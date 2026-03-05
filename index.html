@@ -358,7 +358,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.18.2</h5>
+<h5>Version_1.18.3</h5>
 <div id="mob-pause-btn">⏸</div>
 
 <div id="scale-root">
@@ -573,7 +573,11 @@ function stopAllMusic(){
     countdownSound.currentTime = 0;
 }
 
+var lastHitSoundTime = 0;
 function playHit(){
+    var now = Date.now();
+    if(now - lastHitSoundTime < 200) return;
+    lastHitSoundTime = now;
     hitSound.currentTime = 0;
     hitSound.volume = 0.7;
     hitSound.play().catch(function(){});
@@ -857,7 +861,8 @@ function spFlash(){
     setTimeout(function(){ f.style.opacity="0"; spChar.classList.remove("hit"); },180);
 }
 function spHit(){
-    if(spInv||spDead||isPaused) return;
+    if(spDead||isPaused) return;
+    if(spInv) return;
     spFlash();
     playHit();
     if(mode==="hardcore"){ spEnd(); return; }
@@ -1031,7 +1036,8 @@ function mpFlash(p){
     setTimeout(function(){ p.flashEl.style.opacity="0"; p.charEl.classList.remove("hit"); },180);
 }
 function mpHit(p){
-    if(p.invincible||p.dead||mpIsPaused) return;
+    if(p.dead||mpIsPaused) return;
+    if(p.invincible) return;
     mpFlash(p);
     playHit();
     if(mode==="hardcore"){ mpKill(p); return; }
