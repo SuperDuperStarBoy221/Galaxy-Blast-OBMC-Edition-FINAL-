@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -357,7 +358,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.17.9.9</h5>
+<h5>Version_1.18.2</h5>
 <div id="mob-pause-btn">⏸</div>
 
 <div id="scale-root">
@@ -527,8 +528,6 @@
 </div>
 
 <div id="game-backdrop"></div>
-
-<!-- Audio: place gameboy.mp3 and gameover.mp3 in the same folder as this HTML -->
 <audio id="gameover-sound">
     <source src="gameover.mp3" type="audio/mpeg">
 </audio>
@@ -557,7 +556,6 @@
     window.addEventListener("resize",sc); sc();
 })();
 
-// ── MUSIC ──────────────────────────────────────────────────────────────────
 var gameOverSound = document.getElementById("gameover-sound");
 var countdownSound = document.getElementById("countdown-sound");
 var gameMusic = document.getElementById("game-music");
@@ -586,7 +584,6 @@ function playGameOver(){
     gameOverSound.volume = 0.8;
     gameOverSound.play().catch(function(){});
 }
-// ──────────────────────────────────────────────────────────────────────────
 
 var isTouchDevice = (window.matchMedia && window.matchMedia("(pointer: coarse)").matches)
                     || ("ontouchstart" in window)
