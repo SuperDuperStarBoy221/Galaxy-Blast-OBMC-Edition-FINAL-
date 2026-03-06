@@ -222,6 +222,7 @@
     #mobile-controls.medium .mob-btn:active,
     #mobile-controls.medium .mob-btn.pressed { background: rgba(160,120,0,0.5); border-color: #ffe866; }
 
+    
     #mp-wrapper {
         display: none;
         flex-direction: row;
@@ -355,6 +356,7 @@
     .mp-pause-text.hardcore { color: #ff4444; text-shadow: 0 0 16px red, 0 0 32px red; }
     .mp-pause-text.medium   { color: #ffd700; text-shadow: 0 0 16px #ffd700, 0 0 32px #ffd700; }
 
+    
     #mob-mp-wrapper {
         display: none;
         flex-direction: column;
@@ -368,6 +370,7 @@
         overflow: hidden;
     }
 
+    
     #mob-mp-p2-half {
         width: 100%;
         flex: 1;
@@ -379,7 +382,7 @@
         transform-origin: center center;
         position: relative;
     }
-
+    
     #mob-mp-p1-half {
         width: 100%;
         flex: 1;
@@ -390,6 +393,7 @@
         position: relative;
     }
 
+    
     #mob-mp-divider {
         width: 100%;
         height: 48px;
@@ -445,6 +449,7 @@
         gap: 12px;
     }
 
+    
     .mob-mp-game {
         width: 100%;
         flex: 1;
@@ -465,6 +470,7 @@
     .mob-mp-game.hardcore { border-color: red !important; }
     .mob-mp-game.medium   { border-color: #ffd700 !important; }
 
+    
     .mob-mp-hud {
         position: absolute;
         top: 0; left: 0; right: 0;
@@ -481,6 +487,8 @@
     .mob-mp-hud-score.hardcore { color: #ff4444; }
     .mob-mp-hud-score.medium   { color: #ffd700; }
     .mob-mp-hud-lives { font-size: 8px; letter-spacing: 2px; background: transparent; }
+
+    
     .mob-mp-top-bar {
         position: absolute; top:0; left:0; width:100%; height:36px;
         background: black; z-index: 20;
@@ -490,6 +498,7 @@
         background: black; z-index: 20;
     }
 
+    
     .mob-mp-char {
         position: absolute;
         bottom: 28px;
@@ -511,6 +520,7 @@
         font-size: 38px; color: red; z-index: 99; background: transparent;
     }
 
+    
     .mob-mp-dead {
         display: none;
         position: absolute; top:0; left:0; width:100%; height:100%;
@@ -523,6 +533,8 @@
     .mob-mp-dead-score { font-size: 8px; color: #0ff; }
     .mob-mp-dead-score.hardcore { color: #ff4444; }
     .mob-mp-dead-score.medium   { color: #ffd700; }
+
+    
     #mob-mp-pause-overlay {
         display: none;
         position: absolute;
@@ -546,6 +558,7 @@
     #mob-mp-pause-overlay-text.hardcore { color: #ff4444; text-shadow: 0 0 20px red, 0 0 40px red; }
     #mob-mp-pause-overlay-text.medium   { color: #ffd700; text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700; }
 
+    
     @keyframes mob-fall-p1 { 0%{top:-60px} 100%{top:105vh} }
     @keyframes mob-fall-p2 { 0%{top:-60px} 100%{top:105vh} }
 
@@ -555,6 +568,8 @@
         background: transparent;
         z-index: 8;
     }
+
+    
     #mob-mp-result {
         display: none;
         position: fixed;
@@ -572,7 +587,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.18.4</h5>
+<h5>Version_1.18.5</h5>
 <div id="mob-pause-btn">⏸</div>
 
 <div id="scale-root">
@@ -605,14 +620,16 @@
         </button>
     </a>
     <br/><br/>
+    
     <a href="#" id="mp-link" onclick="showModeSelect('multi')" id="pc-mp-link">
         <button id="mp-btn" style="border-color:#f0f;color:#f0f;text-shadow:0 0 8px #f0f;width:280px;height:80px;font-size:13px;">
             👥 MULTIPLAYER<br/><span id="mp-btn-sub" style="font-size:8px;color:#d0a0d0;background:transparent;">P1: A/D &nbsp;|&nbsp; P2: ←/→</span>
         </button>
     </a>
+    
     <a href="#" id="mob-mp-link" onclick="showModeSelect('mobmulti')" style="display:none;">
         <button id="mob-mp-btn" style="border-color:#f0f;color:#f0f;text-shadow:0 0 8px #f0f;width:280px;height:80px;font-size:13px;">
-            👥 MULTIPLAYER<br/><span style="font-size:8px;color:#d0a0d0;background:transparent;">Pass & Play </span>
+            👥 MULTIPLAYER<br/><span style="font-size:8px;color:#d0a0d0;background:transparent;">Pass & Play 📱</span>
         </button>
     </a>
     <br/><br/>
@@ -690,6 +707,8 @@
     <h4>P key = PAUSE / UNPAUSE</h4><br/><br/>
     <button onclick="showStart()">← Back</button>
 </div>
+
+
 <div id="mp-wrapper">
     <div class="mp-panel">
         <div class="mp-plabel" style="color:#a0f0ff;">◀ P1 — A / D ▶</div>
@@ -745,7 +764,10 @@
     <button onclick="showStart()" style="width:200px;height:65px;font-size:12px;">✕ Quit</button>
 </div>
 </div>
+
+
 <div id="mob-mp-wrapper">
+    
     <div id="mob-mp-p2-half">
         <div class="mob-mp-game p2-game" id="mob-mp-game-2">
             <div class="mob-mp-flash" id="mob-mp-flash-2"></div>
@@ -761,11 +783,14 @@
             </div>
             <div class="mob-mp-bot-bar"></div>
         </div>
+        
         <div style="width:100%;display:flex;flex-direction:row;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.85);flex-shrink:0;">
             <div class="mob-btn" id="mob-mp-left-2" style="width:38vw;height:56px;font-size:22px;">◀</div>
             <div class="mob-btn" id="mob-mp-right-2" style="width:38vw;height:56px;font-size:22px;">▶</div>
         </div>
     </div>
+
+    
     <div id="mob-mp-divider">
         <div id="mob-mp-scores">
             <span id="mob-div-s2" style="color:#ffdb70;background:transparent;">P2: 0</span>
@@ -774,11 +799,9 @@
         <div id="mob-vs-text">VS</div>
         <div id="mob-mp-pause-btn">⏸</div>
     </div>
+
+    
     <div id="mob-mp-p1-half">
-        <div style="width:100%;display:flex;flex-direction:row;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.85);flex-shrink:0;">
-            <div class="mob-btn" id="mob-mp-left-1" style="width:38vw;height:56px;font-size:22px;">◀</div>
-            <div class="mob-btn" id="mob-mp-right-1" style="width:38vw;height:56px;font-size:22px;">▶</div>
-        </div>
         <div class="mob-mp-game p1-game" id="mob-mp-game-1">
             <div class="mob-mp-flash" id="mob-mp-flash-1"></div>
             <div class="mob-mp-hud" id="mob-mp-hud-1">
@@ -793,11 +816,19 @@
             </div>
             <div class="mob-mp-bot-bar"></div>
         </div>
+        
+        <div style="width:100%;display:flex;flex-direction:row;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.85);flex-shrink:0;">
+            <div class="mob-btn" id="mob-mp-left-1" style="width:38vw;height:56px;font-size:22px;">◀</div>
+            <div class="mob-btn" id="mob-mp-right-1" style="width:38vw;height:56px;font-size:22px;">▶</div>
+        </div>
     </div>
+
+    
     <div id="mob-mp-pause-overlay">
         <div id="mob-mp-pause-overlay-text">PAUSED</div>
     </div>
 </div>
+
 
 <div id="mob-mp-result">
     <h1 id="mob-mp-result-title"></h1>
@@ -816,6 +847,7 @@
 <audio id="hit-sound"><source src="hit.mp3" type="audio/mpeg"></audio>
 
 <script>
+
 (function(){
     var GW=660,GH=720;
     function sc(){
@@ -826,6 +858,7 @@
     }
     window.addEventListener("resize",sc); sc();
 })();
+
 
 var gameOverSound    = document.getElementById("gameover-sound");
 var countdownSound   = document.getElementById("countdown-sound");
@@ -853,16 +886,21 @@ function playGameOver(){
     gameOverSound.play().catch(function(){});
 }
 
+
 var isTouchDevice = (window.matchMedia && window.matchMedia("(pointer: coarse)").matches)
                  || ("ontouchstart" in window)
                  || (navigator.maxTouchPoints > 0);
 
+
 if(isTouchDevice){
+    
     document.getElementById("mp-link").style.display = "none";
     document.getElementById("mob-mp-link").style.display = "inline";
 } else {
+    
     document.getElementById("mob-mp-link").style.display = "none";
 }
+
 
 var msgs   =["Nice try!","Better Luck Next Time!","Almost there!","Don't let Asher laugh at you!","Never Give up!","Lock in!"];
 var hcMsgs =["TOO SLOW. ☠","PATHETIC.","THE FIRE WINS.","GET GOOD.","Asher is laughing. ☠"];
@@ -880,6 +918,7 @@ function saveScores(){
     localStorage.setItem("galaxyblast_best_med",bestMed);
     localStorage.setItem("galaxyblast_best_hc",bestHC);
 }
+
 
 var mobPauseBtn = document.getElementById("mob-pause-btn");
 function showMobPauseBtn(visible, m){
@@ -901,6 +940,7 @@ function updateMobPauseBtnState(){
 }
 mobPauseBtn.addEventListener("touchstart",function(e){ e.preventDefault(); togglePause(); },{passive:false});
 mobPauseBtn.addEventListener("mousedown",function(){ togglePause(); });
+
 
 var spDead=false,spCd=false;
 function spPause(){
@@ -941,6 +981,7 @@ function togglePause(){
     }
 }
 
+
 function mpPauseAll(){
     if(!mpState) return;
     mpIsPaused=true;
@@ -972,6 +1013,7 @@ function mpResume(){
     });
     updateMobPauseBtnState();
 }
+
 
 var mobInterval=null;
 function mobDown(dir){
@@ -1013,6 +1055,7 @@ function showMobileControls(visible,m){
     }
 }
 
+
 function hideAll(){
     ["start","type-select","mode-select","hud","game","result","tutorial",
      "mp-wrapper","mp-result","mobile-controls"].forEach(function(id){
@@ -1039,6 +1082,7 @@ function showStart(){
 function showTypeSelect(){ stopAllMusic(); hideAll(); document.getElementById("type-select").style.display="block"; }
 function showModeSelect(type){ stopAllMusic(); gameType=type; hideAll(); document.getElementById("mode-select").style.display="block"; }
 function startTutorial(){ stopAllMusic(); hideAll(); document.getElementById("tutorial").style.display="block"; }
+
 
 var spScore=0,spLives=3,spInv=false,spCharX=300;
 var spChar=document.getElementById("character");
@@ -1190,6 +1234,7 @@ spMonster.addEventListener("animationiteration",function(){ spMonster.style.left
 function moveLeft(){ if(!isPaused&&spCharX>0){ spCharX-=100; spChar.style.left=spCharX+"px"; } }
 function moveRight(){ if(!isPaused&&spCharX<500){ spCharX+=100; spChar.style.left=spCharX+"px"; } }
 function restartGame(){ stopAllMusic(); document.getElementById("result").style.display="none"; beginGame(mode); }
+
 
 var MP_COLS=5,MP_STEP=52,MP_MID=2;
 var mpState=null;
@@ -1349,6 +1394,7 @@ function stopMp(){
 }
 function restartMp(){ stopAllMusic(); document.getElementById("mp-result").style.display="none"; beginMp(mode); }
 
+
 var MOB_MP_COLS = 5;
 var mobMpState = null;
 
@@ -1356,6 +1402,7 @@ function getMobMpStep(){
     return Math.floor(window.innerWidth / MOB_MP_COLS);
 }
 function getMobMpGameHeight(){
+    
     var divH = 48;
     var ctrlH = 68; 
     return Math.floor((window.innerHeight - divH) / 2) - ctrlH;
@@ -1424,6 +1471,7 @@ function mobMpKill(p){
     if(mode==="hardcore") dsc.classList.add("hardcore");
     else if(mode==="medium") dsc.classList.add("medium");
     document.getElementById("mob-mp-dead-" + p.n).classList.add("show");
+    
     document.getElementById("mob-div-s1").textContent = "P1: " + mobMpState[0].score;
     document.getElementById("mob-div-s2").textContent = "P2: " + mobMpState[1].score;
     if(mobMpState && mobMpState[0].dead && mobMpState[1].dead){
@@ -1453,6 +1501,7 @@ function mobMpStartPlayer(p){
             var c = Math.floor(Math.random() * MOB_MP_COLS);
             p.obsCol[i] = c;
             el.style.left = (c * step + Math.floor(step/2) - 20) + "px";
+            
             document.getElementById("mob-div-s1").textContent = "P1: " + mobMpState[0].score;
             document.getElementById("mob-div-s2").textContent = "P2: " + mobMpState[1].score;
         });
@@ -1460,9 +1509,13 @@ function mobMpStartPlayer(p){
 
     p.obs.forEach(function(el){ el.style.animationPlayState = "running"; });
 
+    
     var charEl = document.getElementById("mob-mp-char-" + p.n);
     p.col = Math.floor(MOB_MP_COLS / 2);
     charEl.style.left = (p.col * step + Math.floor(step/2) - 24) + "px";
+
+    
+    
     var charCenterY = gameH - 28 - 24;
 
     p.collInt = setInterval(function(){
@@ -1506,6 +1559,7 @@ function beginMobMp(m){
     mode = m; mobMpIsPaused = false;
     stopMobMp();
 
+    
     var cls = m==="hardcore" ? "hardcore" : m==="medium" ? "medium" : "";
     [1,2].forEach(function(n){
         var gEl = document.getElementById("mob-mp-game-" + n);
@@ -1514,9 +1568,11 @@ function beginMobMp(m){
         document.getElementById("mob-mp-dead-" + n).classList.remove("show");
         document.getElementById("mob-mp-score-" + n).textContent = "0";
         document.getElementById("mob-mp-dead-sc-" + n).classList.remove("hardcore","medium");
+        
         Array.from(gEl.querySelectorAll(".mob-mp-obs")).forEach(function(o){ o.remove(); });
     });
 
+    
     var divEl = document.getElementById("mob-mp-divider");
     var vsEl = document.getElementById("mob-vs-text");
     var pbEl = document.getElementById("mob-mp-pause-btn");
@@ -1525,14 +1581,17 @@ function beginMobMp(m){
     pbEl.classList.remove("hardcore","medium");
     if(cls){ divEl.classList.add(cls); vsEl.classList.add(cls); pbEl.classList.add(cls); }
 
+    
     document.getElementById("mob-div-s1").textContent = "P1: 0";
     document.getElementById("mob-div-s2").textContent = "P2: 0";
 
+    
     document.getElementById("mob-mp-pause-overlay").classList.remove("visible");
     var pot = document.getElementById("mob-mp-pause-overlay-text");
     pot.classList.remove("hardcore","medium");
     if(cls) pot.classList.add(cls);
 
+    
     [1,2].forEach(function(n){
         ["mob-mp-left-"+n,"mob-mp-right-"+n].forEach(function(id){
             var b = document.getElementById(id);
@@ -1541,6 +1600,7 @@ function beginMobMp(m){
         });
     });
 
+    
     var maxL = m==="easy"?3:m==="medium"?2:1;
     mobMpState = [
         { n:1, col:2, score:0, lives:maxL, invincible:false, dead:false, obs:[], obsCol:[], collInt:null, scoreInt:null },
@@ -1550,12 +1610,14 @@ function beginMobMp(m){
     mobMpUpdateLives(mobMpState[0]);
     mobMpUpdateLives(mobMpState[1]);
 
+    
     if(m==="hardcore"){ hardcoreMusic.currentTime=0; hardcoreMusic.volume=0.5; hardcoreMusic.play().catch(function(){}); }
     else { gameMusic.currentTime=0; gameMusic.volume=0.5; gameMusic.play().catch(function(){}); }
 
     hideAll();
     document.getElementById("mob-mp-wrapper").style.display = "flex";
 
+    
     mobMpCountdown(1, function(){ mobMpStartPlayer(mobMpState[0]); });
     mobMpCountdown(2, function(){ mobMpStartPlayer(mobMpState[1]); });
 }
@@ -1596,6 +1658,7 @@ function mobMpResume(){
     document.getElementById("mob-mp-pause-btn").textContent = "⏸";
 }
 
+
 document.getElementById("mob-mp-pause-btn").addEventListener("touchstart", function(e){
     e.preventDefault();
     if(mobMpIsPaused) mobMpResume(); else mobMpPause();
@@ -1603,6 +1666,7 @@ document.getElementById("mob-mp-pause-btn").addEventListener("touchstart", funct
 document.getElementById("mob-mp-pause-btn").addEventListener("mousedown", function(){
     if(mobMpIsPaused) mobMpResume(); else mobMpPause();
 });
+
 
 function makeMobMpBtn(btnId, pIdx, dir){
     var btn = document.getElementById(btnId);
@@ -1663,6 +1727,7 @@ function restartMobMp(){
     document.getElementById("mob-mp-result").style.display = "none";
     beginMobMp(mode);
 }
+
 
 document.addEventListener("keydown", function(e){
     if(e.key==="p"||e.key==="P"){
