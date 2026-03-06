@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -164,6 +163,7 @@
         font-size: 14px;
         color: white;
         cursor: pointer;
+        display: none;
         align-items: center;
         justify-content: center;
         user-select: none;
@@ -222,7 +222,6 @@
     #mobile-controls.medium .mob-btn:active,
     #mobile-controls.medium .mob-btn.pressed { background: rgba(160,120,0,0.5); border-color: #ffe866; }
 
-    
     #mp-wrapper {
         display: none;
         flex-direction: row;
@@ -355,240 +354,12 @@
     }
     .mp-pause-text.hardcore { color: #ff4444; text-shadow: 0 0 16px red, 0 0 32px red; }
     .mp-pause-text.medium   { color: #ffd700; text-shadow: 0 0 16px #ffd700, 0 0 32px #ffd700; }
-
-    
-    #mob-mp-wrapper {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        width: 100vw;
-        height: 100vh;
-        position: fixed;
-        top: 0; left: 0;
-        background: black;
-        z-index: 5000;
-        overflow: hidden;
-    }
-
-    
-    #mob-mp-p2-half {
-        width: 100%;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-        transform: rotate(180deg);
-        transform-origin: center center;
-        position: relative;
-    }
-    
-    #mob-mp-p1-half {
-        width: 100%;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-        position: relative;
-    }
-
-    
-    #mob-mp-divider {
-        width: 100%;
-        height: 48px;
-        background: #111;
-        border-top: 3px solid #f0f;
-        border-bottom: 3px solid #f0f;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 16px;
-        z-index: 100;
-        flex-shrink: 0;
-    }
-    #mob-mp-divider.hardcore { border-color: red; }
-    #mob-mp-divider.medium   { border-color: #ffd700; }
-    #mob-vs-text {
-        font-size: 14px;
-        color: #f0f;
-        text-shadow: 0 0 10px #f0f;
-        background: transparent;
-        letter-spacing: 4px;
-    }
-    #mob-vs-text.hardcore { color: red; text-shadow: 0 0 10px red; }
-    #mob-vs-text.medium   { color: #ffd700; text-shadow: 0 0 10px #ffd700; }
-    #mob-mp-pause-btn {
-        width: 52px;
-        height: 34px;
-        background: rgba(0,0,0,0.75);
-        border: 2px solid #f0f;
-        border-radius: 6px;
-        font-size: 16px;
-        color: white;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        user-select: none;
-        -webkit-user-select: none;
-        touch-action: manipulation;
-        -webkit-tap-highlight-color: transparent;
-        transition: background 0.07s, transform 0.07s;
-    }
-    #mob-mp-pause-btn:active { transform: scale(0.88); }
-    #mob-mp-pause-btn.hardcore { border-color: red; }
-    #mob-mp-pause-btn.medium   { border-color: #ffd700; }
-    #mob-mp-scores {
-        font-size: 8px;
-        color: #aaa;
-        background: transparent;
-        letter-spacing: 1px;
-        display: flex;
-        gap: 12px;
-    }
-
-    
-    .mob-mp-game {
-        width: 100%;
-        flex: 1;
-        position: relative;
-        overflow: hidden;
-        background-image: url("https://www.ohsat.com/tutorial/megalaga/megalaga-1/images/scrolling.gif");
-        background-size: cover;
-        background-position: center;
-        border-left: none;
-        border-right: none;
-    }
-    .mob-mp-game.p2-game {
-        border-bottom: 2px solid #f0f;
-    }
-    .mob-mp-game.p1-game {
-        border-top: 2px solid #f0f;
-    }
-    .mob-mp-game.hardcore { border-color: red !important; }
-    .mob-mp-game.medium   { border-color: #ffd700 !important; }
-
-    
-    .mob-mp-hud {
-        position: absolute;
-        top: 0; left: 0; right: 0;
-        height: 36px;
-        background: rgba(0,0,0,0.8);
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 10px;
-        z-index: 30;
-    }
-    .mob-mp-hud-score { font-size: 7px; color: #0ff; background: transparent; }
-    .mob-mp-hud-score.hardcore { color: #ff4444; }
-    .mob-mp-hud-score.medium   { color: #ffd700; }
-    .mob-mp-hud-lives { font-size: 8px; letter-spacing: 2px; background: transparent; }
-
-    
-    .mob-mp-top-bar {
-        position: absolute; top:0; left:0; width:100%; height:36px;
-        background: black; z-index: 20;
-    }
-    .mob-mp-bot-bar {
-        position: absolute; bottom:0; left:0; width:100%; height:28px;
-        background: black; z-index: 20;
-    }
-
-    
-    .mob-mp-char {
-        position: absolute;
-        bottom: 28px;
-        background: transparent;
-        z-index: 10;
-        transition: filter 0.1s, left 0.05s;
-    }
-    .mob-mp-char.hit { filter: brightness(5) sepia(1) hue-rotate(300deg); }
-
-    .mob-mp-flash {
-        position: absolute; top:0; left:0; width:100%; height:100%;
-        opacity: 0; pointer-events: none; z-index: 50; background: red;
-        transition: opacity 0.05s;
-    }
-    .mob-mp-cd {
-        display: none;
-        position: absolute;
-        top: 38%; left: 50%; transform: translate(-50%, -50%);
-        font-size: 38px; color: red; z-index: 99; background: transparent;
-    }
-
-    
-    .mob-mp-dead {
-        display: none;
-        position: absolute; top:0; left:0; width:100%; height:100%;
-        background: rgba(0,0,0,0.78);
-        flex-direction: column; align-items: center; justify-content: center;
-        z-index: 9999;
-    }
-    .mob-mp-dead.show { display: flex; }
-    .mob-mp-dead-title { font-size: 12px; color: red; margin-bottom: 8px; }
-    .mob-mp-dead-score { font-size: 8px; color: #0ff; }
-    .mob-mp-dead-score.hardcore { color: #ff4444; }
-    .mob-mp-dead-score.medium   { color: #ffd700; }
-
-    
-    #mob-mp-pause-overlay {
-        display: none;
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: 8000;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        pointer-events: none;
-    }
-    #mob-mp-pause-overlay.visible { display: flex; }
-    #mob-mp-pause-overlay-text {
-        font-size: 28px;
-        color: #fff;
-        text-shadow: 0 0 20px #f0f, 0 0 40px #f0f;
-        letter-spacing: 6px;
-        background: transparent;
-        animation: pausePulse 1.2s ease-in-out infinite;
-    }
-    #mob-mp-pause-overlay-text.hardcore { color: #ff4444; text-shadow: 0 0 20px red, 0 0 40px red; }
-    #mob-mp-pause-overlay-text.medium   { color: #ffd700; text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700; }
-
-    
-    @keyframes mob-fall-p1 { 0%{top:-60px} 100%{top:105vh} }
-    @keyframes mob-fall-p2 { 0%{top:-60px} 100%{top:105vh} }
-
-    .mob-mp-obs {
-        width: 40px; height: 50px;
-        position: absolute;
-        background: transparent;
-        z-index: 8;
-    }
-
-    
-    #mob-mp-result {
-        display: none;
-        position: fixed;
-        top: 0; left: 0;
-        width: 100vw; height: 100vh;
-        background: black;
-        z-index: 6000;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    #mob-mp-result h1 { font-size: 22px; margin-bottom: 16px; animation: wpulse 1s infinite; }
-    #mob-mp-result .mpr-sub  { font-size: 10px; color: #aaa; margin-bottom: 20px; }
-    #mob-mp-result .mpr-scrs { font-size: 11px; line-height: 2.8; margin-bottom: 24px; }
     </style>
 </head>
 <body>
-<h5>Version_1.18.4</h5>
+<h5>Version_1.18.3</h5>
 <div id="mob-pause-btn">⏸</div>
+
 <div id="scale-root">
 <br/><br/><br/>
 <div id="start" style="display:block;">
@@ -619,16 +390,9 @@
         </button>
     </a>
     <br/><br/>
-    
-    <a href="#" id="mp-link" onclick="showModeSelect('multi')" id="pc-mp-link">
+    <a href="#" id="mp-link" onclick="showModeSelect('multi')">
         <button id="mp-btn" style="border-color:#f0f;color:#f0f;text-shadow:0 0 8px #f0f;width:280px;height:80px;font-size:13px;">
             👥 MULTIPLAYER<br/><span id="mp-btn-sub" style="font-size:8px;color:#d0a0d0;background:transparent;">P1: A/D &nbsp;|&nbsp; P2: ←/→</span>
-        </button>
-    </a>
-    
-    <a href="#" id="mob-mp-link" onclick="showModeSelect('mobmulti')" style="display:none;">
-        <button id="mob-mp-btn" style="border-color:#f0f;color:#f0f;text-shadow:0 0 8px #f0f;width:280px;height:80px;font-size:13px;">
-            👥 MULTIPLAYER<br/><span style="font-size:8px;color:#d0a0d0;background:transparent;">Pass & Play 📱</span>
         </button>
     </a>
     <br/><br/>
@@ -706,8 +470,6 @@
     <h4>P key = PAUSE / UNPAUSE</h4><br/><br/>
     <button onclick="showStart()">← Back</button>
 </div>
-
-
 <div id="mp-wrapper">
     <div class="mp-panel">
         <div class="mp-plabel" style="color:#a0f0ff;">◀ P1 — A / D ▶</div>
@@ -764,89 +526,24 @@
 </div>
 </div>
 
-
-<div id="mob-mp-wrapper">
-    
-    <div id="mob-mp-p2-half">
-        <div class="mob-mp-game p2-game" id="mob-mp-game-2">
-            <div class="mob-mp-flash" id="mob-mp-flash-2"></div>
-            <div class="mob-mp-hud" id="mob-mp-hud-2">
-                <div class="mob-mp-hud-score" id="mob-mp-hs-2">SCORE: <span id="mob-mp-score-2">0</span></div>
-                <div class="mob-mp-hud-lives" id="mob-mp-lives-2"></div>
-            </div>
-            <img class="mob-mp-char" id="mob-mp-char-2" src="https://pixeljoint.com/files/icons/full/avion.gif" width="48" height="48">
-            <div class="mob-mp-cd" id="mob-mp-cd-2"></div>
-            <div class="mob-mp-dead" id="mob-mp-dead-2">
-                <div class="mob-mp-dead-title">GAME OVER</div>
-                <div class="mob-mp-dead-score" id="mob-mp-dead-sc-2"></div>
-            </div>
-            <div class="mob-mp-bot-bar"></div>
-        </div>
-        
-        <div style="width:100%;display:flex;flex-direction:row;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.85);flex-shrink:0;">
-            <div class="mob-btn" id="mob-mp-left-2" style="width:38vw;height:56px;font-size:22px;">◀</div>
-            <div class="mob-btn" id="mob-mp-right-2" style="width:38vw;height:56px;font-size:22px;">▶</div>
-        </div>
-    </div>
-
-    
-    <div id="mob-mp-divider">
-        <div id="mob-mp-scores">
-            <span id="mob-div-s2" style="color:#ffdb70;background:transparent;">P2: 0</span>
-            <span id="mob-div-s1" style="color:#a0f0ff;background:transparent;">P1: 0</span>
-        </div>
-        <div id="mob-vs-text">VS</div>
-        <div id="mob-mp-pause-btn">⏸</div>
-    </div>
-
-    
-    <div id="mob-mp-p1-half">
-        <div class="mob-mp-game p1-game" id="mob-mp-game-1">
-            <div class="mob-mp-flash" id="mob-mp-flash-1"></div>
-            <div class="mob-mp-hud" id="mob-mp-hud-1">
-                <div class="mob-mp-hud-score" id="mob-mp-hs-1">SCORE: <span id="mob-mp-score-1">0</span></div>
-                <div class="mob-mp-hud-lives" id="mob-mp-lives-1"></div>
-            </div>
-            <img class="mob-mp-char" id="mob-mp-char-1" src="https://pixeljoint.com/files/icons/full/avion.gif" width="48" height="48">
-            <div class="mob-mp-cd" id="mob-mp-cd-1"></div>
-            <div class="mob-mp-dead" id="mob-mp-dead-1">
-                <div class="mob-mp-dead-title">GAME OVER</div>
-                <div class="mob-mp-dead-score" id="mob-mp-dead-sc-1"></div>
-            </div>
-            <div class="mob-mp-bot-bar"></div>
-        </div>
-        
-        <div style="width:100%;display:flex;flex-direction:row;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.85);flex-shrink:0;">
-            <div class="mob-btn" id="mob-mp-left-1" style="width:38vw;height:56px;font-size:22px;">◀</div>
-            <div class="mob-btn" id="mob-mp-right-1" style="width:38vw;height:56px;font-size:22px;">▶</div>
-        </div>
-    </div>
-
-    
-    <div id="mob-mp-pause-overlay">
-        <div id="mob-mp-pause-overlay-text">PAUSED</div>
-    </div>
-</div>
-
-
-<div id="mob-mp-result">
-    <h1 id="mob-mp-result-title"></h1>
-    <div class="mpr-sub" id="mob-mpr-sub"></div>
-    <div class="mpr-scrs" id="mob-mpr-scrs"></div>
-    <button onclick="restartMobMp()" style="width:220px;height:65px;font-size:12px;border-color:#f0f;color:#f0f;">↺ Play Again</button>
-    <br/><br/>
-    <button onclick="showStart()" style="width:180px;height:55px;font-size:11px;">✕ Quit</button>
-</div>
-
 <div id="game-backdrop"></div>
-<audio id="gameover-sound"><source src="gameover.mp3" type="audio/mpeg"></audio>
-<audio id="countdown-sound"><source src="countdown.mp3" type="audio/mpeg"></audio>
-<audio id="game-music" loop><source src="gamemusic.mp3" type="audio/mpeg"></audio>
-<audio id="hardcore-music" loop><source src="hardcore.mp3" type="audio/mpeg"></audio>
-<audio id="hit-sound"><source src="hit.mp3" type="audio/mpeg"></audio>
+<audio id="gameover-sound">
+    <source src="gameover.mp3" type="audio/mpeg">
+</audio>
+<audio id="countdown-sound">
+    <source src="countdown.mp3" type="audio/mpeg">
+</audio>
+<audio id="game-music" loop>
+    <source src="gamemusic.mp3" type="audio/mpeg">
+</audio>
+<audio id="hardcore-music" loop>
+    <source src="hardcore.mp3" type="audio/mpeg">
+</audio>
+<audio id="hit-sound">
+    <source src="hit.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-
 (function(){
     var GW=660,GH=720;
     function sc(){
@@ -858,101 +555,118 @@
     window.addEventListener("resize",sc); sc();
 })();
 
-
-var gameOverSound    = document.getElementById("gameover-sound");
-var countdownSound   = document.getElementById("countdown-sound");
-var gameMusic        = document.getElementById("game-music");
-var hardcoreMusic    = document.getElementById("hardcore-music");
-var hitSound         = document.getElementById("hit-sound");
+var gameOverSound = document.getElementById("gameover-sound");
+var countdownSound = document.getElementById("countdown-sound");
+var gameMusic = document.getElementById("game-music");
+var hardcoreMusic = document.getElementById("hardcore-music");
+var hitSound = document.getElementById("hit-sound");
 
 function stopAllMusic(){
-    gameMusic.pause(); gameMusic.currentTime=0;
-    hardcoreMusic.pause(); hardcoreMusic.currentTime=0;
-    gameOverSound.pause(); gameOverSound.currentTime=0;
-    countdownSound.pause(); countdownSound.currentTime=0;
+    gameMusic.pause();
+    gameMusic.currentTime = 0;
+    hardcoreMusic.pause();
+    hardcoreMusic.currentTime = 0;
+    gameOverSound.pause();
+    gameOverSound.currentTime = 0;
+    countdownSound.pause();
+    countdownSound.currentTime = 0;
 }
-var lastHitSoundTime=0;
+
+var lastHitSoundTime = 0;
 function playHit(){
-    var now=Date.now();
-    if(now-lastHitSoundTime<200) return;
-    lastHitSoundTime=now;
-    hitSound.currentTime=0; hitSound.volume=0.7;
+    var now = Date.now();
+    if(now - lastHitSoundTime < 200) return;
+    lastHitSoundTime = now;
+    hitSound.currentTime = 0;
+    hitSound.volume = 0.7;
     hitSound.play().catch(function(){});
 }
+
 function playGameOver(){
     stopAllMusic();
-    gameOverSound.volume=0.8;
+    gameOverSound.volume = 0.8;
     gameOverSound.play().catch(function(){});
 }
 
-
 var isTouchDevice = (window.matchMedia && window.matchMedia("(pointer: coarse)").matches)
-                 || ("ontouchstart" in window)
-                 || (navigator.maxTouchPoints > 0);
-
+                    || ("ontouchstart" in window)
+                    || (navigator.maxTouchPoints > 0);
 
 if(isTouchDevice){
-    
-    document.getElementById("mp-link").style.display = "none";
-    document.getElementById("mob-mp-link").style.display = "inline";
-} else {
-    
-    document.getElementById("mob-mp-link").style.display = "none";
+    var mpLink = document.getElementById("mp-link");
+    var mpBtn  = document.getElementById("mp-btn");
+    mpLink.onclick = function(e){ e.preventDefault(); };
+    mpLink.style.cursor = "default";
+    mpBtn.disabled = true;
+    mpBtn.style.borderColor = "#555";
+    mpBtn.style.color = "#555";
+    mpBtn.style.textShadow = "none";
+    mpBtn.style.cursor = "not-allowed";
+    mpBtn.style.opacity = "0.45";
+    document.getElementById("mp-btn-sub").textContent = "PC only 🖥";
+    document.getElementById("mp-btn-sub").style.color = "#666";
 }
-
 
 var msgs   =["Nice try!","Better Luck Next Time!","Almost there!","Don't let Asher laugh at you!","Never Give up!","Lock in!"];
 var hcMsgs =["TOO SLOW. ☠","PATHETIC.","THE FIRE WINS.","GET GOOD.","Asher is laughing. ☠"];
 var mode="easy", gameType="single";
-var bestEasy = parseInt(localStorage.getItem("galaxyblast_best_easy"))||0;
-var bestMed  = parseInt(localStorage.getItem("galaxyblast_best_med")) ||0;
-var bestHC   = parseInt(localStorage.getItem("galaxyblast_best_hc"))  ||0;
-document.getElementById("start-best-easy").textContent=bestEasy;
-document.getElementById("start-best-med").textContent=bestMed;
-document.getElementById("start-best-hc").textContent=bestHC;
-var isPaused=false, mpIsPaused=false, mobMpIsPaused=false;
+var bestEasy = parseInt(localStorage.getItem("galaxyblast_best_easy")) || 0;
+var bestMed  = parseInt(localStorage.getItem("galaxyblast_best_med"))  || 0;
+var bestHC   = parseInt(localStorage.getItem("galaxyblast_best_hc"))   || 0;
+document.getElementById("start-best-easy").textContent = bestEasy;
+document.getElementById("start-best-med").textContent  = bestMed;
+document.getElementById("start-best-hc").textContent   = bestHC;
+var isPaused = false;
+var mpIsPaused = false;
 
 function saveScores(){
-    localStorage.setItem("galaxyblast_best_easy",bestEasy);
-    localStorage.setItem("galaxyblast_best_med",bestMed);
-    localStorage.setItem("galaxyblast_best_hc",bestHC);
+    localStorage.setItem("galaxyblast_best_easy", bestEasy);
+    localStorage.setItem("galaxyblast_best_med",  bestMed);
+    localStorage.setItem("galaxyblast_best_hc",   bestHC);
 }
-
 
 var mobPauseBtn = document.getElementById("mob-pause-btn");
-function showMobPauseBtn(visible, m){
-    if(visible && isTouchDevice){
-        mobPauseBtn.style.display="flex";
-        mobPauseBtn.classList.remove("hardcore","medium","paused");
-        if(m==="hardcore") mobPauseBtn.classList.add("hardcore");
-        else if(m==="medium") mobPauseBtn.classList.add("medium");
+
+function showMobPauseBtn(visible, m) {
+    if (visible && isTouchDevice) {
+        mobPauseBtn.style.display = "flex";
+        mobPauseBtn.classList.remove("hardcore", "medium", "paused");
+        if (m === "hardcore") mobPauseBtn.classList.add("hardcore");
+        else if (m === "medium") mobPauseBtn.classList.add("medium");
     } else {
-        mobPauseBtn.style.display="none";
+        mobPauseBtn.style.display = "none";
     }
 }
-function updateMobPauseBtnState(){
-    if(isPaused||mpIsPaused){
-        mobPauseBtn.textContent="▶"; mobPauseBtn.classList.add("paused");
+
+function updateMobPauseBtnState() {
+    if (isPaused || mpIsPaused) {
+        mobPauseBtn.textContent = "▶";
+        mobPauseBtn.classList.add("paused");
     } else {
-        mobPauseBtn.textContent="⏸"; mobPauseBtn.classList.remove("paused");
+        mobPauseBtn.textContent = "⏸";
+        mobPauseBtn.classList.remove("paused");
     }
 }
-mobPauseBtn.addEventListener("touchstart",function(e){ e.preventDefault(); togglePause(); },{passive:false});
-mobPauseBtn.addEventListener("mousedown",function(){ togglePause(); });
 
+mobPauseBtn.addEventListener("touchstart", function(e) {
+    e.preventDefault();
+    togglePause();
+}, { passive: false });
+mobPauseBtn.addEventListener("mousedown", function(e) {
+    togglePause();
+});
 
-var spDead=false,spCd=false;
 function spPause(){
-    if(spDead||spCd) return;
-    isPaused=true;
-    spBlock.style.animationPlayState="paused";
-    spMeteor.style.animationPlayState="paused";
-    spMonster.style.animationPlayState="paused";
+    if(spDead || spCd) return;
+    isPaused = true;
+    spBlock.style.animationPlayState   = "paused";
+    spMeteor.style.animationPlayState  = "paused";
+    spMonster.style.animationPlayState = "paused";
     if(spScoreInt){ clearInterval(spScoreInt); spScoreInt=null; }
-    if(mode==="easy"||mode==="medium") gameMusic.pause();
+    if(mode==="easy" || mode==="medium") gameMusic.pause();
     else hardcoreMusic.pause();
-    var po=document.getElementById("pause-overlay");
-    var pt=document.getElementById("pause-text");
+    var po = document.getElementById("pause-overlay");
+    var pt = document.getElementById("pause-text");
     pt.classList.remove("hardcore","medium");
     if(mode==="hardcore") pt.classList.add("hardcore");
     else if(mode==="medium") pt.classList.add("medium");
@@ -960,38 +674,37 @@ function spPause(){
     updateMobPauseBtnState();
 }
 function spResume(){
-    isPaused=false;
-    spBlock.style.animationPlayState="running";
-    spMeteor.style.animationPlayState="running";
-    spMonster.style.animationPlayState="running";
+    isPaused = false;
+    spBlock.style.animationPlayState   = "running";
+    spMeteor.style.animationPlayState  = "running";
+    spMonster.style.animationPlayState = "running";
     spStartScore();
-    if(mode==="easy"||mode==="medium") gameMusic.play().catch(function(){});
+    if(mode==="easy" || mode==="medium") gameMusic.play().catch(function(){});
     else hardcoreMusic.play().catch(function(){});
     document.getElementById("pause-overlay").classList.remove("visible");
     updateMobPauseBtnState();
 }
 function togglePause(){
-    if(gameType==="single"){
-        if(spDead||spCd) return;
+    if(gameType === "single"){
+        if(spDead || spCd) return;
         if(isPaused) spResume(); else spPause();
-    } else if(gameType==="multi"){
+    } else if(gameType === "multi"){
         if(!mpState) return;
         if(mpIsPaused) mpResume(); else mpPauseAll();
     }
 }
 
-
 function mpPauseAll(){
     if(!mpState) return;
-    mpIsPaused=true;
+    mpIsPaused = true;
     if(mode==="hardcore") hardcoreMusic.pause();
     else gameMusic.pause();
-    mpState.forEach(function(p,idx){
+    mpState.forEach(function(p, idx){
         if(p.dead) return;
         p.obs.forEach(function(o){ o.style.animationPlayState="paused"; });
         clearInterval(p.scoreInt); p.scoreInt=null;
-        var po=document.getElementById("mp-pause-"+(idx+1));
-        var pt=document.getElementById("mp-pause-text-"+(idx+1));
+        var po = document.getElementById("mp-pause-"+(idx+1));
+        var pt = document.getElementById("mp-pause-text-"+(idx+1));
         pt.classList.remove("hardcore","medium");
         if(mode==="hardcore") pt.classList.add("hardcore");
         else if(mode==="medium") pt.classList.add("medium");
@@ -1001,77 +714,73 @@ function mpPauseAll(){
 }
 function mpResume(){
     if(!mpState) return;
-    mpIsPaused=false;
+    mpIsPaused = false;
     if(mode==="hardcore") hardcoreMusic.play().catch(function(){});
     else gameMusic.play().catch(function(){});
-    mpState.forEach(function(p,idx){
+    mpState.forEach(function(p, idx){
         if(p.dead) return;
         p.obs.forEach(function(o){ o.style.animationPlayState="running"; });
-        p.scoreInt=setInterval(function(){ if(!p.dead){ p.score++; p.scoreEl.textContent=p.score; } },300);
+        p.scoreInt = setInterval(function(){ if(!p.dead){ p.score++; p.scoreEl.textContent=p.score; } },300);
         document.getElementById("mp-pause-"+(idx+1)).classList.remove("visible");
     });
     updateMobPauseBtnState();
 }
 
-
-var mobInterval=null;
+var mobInterval = null;
 function mobDown(dir){
-    if(spDead||isPaused||gameType!=="single") return;
+    if(spDead || isPaused || gameType !== "single") return;
     if(dir==="left") moveLeft(); else moveRight();
     if(mobInterval) clearInterval(mobInterval);
-    mobInterval=setInterval(function(){
-        if(spDead||isPaused){ clearInterval(mobInterval); mobInterval=null; return; }
+    mobInterval = setInterval(function(){
+        if(spDead || isPaused){ clearInterval(mobInterval); mobInterval=null; return; }
         if(dir==="left") moveLeft(); else moveRight();
-    },160);
+    }, 160);
 }
 function mobUp(){
     if(mobInterval){ clearInterval(mobInterval); mobInterval=null; }
 }
+
 (function(){
-    var btnL=document.getElementById("mob-left");
-    var btnR=document.getElementById("mob-right");
-    function addEvents(btn,dir){
-        btn.addEventListener("touchstart",function(e){ e.preventDefault(); mobDown(dir); },{passive:false});
-        btn.addEventListener("touchend",  function(e){ e.preventDefault(); mobUp(); },{passive:false});
-        btn.addEventListener("touchcancel",function(e){ e.preventDefault(); mobUp(); },{passive:false});
-        btn.addEventListener("mousedown",function(){ mobDown(dir); });
-        btn.addEventListener("mouseup",  function(){ mobUp(); });
-        btn.addEventListener("mouseleave",function(){ mobUp(); });
+    var btnL = document.getElementById("mob-left");
+    var btnR = document.getElementById("mob-right");
+    function addEvents(btn, dir){
+        btn.addEventListener("touchstart", function(e){ e.preventDefault(); mobDown(dir); }, {passive:false});
+        btn.addEventListener("touchend",   function(e){ e.preventDefault(); mobUp(); },      {passive:false});
+        btn.addEventListener("touchcancel",function(e){ e.preventDefault(); mobUp(); },      {passive:false});
+        btn.addEventListener("mousedown",  function(e){ mobDown(dir); });
+        btn.addEventListener("mouseup",    function(e){ mobUp(); });
+        btn.addEventListener("mouseleave", function(e){ mobUp(); });
     }
-    addEvents(btnL,"left");
-    addEvents(btnR,"right");
+    addEvents(btnL, "left");
+    addEvents(btnR, "right");
 })();
 
-function showMobileControls(visible,m){
-    var mc=document.getElementById("mobile-controls");
-    if(visible && isTouchDevice && gameType==="single"){
+function showMobileControls(visible, m){
+    var mc = document.getElementById("mobile-controls");
+    if(visible && isTouchDevice && gameType === "single"){
         mc.classList.remove("hardcore","medium");
         if(m==="hardcore") mc.classList.add("hardcore");
         else if(m==="medium") mc.classList.add("medium");
-        mc.style.display="flex";
+        mc.style.display = "flex";
     } else {
-        mc.style.display="none";
+        mc.style.display = "none";
     }
 }
 
-
 function hideAll(){
-    ["start","type-select","mode-select","hud","game","result","tutorial",
-     "mp-wrapper","mp-result","mobile-controls"].forEach(function(id){
-        document.getElementById(id).style.display="none";
-    });
-    document.getElementById("mob-mp-wrapper").style.display="none";
-    document.getElementById("mob-mp-result").style.display="none";
+    ["start","type-select","mode-select","hud","game","result","tutorial","mp-wrapper","mp-result","mobile-controls"]
+    .forEach(function(id){ document.getElementById(id).style.display="none"; });
     document.getElementById("game-backdrop").style.display="none";
     showMobPauseBtn(false);
 }
 function showStart(){
-    stopMp(); stopMobMp();
-    isPaused=false; mpIsPaused=false; mobMpIsPaused=false;
+    stopMp();
+    isPaused = false;
+    mpIsPaused = false;
     stopAllMusic();
-    bestEasy=parseInt(localStorage.getItem("galaxyblast_best_easy"))||0;
-    bestMed =parseInt(localStorage.getItem("galaxyblast_best_med")) ||0;
-    bestHC  =parseInt(localStorage.getItem("galaxyblast_best_hc"))  ||0;
+    bestEasy = parseInt(localStorage.getItem("galaxyblast_best_easy")) || 0;
+    bestMed  = parseInt(localStorage.getItem("galaxyblast_best_med"))  || 0;
+    bestHC   = parseInt(localStorage.getItem("galaxyblast_best_hc"))   || 0;
     hideAll();
     document.getElementById("start").style.display="block";
     document.getElementById("start-best-easy").textContent=bestEasy;
@@ -1082,8 +791,7 @@ function showTypeSelect(){ stopAllMusic(); hideAll(); document.getElementById("t
 function showModeSelect(type){ stopAllMusic(); gameType=type; hideAll(); document.getElementById("mode-select").style.display="block"; }
 function startTutorial(){ stopAllMusic(); hideAll(); document.getElementById("tutorial").style.display="block"; }
 
-
-var spScore=0,spLives=3,spInv=false,spCharX=300;
+var spScore=0,spLives=3,spDead=false,spInv=false,spCd=false,spCharX=300;
 var spChar=document.getElementById("character");
 var spBlock=document.getElementById("block");
 var spMeteor=document.getElementById("meteor");
@@ -1093,35 +801,49 @@ var spGame=document.getElementById("game");
 function spRandomizeObstaclePositions(){
     var cols=[0,100,200,300,400,500];
     cols.sort(function(){ return Math.random()-0.5; });
-    spBlock.style.left=cols[0]+"px";
-    spMeteor.style.left=cols[1]+"px";
-    spMonster.style.left=cols[2]+"px";
+    spBlock.style.left   = cols[0]+"px";
+    spMeteor.style.left  = cols[1]+"px";
+    spMonster.style.left = cols[2]+"px";
 }
+
 function beginGame(m){
-    mode=m; isPaused=false;
+    mode=m;
+    isPaused=false;
     if(gameType==="multi"){ beginMp(m); return; }
-    if(gameType==="mobmulti"){ beginMobMp(m); return; }
     spScore=0; spLives=m==="easy"?3:m==="medium"?2:1;
     spDead=false; spInv=false; spCd=false; spCharX=300;
+
     var ge=spGame,hu=document.getElementById("hud"),
         hs=document.getElementById("hud-score"),hb=document.getElementById("hud-best");
     [ge,hu,hs,hb].forEach(function(e){ e.classList.remove("hardcore","medium"); });
     if(m==="hardcore") [ge,hu,hs,hb].forEach(function(e){ e.classList.add("hardcore"); });
     else if(m==="medium") [ge,hu,hs,hb].forEach(function(e){ e.classList.add("medium"); });
+
     hideAll();
     ge.style.display="block"; hu.style.display="flex";
     document.getElementById("game-backdrop").style.display="block";
-    showMobileControls(true,m);
-    showMobPauseBtn(true,m);
+    showMobileControls(true, m);
+    showMobPauseBtn(true, m);
     updateMobPauseBtnState();
+
     document.getElementById("pause-overlay").classList.remove("visible");
-    spBlock.style.animation="none"; spMeteor.style.animation="none"; spMonster.style.animation="none";
-    void spBlock.offsetWidth; void spMeteor.offsetWidth; void spMonster.offsetWidth;
+
+    spBlock.style.animation="none";
+    spMeteor.style.animation="none";
+    spMonster.style.animation="none";
+    void spBlock.offsetWidth;
+    void spMeteor.offsetWidth;
+    void spMonster.offsetWidth;
+
     spRandomizeObstaclePositions();
-    spBlock.style.top="-120px"; spMeteor.style.top="-140px"; spMonster.style.top="-1000px";
+    spBlock.style.top   = "-120px";
+    spMeteor.style.top  = "-140px";
+    spMonster.style.top = "-1000px";
+
     spChar.style.left=spCharX+"px";
     spUpdateHUD(); spCountdown(spStartAnims);
 }
+
 function spUpdateHUD(){
     document.getElementById("hud-score-val").textContent=spScore;
     var b=mode==="hardcore"?bestHC:mode==="medium"?bestMed:bestEasy;
@@ -1138,30 +860,36 @@ function spFlash(){
     setTimeout(function(){ f.style.opacity="0"; spChar.classList.remove("hit"); },180);
 }
 function spHit(){
-    if(spDead||isPaused||spInv) return;
-    spFlash(); playHit();
+    if(spDead||isPaused) return;
+    if(spInv) return;
+    spFlash();
+    playHit();
     if(mode==="hardcore"){ spEnd(); return; }
     spLives--; spUpdateHUD();
     if(spLives<=0) spEnd();
     else { spInv=true; setTimeout(function(){ spInv=false; },mode==="medium"?500:700); }
 }
 function spEnd(){
-    spDead=true; isPaused=false;
+    spDead=true;
+    isPaused=false;
     document.getElementById("pause-overlay").classList.remove("visible");
-    showMobPauseBtn(false); mobUp();
+    showMobPauseBtn(false);
+    mobUp();
     if(spCollInt) clearInterval(spCollInt);
     if(spScoreInt) clearInterval(spScoreInt);
     playGameOver();
-    if(mode==="hardcore"){ if(spScore>bestHC) bestHC=spScore; }
-    else if(mode==="medium"){ if(spScore>bestMed) bestMed=spScore; }
-    else { if(spScore>bestEasy) bestEasy=spScore; }
-    saveScores();
+
+    if(mode==="hardcore"){ if(spScore>bestHC){ bestHC=spScore; } }
+    else if(mode==="medium"){ if(spScore>bestMed){ bestMed=spScore; } }
+    else { if(spScore>bestEasy){ bestEasy=spScore; } }
+    saveScores(); 
     var b=mode==="hardcore"?bestHC:mode==="medium"?bestMed:bestEasy;
     document.getElementById("score").textContent=spScore;
     document.getElementById("best-display").textContent=b;
     document.getElementById("start-best-easy").textContent=bestEasy;
     document.getElementById("start-best-med").textContent=bestMed;
     document.getElementById("start-best-hc").textContent=bestHC;
+
     var ri=document.getElementById("result"),bl=document.getElementById("best-line"),
         rb=document.getElementById("restart-btn"),qb=document.getElementById("quit-btn");
     ri.classList.remove("hardcore","medium"); rb.classList.remove("hc-btn","med-btn"); qb.classList.remove("hc-btn","med-btn");
@@ -1179,34 +907,42 @@ function spEnd(){
     spGame.style.display="none"; document.getElementById("hud").style.display="none";
     document.getElementById("result").style.display="block";
 }
-var SP_CHAR_MID=450-30-100+50;
-var spCollInt=null;
-function spGetCol(leftPx){ return Math.round(parseInt(leftPx)/100); }
+
+var SP_CHAR_MID = 450 - 30 - 100 + 50;
+var spCollInt = null;
+function spGetCol(leftPx){ return Math.round(parseInt(leftPx) / 100); }
 function spStartCollision(){
     if(spCollInt) clearInterval(spCollInt);
-    spCollInt=setInterval(function(){
+    spCollInt = setInterval(function(){
         if(spDead||spInv||isPaused||gameType!=="single") return;
-        var obs=[{el:spBlock,offset:50},{el:spMeteor,offset:60},{el:spMonster,offset:60}];
-        var charCol=spGetCol(spCharX);
+        var obs=[
+            {el:spBlock,   offset:50},
+            {el:spMeteor,  offset:60},
+            {el:spMonster, offset:60}
+        ];
+        var charCol = spGetCol(spCharX);
         for(var i=0;i<obs.length;i++){
             var o=obs[i];
             var obsCol=spGetCol(o.el.style.left);
             var obsTop=parseFloat(window.getComputedStyle(o.el).top);
             var obsMid=obsTop+o.offset;
-            if(charCol===obsCol && Math.abs(obsMid-SP_CHAR_MID)<38){ spHit(); break; }
+            if(charCol===obsCol && Math.abs(obsMid-SP_CHAR_MID)<38){
+                spHit(); break;
+            }
         }
     },16);
 }
-var spScoreInt=null;
+var spScoreInt = null;
 function spStartScore(){
     if(spScoreInt) clearInterval(spScoreInt);
-    spScoreInt=setInterval(function(){
+    spScoreInt = setInterval(function(){
         if(!spDead&&!spInv&&!spCd&&!isPaused&&gameType==="single"){ spScore++; spUpdateHUD(); }
     },300);
 }
 function spCountdown(cb){
     spCd=true;
-    countdownSound.currentTime=0; countdownSound.volume=0.7;
+    countdownSound.currentTime = 0;
+    countdownSound.volume = 0.7;
     countdownSound.play().catch(function(){});
     var cd=document.getElementById("countdown");
     cd.style.display="block"; cd.style.color=mode==="medium"?"#ffd700":"red";
@@ -1223,26 +959,37 @@ function spStartAnims(){
     spMeteor.style.animation="meteor "+sp[0]+" infinite linear";
     spBlock.style.animation="slide "+sp[1]+" infinite linear";
     spMonster.style.animation="monster "+sp[2]+" infinite linear";
-    if(mode==="easy"||mode==="medium"){ gameMusic.currentTime=0; gameMusic.volume=0.5; gameMusic.play().catch(function(){}); }
-    else { hardcoreMusic.currentTime=0; hardcoreMusic.volume=0.5; hardcoreMusic.play().catch(function(){}); }
-    spStartCollision(); spStartScore();
+    if(mode==="easy" || mode==="medium"){
+        gameMusic.currentTime = 0;
+        gameMusic.volume = 0.5;
+        gameMusic.play().catch(function(){});
+    } else if(mode==="hardcore"){
+        hardcoreMusic.currentTime = 0;
+        hardcoreMusic.volume = 0.5;
+        hardcoreMusic.play().catch(function(){});
+    }
+    spStartCollision();
+    spStartScore();
 }
 spBlock.addEventListener("animationiteration",function(){ spBlock.style.left=(Math.floor(Math.random()*6)*100)+"px"; spUpdateHUD(); });
 spMeteor.addEventListener("animationiteration",function(){ spMeteor.style.left=(Math.floor(Math.random()*6)*100)+"px"; });
 spMonster.addEventListener("animationiteration",function(){ spMonster.style.left=(Math.floor(Math.random()*6)*100)+"px"; });
-function moveLeft(){ if(!isPaused&&spCharX>0){ spCharX-=100; spChar.style.left=spCharX+"px"; } }
-function moveRight(){ if(!isPaused&&spCharX<500){ spCharX+=100; spChar.style.left=spCharX+"px"; } }
-function restartGame(){ stopAllMusic(); document.getElementById("result").style.display="none"; beginGame(mode); }
+function moveLeft(){ if(!isPaused && spCharX>0){ spCharX-=100; spChar.style.left=spCharX+"px"; } }
+function moveRight(){ if(!isPaused && spCharX<500){ spCharX+=100; spChar.style.left=spCharX+"px"; } }
+function restartGame(){
+    stopAllMusic();
+    document.getElementById("result").style.display="none";
+    beginGame(mode);
+}
 
-
-var MP_COLS=5,MP_STEP=52,MP_MID=2;
+var MP_COLS=5, MP_STEP=52, MP_MID=2;
 var mpState=null;
 function mpSpeeds(m){
     if(m==="hardcore") return ["0.65s","0.7s","0.72s"];
     if(m==="medium")   return ["0.8s","0.85s","0.9s"];
     return                    ["1.1s","1.2s","1.3s"];
 }
-function mpMakeObs(gameEl,col,dur,delay){
+function mpMakeObs(gameEl, col, dur, delay){
     var img=document.createElement("img");
     img.className="mp-obs";
     img.src="http://vignette3.wikia.nocookie.net/touken-ranbu/images/8/8b/Fire_gif.gif/revision/latest?cb=20150511021654f";
@@ -1257,33 +1004,41 @@ function mpMakeObs(gameEl,col,dur,delay){
     img.style.animationTimingFunction="linear";
     img.style.animationPlayState="paused";
     img.style.zIndex="8";
-    gameEl.insertBefore(img,gameEl.firstChild);
+    gameEl.insertBefore(img, gameEl.firstChild);
     return img;
 }
 function mpMakePlayer(n){
     var maxL=mode==="easy"?3:mode==="medium"?2:1;
     return {
-        n:n, gameEl:document.getElementById("mp-game-"+n),
-        charEl:document.getElementById("mp-char-"+n),
-        flashEl:document.getElementById("mp-flash-"+n),
-        deadEl:document.getElementById("mp-dead-"+n),
-        deadScEl:document.getElementById("mp-dead-sc-"+n),
-        scoreEl:document.getElementById("mp-score-"+n),
-        livesEl:document.getElementById("mp-lives-"+n),
-        col:MP_MID,score:0,lives:maxL,
-        invincible:false,dead:false,obs:[],obsCol:[],collInt:null,scoreInt:null
+        n:n,
+        gameEl:   document.getElementById("mp-game-"+n),
+        charEl:   document.getElementById("mp-char-"+n),
+        flashEl:  document.getElementById("mp-flash-"+n),
+        deadEl:   document.getElementById("mp-dead-"+n),
+        deadScEl: document.getElementById("mp-dead-sc-"+n),
+        scoreEl:  document.getElementById("mp-score-"+n),
+        livesEl:  document.getElementById("mp-lives-"+n),
+        col:MP_MID, score:0, lives:maxL,
+        invincible:false, dead:false,
+        obs:[], obsCol:[], collInt:null, scoreInt:null
     };
 }
 function mpUpdateLives(p){
     if(mode==="hardcore"){ p.livesEl.innerHTML='<span style="color:red;font-size:8px;background:transparent;">☠ HC</span>'; return; }
-    var max=mode==="easy"?3:2,h="";
+    var max=mode==="easy"?3:2, h="";
     for(var i=0;i<max;i++) h+=i<p.lives?(mode==="medium"?'<span style="color:#ffd700;background:transparent;">♥</span>':'<span style="color:red;background:transparent;">♥</span>'):'<span style="color:#444;background:transparent;">♥</span>';
     p.livesEl.innerHTML=h;
 }
-function mpFlash(p){ p.flashEl.style.opacity=mode==="hardcore"?"0.7":"0.45"; p.charEl.classList.add("hit"); setTimeout(function(){ p.flashEl.style.opacity="0"; p.charEl.classList.remove("hit"); },180); }
+function mpFlash(p){
+    p.flashEl.style.opacity=mode==="hardcore"?"0.7":"0.45";
+    p.charEl.classList.add("hit");
+    setTimeout(function(){ p.flashEl.style.opacity="0"; p.charEl.classList.remove("hit"); },180);
+}
 function mpHit(p){
-    if(p.dead||mpIsPaused||p.invincible) return;
-    mpFlash(p); playHit();
+    if(p.dead||mpIsPaused) return;
+    if(p.invincible) return;
+    mpFlash(p);
+    playHit();
     if(mode==="hardcore"){ mpKill(p); return; }
     p.lives--; mpUpdateLives(p);
     if(p.lives<=0) mpKill(p);
@@ -1299,14 +1054,21 @@ function mpKill(p){
 }
 function mpStartPlayer(p){
     if(p.n===1){
-        if(mode==="hardcore"){ hardcoreMusic.currentTime=0; hardcoreMusic.volume=0.5; hardcoreMusic.play().catch(function(){}); }
-        else { gameMusic.currentTime=0; gameMusic.volume=0.5; gameMusic.play().catch(function(){}); }
+        if(mode==="hardcore"){
+            hardcoreMusic.currentTime = 0;
+            hardcoreMusic.volume = 0.5;
+            hardcoreMusic.play().catch(function(){});
+        } else {
+            gameMusic.currentTime = 0;
+            gameMusic.volume = 0.5;
+            gameMusic.play().catch(function(){});
+        }
     }
     var sp=mpSpeeds(mode);
     var stagger=["0s","0.4s","0.8s"];
     for(var i=0;i<3;i++){
         var col=Math.floor(Math.random()*MP_COLS);
-        var el=mpMakeObs(p.gameEl,col,sp[i],stagger[i]);
+        var el=mpMakeObs(p.gameEl, col, sp[i], stagger[i]);
         p.obs.push(el); p.obsCol.push(col);
     }
     p.obs.forEach(function(el,i){
@@ -1317,21 +1079,25 @@ function mpStartPlayer(p){
         });
     });
     p.obs.forEach(function(el){ el.style.top="-60px"; el.style.animationPlayState="running"; });
-    var CHAR_MID=(420-52-35)+26;
+    var CHAR_MID = (420 - 52 - 35) + 26;
     p.collInt=setInterval(function(){
         if(p.dead||p.invincible||mpIsPaused) return;
         for(var i=0;i<p.obs.length;i++){
             var obsTop=parseFloat(window.getComputedStyle(p.obs[i]).top);
-            var obsMid=obsTop+27;
-            if(p.obsCol[i]===p.col && Math.abs(obsMid-CHAR_MID)<36){ mpHit(p); break; }
+            var obsMid=obsTop + 27;
+            if(p.obsCol[i]===p.col && Math.abs(obsMid - CHAR_MID) < 36){ mpHit(p); break; }
         }
     },16);
-    p.scoreInt=setInterval(function(){ if(!p.dead&&!mpIsPaused){ p.score++; p.scoreEl.textContent=p.score; } },300);
+    p.scoreInt=setInterval(function(){ if(!p.dead && !mpIsPaused){ p.score++; p.scoreEl.textContent=p.score; } },300);
 }
-function mpCountdown(p,cb){
+function mpCountdown(p, cb){
     var cd=document.getElementById("mp-cd-"+p.n);
     cd.style.display="block"; cd.style.color=mode==="medium"?"#ffd700":"red";
-    if(p.n===1){ countdownSound.currentTime=0; countdownSound.volume=0.7; countdownSound.play().catch(function(){}); }
+    if(p.n===1){
+        countdownSound.currentTime = 0;
+        countdownSound.volume = 0.7;
+        countdownSound.play().catch(function(){});
+    }
     var n=3; cd.textContent=n;
     var t=setInterval(function(){
         n--;
@@ -1346,9 +1112,9 @@ function showMpResult(){
     var p1=mpState[0],p2=mpState[1];
     var title=document.getElementById("mp-result-title");
     var w,c;
-    if(p1.score>p2.score)      { w="P1 WINS!"; c="#a0f0ff"; }
-    else if(p2.score>p1.score) { w="P2 WINS!"; c="#ffdb70"; }
-    else                       { w="IT'S A TIE!"; c="#f0f"; }
+    if(p1.score>p2.score)      { w="P1 WINS!";   c="#a0f0ff"; }
+    else if(p2.score>p1.score) { w="P2 WINS!";   c="#ffdb70"; }
+    else                       { w="IT'S A TIE!"; c="#f0f";   }
     title.textContent=w; title.style.color=c; title.style.textShadow="0 0 20px "+c;
     document.getElementById("mpr-sub").textContent="DIFFICULTY: "+mode.toUpperCase();
     document.getElementById("mpr-scrs").innerHTML=
@@ -1365,11 +1131,11 @@ function beginMp(m){
             if(cls) e.classList.add(cls);
         });
         document.getElementById("mp-dead-"+n).classList.remove("show");
-        document.getElementById("mp-pause-"+n).classList.remove("visible");
+        document.getElementById("mp-pause-"+(n)).classList.remove("visible");
         Array.from(document.querySelectorAll("#mp-game-"+n+" .mp-obs")).forEach(function(o){ o.remove(); });
         document.getElementById("mp-score-"+n).textContent="0";
     });
-    var p1=mpMakePlayer(1),p2=mpMakePlayer(2);
+    var p1=mpMakePlayer(1), p2=mpMakePlayer(2);
     mpState=[p1,p2];
     p1.charEl.style.left=(MP_MID*MP_STEP)+"px";
     p2.charEl.style.left=(MP_MID*MP_STEP)+"px";
@@ -1377,10 +1143,10 @@ function beginMp(m){
     hideAll();
     document.getElementById("mp-wrapper").style.display="flex";
     document.getElementById("game-backdrop").style.display="block";
-    showMobPauseBtn(true,m);
+    showMobPauseBtn(true, m);
     updateMobPauseBtnState();
-    mpCountdown(p1,function(){ mpStartPlayer(p1); });
-    mpCountdown(p2,function(){ mpStartPlayer(p2); });
+    mpCountdown(p1, function(){ mpStartPlayer(p1); });
+    mpCountdown(p2, function(){ mpStartPlayer(p2); });
 }
 function stopMp(){
     if(!mpState) return;
@@ -1391,358 +1157,28 @@ function stopMp(){
     });
     mpState=null;
 }
-function restartMp(){ stopAllMusic(); document.getElementById("mp-result").style.display="none"; beginMp(mode); }
-
-
-var MOB_MP_COLS = 5;
-var mobMpState = null;
-
-function getMobMpStep(){
-    return Math.floor(window.innerWidth / MOB_MP_COLS);
-}
-function getMobMpGameHeight(){
-    
-    var divH = 48;
-    var ctrlH = 68; 
-    return Math.floor((window.innerHeight - divH) / 2) - ctrlH;
-}
-
-function mobMpSpeeds(m){
-    if(m==="hardcore") return ["0.7s","0.75s","0.78s"];
-    if(m==="medium")   return ["0.95s","1.0s","1.05s"];
-    return                    ["1.3s","1.4s","1.45s"];
-}
-
-function mobMpMakeObs(gameEl, col, dur, delay, step){
-    var img = document.createElement("img");
-    img.className = "mob-mp-obs";
-    img.src = "http://vignette3.wikia.nocookie.net/touken-ranbu/images/8/8b/Fire_gif.gif/revision/latest?cb=20150511021654f";
-    img.width = 40; img.height = 50;
-    img.style.left = (col * step + Math.floor(step/2) - 20) + "px";
-    img.style.top = "-60px";
-    img.style.position = "absolute";
-    img.style.animationName = "mob-fall-p1";
-    img.style.animationDuration = dur;
-    img.style.animationDelay = delay;
-    img.style.animationIterationCount = "infinite";
-    img.style.animationTimingFunction = "linear";
-    img.style.animationPlayState = "paused";
-    img.style.zIndex = "8";
-    gameEl.appendChild(img);
-    return img;
-}
-
-function mobMpUpdateLives(p){
-    var el = document.getElementById("mob-mp-lives-" + p.n);
-    if(mode === "hardcore"){ el.innerHTML = '<span style="color:red;font-size:7px;background:transparent;">☠ HC</span>'; return; }
-    var max = mode==="easy"?3:2, h="";
-    for(var i=0;i<max;i++) h += i<p.lives ?
-        (mode==="medium"?'<span style="color:#ffd700;background:transparent;">♥</span>':'<span style="color:red;background:transparent;">♥</span>') :
-        '<span style="color:#444;background:transparent;">♥</span>';
-    el.innerHTML = h;
-}
-
-function mobMpFlash(p){
-    var f = document.getElementById("mob-mp-flash-" + p.n);
-    f.style.opacity = mode==="hardcore" ? "0.7" : "0.45";
-    document.getElementById("mob-mp-char-" + p.n).classList.add("hit");
-    setTimeout(function(){
-        f.style.opacity = "0";
-        document.getElementById("mob-mp-char-" + p.n).classList.remove("hit");
-    }, 180);
-}
-
-function mobMpHit(p){
-    if(p.dead || mobMpIsPaused || p.invincible) return;
-    mobMpFlash(p); playHit();
-    if(mode === "hardcore"){ mobMpKill(p); return; }
-    p.lives--; mobMpUpdateLives(p);
-    if(p.lives <= 0) mobMpKill(p);
-    else { p.invincible = true; setTimeout(function(){ p.invincible = false; }, mode==="medium"?500:700); }
-}
-
-function mobMpKill(p){
-    p.dead = true;
-    clearInterval(p.scoreInt); clearInterval(p.collInt);
-    p.obs.forEach(function(o){ o.style.animationPlayState = "paused"; });
-    var dsc = document.getElementById("mob-mp-dead-sc-" + p.n);
-    dsc.textContent = "SCORE: " + p.score;
-    if(mode==="hardcore") dsc.classList.add("hardcore");
-    else if(mode==="medium") dsc.classList.add("medium");
-    document.getElementById("mob-mp-dead-" + p.n).classList.add("show");
-    
-    document.getElementById("mob-div-s1").textContent = "P1: " + mobMpState[0].score;
-    document.getElementById("mob-div-s2").textContent = "P2: " + mobMpState[1].score;
-    if(mobMpState && mobMpState[0].dead && mobMpState[1].dead){
-        playGameOver();
-        setTimeout(showMobMpResult, 900);
-    }
-}
-
-function mobMpStartPlayer(p){
-    var step = getMobMpStep();
-    var gameH = document.getElementById("mob-mp-game-" + p.n).offsetHeight;
-    var sp = mobMpSpeeds(mode);
-    var stagger = ["0s", "0.45s", "0.9s"];
-
-    for(var i=0;i<3;i++){
-        var col = Math.floor(Math.random() * MOB_MP_COLS);
-        var el = mobMpMakeObs(
-            document.getElementById("mob-mp-game-" + p.n),
-            col, sp[i], stagger[i], step
-        );
-        p.obs.push(el); p.obsCol.push(col);
-    }
-
-    p.obs.forEach(function(el, i){
-        el.addEventListener("animationiteration", function(){
-            if(mobMpIsPaused) return;
-            var c = Math.floor(Math.random() * MOB_MP_COLS);
-            p.obsCol[i] = c;
-            el.style.left = (c * step + Math.floor(step/2) - 20) + "px";
-            
-            document.getElementById("mob-div-s1").textContent = "P1: " + mobMpState[0].score;
-            document.getElementById("mob-div-s2").textContent = "P2: " + mobMpState[1].score;
-        });
-    });
-
-    p.obs.forEach(function(el){ el.style.animationPlayState = "running"; });
-
-    
-    var charEl = document.getElementById("mob-mp-char-" + p.n);
-    p.col = Math.floor(MOB_MP_COLS / 2);
-    charEl.style.left = (p.col * step + Math.floor(step/2) - 24) + "px";
-
-    
-    
-    var charCenterY = gameH - 28 - 24;
-
-    p.collInt = setInterval(function(){
-        if(p.dead || p.invincible || mobMpIsPaused) return;
-        for(var i=0;i<p.obs.length;i++){
-            var obsTop = parseFloat(window.getComputedStyle(p.obs[i]).top);
-            var obsMid = obsTop + 25;
-            if(p.obsCol[i] === p.col && Math.abs(obsMid - charCenterY) < 34){
-                mobMpHit(p); break;
-            }
-        }
-    }, 16);
-
-    p.scoreInt = setInterval(function(){
-        if(!p.dead && !mobMpIsPaused){
-            p.score++;
-            document.getElementById("mob-mp-score-" + p.n).textContent = p.score;
-        }
-    }, 300);
-}
-
-function mobMpCountdown(n, cb){
-    var cd = document.getElementById("mob-mp-cd-" + n);
-    cd.style.display = "block";
-    cd.style.color = mode==="medium" ? "#ffd700" : "red";
-    if(n === 1){
-        countdownSound.currentTime = 0;
-        countdownSound.volume = 0.7;
-        countdownSound.play().catch(function(){});
-    }
-    var count = 3; cd.textContent = count;
-    var t = setInterval(function(){
-        count--;
-        if(count > 0) cd.textContent = count;
-        else if(count === 0) cd.textContent = mode==="hardcore" ? "DIE." : mode==="medium" ? "⚡GO!" : "GO!";
-        else { clearInterval(t); cd.style.display = "none"; cb(); }
-    }, 1000);
-}
-
-function beginMobMp(m){
-    mode = m; mobMpIsPaused = false;
-    stopMobMp();
-
-    
-    var cls = m==="hardcore" ? "hardcore" : m==="medium" ? "medium" : "";
-    [1,2].forEach(function(n){
-        var gEl = document.getElementById("mob-mp-game-" + n);
-        gEl.classList.remove("hardcore","medium");
-        if(cls) gEl.classList.add(cls);
-        document.getElementById("mob-mp-dead-" + n).classList.remove("show");
-        document.getElementById("mob-mp-score-" + n).textContent = "0";
-        document.getElementById("mob-mp-dead-sc-" + n).classList.remove("hardcore","medium");
-        
-        Array.from(gEl.querySelectorAll(".mob-mp-obs")).forEach(function(o){ o.remove(); });
-    });
-
-    
-    var divEl = document.getElementById("mob-mp-divider");
-    var vsEl = document.getElementById("mob-vs-text");
-    var pbEl = document.getElementById("mob-mp-pause-btn");
-    divEl.classList.remove("hardcore","medium");
-    vsEl.classList.remove("hardcore","medium");
-    pbEl.classList.remove("hardcore","medium");
-    if(cls){ divEl.classList.add(cls); vsEl.classList.add(cls); pbEl.classList.add(cls); }
-
-    
-    document.getElementById("mob-div-s1").textContent = "P1: 0";
-    document.getElementById("mob-div-s2").textContent = "P2: 0";
-
-    
-    document.getElementById("mob-mp-pause-overlay").classList.remove("visible");
-    var pot = document.getElementById("mob-mp-pause-overlay-text");
-    pot.classList.remove("hardcore","medium");
-    if(cls) pot.classList.add(cls);
-
-    
-    [1,2].forEach(function(n){
-        ["mob-mp-left-"+n,"mob-mp-right-"+n].forEach(function(id){
-            var b = document.getElementById(id);
-            b.classList.remove("hardcore","medium");
-            if(cls) b.classList.add(cls);
-        });
-    });
-
-    
-    var maxL = m==="easy"?3:m==="medium"?2:1;
-    mobMpState = [
-        { n:1, col:2, score:0, lives:maxL, invincible:false, dead:false, obs:[], obsCol:[], collInt:null, scoreInt:null },
-        { n:2, col:2, score:0, lives:maxL, invincible:false, dead:false, obs:[], obsCol:[], collInt:null, scoreInt:null }
-    ];
-
-    mobMpUpdateLives(mobMpState[0]);
-    mobMpUpdateLives(mobMpState[1]);
-
-    
-    if(m==="hardcore"){ hardcoreMusic.currentTime=0; hardcoreMusic.volume=0.5; hardcoreMusic.play().catch(function(){}); }
-    else { gameMusic.currentTime=0; gameMusic.volume=0.5; gameMusic.play().catch(function(){}); }
-
-    hideAll();
-    document.getElementById("mob-mp-wrapper").style.display = "flex";
-
-    
-    mobMpCountdown(1, function(){ mobMpStartPlayer(mobMpState[0]); });
-    mobMpCountdown(2, function(){ mobMpStartPlayer(mobMpState[1]); });
-}
-
-function stopMobMp(){
-    if(!mobMpState) return;
-    mobMpState.forEach(function(p){
-        clearInterval(p.scoreInt); clearInterval(p.collInt);
-        if(p.obs) p.obs.forEach(function(o){ o.style.animationPlayState="paused"; });
-    });
-    mobMpState = null;
-}
-
-function mobMpPause(){
-    if(!mobMpState) return;
-    mobMpIsPaused = true;
-    if(mode==="hardcore") hardcoreMusic.pause();
-    else gameMusic.pause();
-    mobMpState.forEach(function(p){
-        if(p.dead) return;
-        p.obs.forEach(function(o){ o.style.animationPlayState="paused"; });
-        clearInterval(p.scoreInt); p.scoreInt = null;
-    });
-    document.getElementById("mob-mp-pause-overlay").classList.add("visible");
-    document.getElementById("mob-mp-pause-btn").textContent = "▶";
-}
-function mobMpResume(){
-    if(!mobMpState) return;
-    mobMpIsPaused = false;
-    if(mode==="hardcore") hardcoreMusic.play().catch(function(){});
-    else gameMusic.play().catch(function(){});
-    mobMpState.forEach(function(p){
-        if(p.dead) return;
-        p.obs.forEach(function(o){ o.style.animationPlayState="running"; });
-        p.scoreInt = setInterval(function(){ if(!p.dead&&!mobMpIsPaused){ p.score++; document.getElementById("mob-mp-score-"+p.n).textContent=p.score; } },300);
-    });
-    document.getElementById("mob-mp-pause-overlay").classList.remove("visible");
-    document.getElementById("mob-mp-pause-btn").textContent = "⏸";
-}
-
-
-document.getElementById("mob-mp-pause-btn").addEventListener("touchstart", function(e){
-    e.preventDefault();
-    if(mobMpIsPaused) mobMpResume(); else mobMpPause();
-}, {passive:false});
-document.getElementById("mob-mp-pause-btn").addEventListener("mousedown", function(){
-    if(mobMpIsPaused) mobMpResume(); else mobMpPause();
-});
-
-
-function makeMobMpBtn(btnId, pIdx, dir){
-    var btn = document.getElementById(btnId);
-    var interval = null;
-    function doMove(){
-        if(!mobMpState || mobMpIsPaused) return;
-        var p = mobMpState[pIdx];
-        if(p.dead) return;
-        var step = getMobMpStep();
-        if(dir === "left" && p.col > 0){ p.col--; }
-        else if(dir === "right" && p.col < MOB_MP_COLS-1){ p.col++; }
-        document.getElementById("mob-mp-char-" + p.n).style.left = (p.col * step + Math.floor(step/2) - 24) + "px";
-    }
-    function startMove(e){
-        if(e.type==="touchstart") e.preventDefault();
-        btn.classList.add("pressed");
-        doMove();
-        if(interval) clearInterval(interval);
-        interval = setInterval(function(){
-            if(!mobMpState || mobMpIsPaused){ clearInterval(interval); interval=null; return; }
-            doMove();
-        }, 160);
-    }
-    function stopMove(e){
-        if(e.type==="touchend"||e.type==="touchcancel") e.preventDefault();
-        btn.classList.remove("pressed");
-        if(interval){ clearInterval(interval); interval=null; }
-    }
-    btn.addEventListener("touchstart", startMove, {passive:false});
-    btn.addEventListener("touchend",   stopMove,  {passive:false});
-    btn.addEventListener("touchcancel",stopMove,  {passive:false});
-    btn.addEventListener("mousedown",  startMove);
-    btn.addEventListener("mouseup",    stopMove);
-    btn.addEventListener("mouseleave", stopMove);
-}
-makeMobMpBtn("mob-mp-left-1",  0, "left");
-makeMobMpBtn("mob-mp-right-1", 0, "right");
-makeMobMpBtn("mob-mp-left-2",  1, "left");
-makeMobMpBtn("mob-mp-right-2", 1, "right");
-
-function showMobMpResult(){
-    document.getElementById("mob-mp-wrapper").style.display = "none";
-    var p1 = mobMpState[0], p2 = mobMpState[1];
-    var title = document.getElementById("mob-mp-result-title");
-    var w,c;
-    if(p1.score > p2.score)       { w="P1 WINS!";    c="#a0f0ff"; }
-    else if(p2.score > p1.score)  { w="P2 WINS!";    c="#ffdb70"; }
-    else                          { w="IT'S A TIE!"; c="#f0f";   }
-    title.textContent = w; title.style.color = c; title.style.textShadow = "0 0 20px "+c;
-    document.getElementById("mob-mpr-sub").textContent = "DIFFICULTY: " + mode.toUpperCase();
-    document.getElementById("mob-mpr-scrs").innerHTML =
-        'P1 Score: <span style="color:#a0f0ff;background:transparent;">'+p1.score+'</span><br>'+
-        'P2 Score: <span style="color:#ffdb70;background:transparent;">'+p2.score+'</span>';
-    document.getElementById("mob-mp-result").style.display = "flex";
-}
-function restartMobMp(){
+function restartMp(){
     stopAllMusic();
-    document.getElementById("mob-mp-result").style.display = "none";
-    beginMobMp(mode);
+    document.getElementById("mp-result").style.display="none";
+    beginMp(mode);
 }
 
-
-document.addEventListener("keydown", function(e){
-    if(e.key==="p"||e.key==="P"){
-        togglePause(); return;
+document.addEventListener("keydown",function(e){
+    if(e.key==="p" || e.key==="P"){
+        togglePause();
+        return;
     }
-    if(isPaused||mpIsPaused) return;
+    if(isPaused || mpIsPaused) return; 
     if(gameType==="single"&&!spDead){
         if(e.key==="ArrowLeft") moveLeft();
         if(e.key==="ArrowRight") moveRight();
     }
     if(gameType==="multi"&&mpState){
-        var p1=mpState[0],p2=mpState[1];
+        var p1=mpState[0], p2=mpState[1];
         if((e.key==="a"||e.key==="A")&&!p1.dead&&p1.col>0){ p1.col--; p1.charEl.style.left=(p1.col*MP_STEP)+"px"; }
         if((e.key==="d"||e.key==="D")&&!p1.dead&&p1.col<MP_COLS-1){ p1.col++; p1.charEl.style.left=(p1.col*MP_STEP)+"px"; }
-        if(e.key==="ArrowLeft"&&!p2.dead&&p2.col>0){ e.preventDefault(); p2.col--; p2.charEl.style.left=(p2.col*MP_STEP)+"px"; }
-        if(e.key==="ArrowRight"&&!p2.dead&&p2.col<MP_COLS-1){ e.preventDefault(); p2.col++; p2.charEl.style.left=(p2.col*MP_STEP)+"px"; }
+        if(e.key==="ArrowLeft" &&!p2.dead&&p2.col>0)         { e.preventDefault(); p2.col--; p2.charEl.style.left=(p2.col*MP_STEP)+"px"; }
+        if(e.key==="ArrowRight"&&!p2.dead&&p2.col<MP_COLS-1) { e.preventDefault(); p2.col++; p2.charEl.style.left=(p2.col*MP_STEP)+"px"; }
     }
 });
 </script>
