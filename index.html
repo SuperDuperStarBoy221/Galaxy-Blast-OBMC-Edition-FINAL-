@@ -458,14 +458,13 @@
         background-image: url("https://www.ohsat.com/tutorial/megalaga/megalaga-1/images/scrolling.gif");
         background-size: cover;
         background-position: center;
-        border-left: none;
-        border-right: none;
+        border: 3px solid #f0f;
     }
     .mob-mp-game.p2-game {
-        border-bottom: 2px solid #f0f;
+        border-bottom: none;
     }
     .mob-mp-game.p1-game {
-        border-top: 2px solid #f0f;
+        border-top: none;
     }
     .mob-mp-game.hardcore { border-color: red !important; }
     .mob-mp-game.medium   { border-color: #ffd700 !important; }
@@ -587,7 +586,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.18.5</h5>
+<h5>Version_1.18.6</h5>
 <div id="mob-pause-btn">⏸</div>
 
 <div id="scale-root">
@@ -1486,8 +1485,9 @@ function mobMpStartPlayer(p){
     var sp = mobMpSpeeds(mode);
     var stagger = ["0s", "0.45s", "0.9s"];
 
+    var shuffled = [0,1,2,3,4].sort(function(){ return Math.random()-0.5; });
     for(var i=0;i<3;i++){
-        var col = Math.floor(Math.random() * MOB_MP_COLS);
+        var col = shuffled[i];
         var el = mobMpMakeObs(
             document.getElementById("mob-mp-game-" + p.n),
             col, sp[i], stagger[i], step
@@ -1611,14 +1611,14 @@ function beginMobMp(m){
     mobMpUpdateLives(mobMpState[1]);
 
     
-    if(m==="hardcore"){ hardcoreMusic.currentTime=0; hardcoreMusic.volume=0.5; hardcoreMusic.play().catch(function(){}); }
-    else { gameMusic.currentTime=0; gameMusic.volume=0.5; gameMusic.play().catch(function(){}); }
-
     hideAll();
     document.getElementById("mob-mp-wrapper").style.display = "flex";
 
-    
-    mobMpCountdown(1, function(){ mobMpStartPlayer(mobMpState[0]); });
+    mobMpCountdown(1, function(){
+        if(m==="hardcore"){ hardcoreMusic.currentTime=0; hardcoreMusic.volume=0.5; hardcoreMusic.play().catch(function(){}); }
+        else { gameMusic.currentTime=0; gameMusic.volume=0.5; gameMusic.play().catch(function(){}); }
+        mobMpStartPlayer(mobMpState[0]);
+    });
     mobMpCountdown(2, function(){ mobMpStartPlayer(mobMpState[1]); });
 }
 
