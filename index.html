@@ -460,8 +460,9 @@
         background-position: center;
         border: 3px solid #f0f;
     }
+    
     .mob-mp-game.p2-game {
-        border-bottom: none;
+        border-top: none;
     }
     .mob-mp-game.p1-game {
         border-top: none;
@@ -558,8 +559,9 @@
     #mob-mp-pause-overlay-text.medium   { color: #ffd700; text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700; }
 
     
-    @keyframes mob-fall-p1 { 0%{top:-60px} 100%{top:105vh} }
-    @keyframes mob-fall-p2 { 0%{top:-60px} 100%{top:105vh} }
+    
+    @keyframes mob-fall-p1 { 0%{top:-60px} 100%{top:110vh} }
+    @keyframes mob-fall-p2 { 0%{top:-60px} 100%{top:110vh} }
 
     .mob-mp-obs {
         width: 40px; height: 50px;
@@ -586,7 +588,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.18.6</h5>
+<h5>Version_1.18.8</h5>
 <div id="mob-pause-btn">⏸</div>
 
 <div id="scale-root">
@@ -707,7 +709,6 @@
     <button onclick="showStart()">← Back</button>
 </div>
 
-
 <div id="mp-wrapper">
     <div class="mp-panel">
         <div class="mp-plabel" style="color:#a0f0ff;">◀ P1 — A / D ▶</div>
@@ -763,7 +764,6 @@
     <button onclick="showStart()" style="width:200px;height:65px;font-size:12px;">✕ Quit</button>
 </div>
 </div>
-
 
 <div id="mob-mp-wrapper">
     
@@ -828,7 +828,6 @@
     </div>
 </div>
 
-
 <div id="mob-mp-result">
     <h1 id="mob-mp-result-title"></h1>
     <div class="mpr-sub" id="mob-mpr-sub"></div>
@@ -858,7 +857,6 @@
     window.addEventListener("resize",sc); sc();
 })();
 
-
 var gameOverSound    = document.getElementById("gameover-sound");
 var countdownSound   = document.getElementById("countdown-sound");
 var gameMusic        = document.getElementById("game-music");
@@ -885,11 +883,9 @@ function playGameOver(){
     gameOverSound.play().catch(function(){});
 }
 
-
 var isTouchDevice = (window.matchMedia && window.matchMedia("(pointer: coarse)").matches)
                  || ("ontouchstart" in window)
                  || (navigator.maxTouchPoints > 0);
-
 
 if(isTouchDevice){
     
@@ -899,7 +895,6 @@ if(isTouchDevice){
     
     document.getElementById("mob-mp-link").style.display = "none";
 }
-
 
 var msgs   =["Nice try!","Better Luck Next Time!","Almost there!","Don't let Asher laugh at you!","Never Give up!","Lock in!"];
 var hcMsgs =["TOO SLOW. ☠","PATHETIC.","THE FIRE WINS.","GET GOOD.","Asher is laughing. ☠"];
@@ -917,7 +912,6 @@ function saveScores(){
     localStorage.setItem("galaxyblast_best_med",bestMed);
     localStorage.setItem("galaxyblast_best_hc",bestHC);
 }
-
 
 var mobPauseBtn = document.getElementById("mob-pause-btn");
 function showMobPauseBtn(visible, m){
@@ -939,7 +933,6 @@ function updateMobPauseBtnState(){
 }
 mobPauseBtn.addEventListener("touchstart",function(e){ e.preventDefault(); togglePause(); },{passive:false});
 mobPauseBtn.addEventListener("mousedown",function(){ togglePause(); });
-
 
 var spDead=false,spCd=false;
 function spPause(){
@@ -980,7 +973,6 @@ function togglePause(){
     }
 }
 
-
 function mpPauseAll(){
     if(!mpState) return;
     mpIsPaused=true;
@@ -1012,7 +1004,6 @@ function mpResume(){
     });
     updateMobPauseBtnState();
 }
-
 
 var mobInterval=null;
 function mobDown(dir){
@@ -1054,7 +1045,6 @@ function showMobileControls(visible,m){
     }
 }
 
-
 function hideAll(){
     ["start","type-select","mode-select","hud","game","result","tutorial",
      "mp-wrapper","mp-result","mobile-controls"].forEach(function(id){
@@ -1081,7 +1071,6 @@ function showStart(){
 function showTypeSelect(){ stopAllMusic(); hideAll(); document.getElementById("type-select").style.display="block"; }
 function showModeSelect(type){ stopAllMusic(); gameType=type; hideAll(); document.getElementById("mode-select").style.display="block"; }
 function startTutorial(){ stopAllMusic(); hideAll(); document.getElementById("tutorial").style.display="block"; }
-
 
 var spScore=0,spLives=3,spInv=false,spCharX=300;
 var spChar=document.getElementById("character");
@@ -1233,7 +1222,6 @@ spMonster.addEventListener("animationiteration",function(){ spMonster.style.left
 function moveLeft(){ if(!isPaused&&spCharX>0){ spCharX-=100; spChar.style.left=spCharX+"px"; } }
 function moveRight(){ if(!isPaused&&spCharX<500){ spCharX+=100; spChar.style.left=spCharX+"px"; } }
 function restartGame(){ stopAllMusic(); document.getElementById("result").style.display="none"; beginGame(mode); }
-
 
 var MP_COLS=5,MP_STEP=52,MP_MID=2;
 var mpState=null;
@@ -1393,24 +1381,22 @@ function stopMp(){
 }
 function restartMp(){ stopAllMusic(); document.getElementById("mp-result").style.display="none"; beginMp(mode); }
 
-
-var MOB_MP_COLS = 5;
+var MOB_MP_COLS = 6;
 var mobMpState = null;
 
 function getMobMpStep(){
     return Math.floor(window.innerWidth / MOB_MP_COLS);
 }
 function getMobMpGameHeight(){
-    
     var divH = 48;
     var ctrlH = 68; 
     return Math.floor((window.innerHeight - divH) / 2) - ctrlH;
 }
 
 function mobMpSpeeds(m){
-    if(m==="hardcore") return ["0.7s","0.75s","0.78s"];
-    if(m==="medium")   return ["0.95s","1.0s","1.05s"];
-    return                    ["1.3s","1.4s","1.45s"];
+    if(m==="hardcore") return ["0.7s","0.75s","0.78s","0.72s","0.74s","0.76s"];
+    if(m==="medium")   return ["0.95s","1.0s","1.05s","0.98s","1.02s","1.07s"];
+    return                    ["1.3s","1.4s","1.45s","1.35s","1.42s","1.48s"];
 }
 
 function mobMpMakeObs(gameEl, col, dur, delay, step){
@@ -1483,14 +1469,16 @@ function mobMpStartPlayer(p){
     var step = getMobMpStep();
     var gameH = document.getElementById("mob-mp-game-" + p.n).offsetHeight;
     var sp = mobMpSpeeds(mode);
-    var stagger = ["0s", "0.45s", "0.9s"];
+    
+    var stagger6 = ["0s","0.28s","0.56s","0.84s","1.12s","1.4s"];
 
-    var shuffled = [0,1,2,3,4].sort(function(){ return Math.random()-0.5; });
-    for(var i=0;i<3;i++){
+    
+    var shuffled = [0,1,2,3,4,5].sort(function(){ return Math.random()-0.5; });
+    for(var i=0;i<6;i++){
         var col = shuffled[i];
         var el = mobMpMakeObs(
             document.getElementById("mob-mp-game-" + p.n),
-            col, sp[i], stagger[i], step
+            col, sp[i], stagger6[i], step
         );
         p.obs.push(el); p.obsCol.push(col);
     }
@@ -1509,13 +1497,10 @@ function mobMpStartPlayer(p){
 
     p.obs.forEach(function(el){ el.style.animationPlayState = "running"; });
 
-    
     var charEl = document.getElementById("mob-mp-char-" + p.n);
     p.col = Math.floor(MOB_MP_COLS / 2);
     charEl.style.left = (p.col * step + Math.floor(step/2) - 24) + "px";
 
-    
-    
     var charCenterY = gameH - 28 - 24;
 
     p.collInt = setInterval(function(){
@@ -1559,7 +1544,6 @@ function beginMobMp(m){
     mode = m; mobMpIsPaused = false;
     stopMobMp();
 
-    
     var cls = m==="hardcore" ? "hardcore" : m==="medium" ? "medium" : "";
     [1,2].forEach(function(n){
         var gEl = document.getElementById("mob-mp-game-" + n);
@@ -1572,7 +1556,6 @@ function beginMobMp(m){
         Array.from(gEl.querySelectorAll(".mob-mp-obs")).forEach(function(o){ o.remove(); });
     });
 
-    
     var divEl = document.getElementById("mob-mp-divider");
     var vsEl = document.getElementById("mob-vs-text");
     var pbEl = document.getElementById("mob-mp-pause-btn");
@@ -1581,17 +1564,14 @@ function beginMobMp(m){
     pbEl.classList.remove("hardcore","medium");
     if(cls){ divEl.classList.add(cls); vsEl.classList.add(cls); pbEl.classList.add(cls); }
 
-    
     document.getElementById("mob-div-s1").textContent = "P1: 0";
     document.getElementById("mob-div-s2").textContent = "P2: 0";
 
-    
     document.getElementById("mob-mp-pause-overlay").classList.remove("visible");
     var pot = document.getElementById("mob-mp-pause-overlay-text");
     pot.classList.remove("hardcore","medium");
     if(cls) pot.classList.add(cls);
 
-    
     [1,2].forEach(function(n){
         ["mob-mp-left-"+n,"mob-mp-right-"+n].forEach(function(id){
             var b = document.getElementById(id);
@@ -1600,7 +1580,6 @@ function beginMobMp(m){
         });
     });
 
-    
     var maxL = m==="easy"?3:m==="medium"?2:1;
     mobMpState = [
         { n:1, col:2, score:0, lives:maxL, invincible:false, dead:false, obs:[], obsCol:[], collInt:null, scoreInt:null },
@@ -1610,7 +1589,6 @@ function beginMobMp(m){
     mobMpUpdateLives(mobMpState[0]);
     mobMpUpdateLives(mobMpState[1]);
 
-    
     hideAll();
     document.getElementById("mob-mp-wrapper").style.display = "flex";
 
@@ -1658,7 +1636,6 @@ function mobMpResume(){
     document.getElementById("mob-mp-pause-btn").textContent = "⏸";
 }
 
-
 document.getElementById("mob-mp-pause-btn").addEventListener("touchstart", function(e){
     e.preventDefault();
     if(mobMpIsPaused) mobMpResume(); else mobMpPause();
@@ -1666,7 +1643,6 @@ document.getElementById("mob-mp-pause-btn").addEventListener("touchstart", funct
 document.getElementById("mob-mp-pause-btn").addEventListener("mousedown", function(){
     if(mobMpIsPaused) mobMpResume(); else mobMpPause();
 });
-
 
 function makeMobMpBtn(btnId, pIdx, dir){
     var btn = document.getElementById(btnId);
@@ -1727,7 +1703,6 @@ function restartMobMp(){
     document.getElementById("mob-mp-result").style.display = "none";
     beginMobMp(mode);
 }
-
 
 document.addEventListener("keydown", function(e){
     if(e.key==="p"||e.key==="P"){
