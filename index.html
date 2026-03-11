@@ -295,6 +295,7 @@
         background:transparent; z-index:10; transition: filter 0.1s;
     }
     .mp-char.hit { filter:brightness(5) sepia(1) hue-rotate(300deg); }
+    .mp-char.inv { animation: invFlicker 0.12s infinite; }
     .mp-flash {
         position:absolute; top:0; left:0; width:100%; height:100%;
         opacity:0; pointer-events:none; z-index:50; background:red; transition:opacity 0.05s;
@@ -611,7 +612,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.20.0</h5>
+<h5>Version_1.20.1</h5>
 <div id="mob-pause-btn">⚙ SET</div>
 
 <div id="scale-root">
@@ -733,7 +734,7 @@
     <button onclick="showStart()">← Back</button>
 </div>
 
-<!--settings-->
+<!-- ─── SETTINGS (scrollable) ─── -->
 <div id="settings">
   <div id="settings-header">
     <h2 style="color:white;background:transparent;font-size:18px;margin-top:6px;margin-bottom:6px;">⚙ SETTINGS</h2>
@@ -748,7 +749,7 @@
   <div id="settings-scroll">
   <div class="set-inner">
 
-    <!--Main Settings-->
+    <!-- ── GENERAL ── -->
     <div class="set-section-label" style="border-top:none;margin-top:0;padding-top:0;">── General ──</div>
 
     <div class="set-row">
@@ -791,7 +792,7 @@
       <button class="set-toggle" id="set-invflash-btn" onclick="settingsToggleInvFlash()">FLICKER ON</button>
     </div>
 
-    <!--Mobile Settings-->
+    <!-- ── MOBILE ── -->
     <div class="set-section-label" id="set-section-mobile">── Mobile Controls ──</div>
 
     <div class="set-row" id="set-btnsize-row">
@@ -804,7 +805,7 @@
       <button class="set-cycle" id="set-btnpos-btn" onclick="settingsCycleBtnGap()">SPREAD</button>
     </div>
 
-    <!--Keybinds sp -->
+    <!-- ── KEYBINDS SP ── -->
     <div class="set-section-label">── Keybinds ──</div>
     <div class="set-subsection-label">Singleplayer</div>
     <div id="set-kb-mobile-note-sp" class="set-lock-msg" style="display:none;">🖥 Keybinds are PC only</div>
@@ -818,7 +819,7 @@
       <button class="set-kb" id="kb-sp-right" onclick="listenKey('sp','right')">→</button>
     </div>
 
-    <!--Keybinds-->
+    <!-- ── KEYBINDS MP ── -->
     <div class="set-section-label">── Multiplayer Keybinds ──</div>
     <div id="set-kb-mobile-note-mp" class="set-lock-msg" style="display:none;">🖥 Keybinds are PC only</div>
 
@@ -845,10 +846,8 @@
     <div class="set-note" style="margin-top:8px;">P = PAUSE always reserved &nbsp;·&nbsp; ESC cancels keybind capture</div>
     <div style="height:10px;background:transparent;"></div>
   </div>
-    <br />
-    <br />
-  </div><!--settings-scroll-->
-</div><!--settings-->
+  </div><!-- /settings-scroll -->
+</div><!-- /settings -->
 
 <div id="mp-wrapper">
     <div class="mp-panel">
@@ -1899,6 +1898,7 @@ function mpUpdateLives(p){
 function mpFlash(p){
     p.flashEl.style.opacity = mode==="hardcore"?"0.7":"0.45";
     p.charEl.classList.add("hit");
+    triggerShake();
     setTimeout(function(){ p.flashEl.style.opacity="0"; p.charEl.classList.remove("hit"); }, 180);
 }
 function mpHit(p){
@@ -1908,7 +1908,11 @@ function mpHit(p){
     if (mode==="hardcore"){ mpKill(p); return; }
     p.lives--; mpUpdateLives(p);
     if (p.lives <= 0) mpKill(p);
-    else { p.invincible=true; setTimeout(function(){ p.invincible=false; }, mode==="medium"?500:700); }
+    else {
+        p.invincible=true;
+        if (settings.showInvFlash) p.charEl.classList.add('inv');
+        setTimeout(function(){ p.invincible=false; p.charEl.classList.remove('inv'); }, mode==="medium"?500:700);
+    }
 }
 function mpKill(p){
     p.dead = true;
@@ -2012,6 +2016,7 @@ function beginMp(m){
     document.getElementById('mp-vs-settings-btn').classList.remove('show');
     mpCountdown(p1, function(){ mpStartPlayer(p1); });
     mpCountdown(p2, function(){ mpStartPlayer(p2); });
+    if (settings.showFps) startFpsCounter();
 }
 function stopMp(){
     if (!mpState) return;
@@ -2021,6 +2026,7 @@ function stopMp(){
         if (p.obs) p.obs.forEach(function(o){ o.style.animationPlayState="paused"; });
     });
     mpState = null;
+    stopFpsCounter();
 }
 function restartMp(){
     stopAllMusic();
