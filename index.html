@@ -86,7 +86,7 @@
     #character {
         width:100px; height:100px;
         position:absolute; bottom:30px; left:300px;
-        background:transparent; transition: filter 0.1s;
+        background:transparent; transition: filter smooth 0.1s;
     }
     #character.hit { filter: brightness(5) sepia(1) hue-rotate(300deg); }
     @keyframes invFlicker { 0%,100%{opacity:1} 50%{opacity:0.2} }
@@ -1803,12 +1803,12 @@ function spCountdown(cb){
     playAudio(countdownSound, 0.7);
     var cd = document.getElementById("countdown");
     cd.style.display = "block";
-    cd.style.color   = mode==="medium"?"#ffd700":"red";
+    cd.style.color   = mode==="medium"?"#ff0000":"red";
     var n = 3; cd.textContent = n;
     var t = setInterval(function(){
         n--;
         if (n > 0) cd.textContent = n;
-        else if (n === 0) cd.textContent = mode==="hardcore"?"DIE." : mode==="medium"?"⚡GO!" : "GO!";
+        else if (n === 0) cd.textContent = mode==="hardcore"?"DIE." : mode==="medium"?"GO!" : "GO!";
         else { clearInterval(t); cd.style.display="none"; spCd=false; cb(); }
     }, 1000);
 }
