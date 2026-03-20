@@ -348,7 +348,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.21.3</h5>
+<h5>Version_1.21.4</h5>
 <div id="mob-pause-btn">⚙ SET</div>
 <div id="fps-counter">FPS: --</div>
 
@@ -677,14 +677,22 @@ function keyLabel(k){
            'pageup':'PgUp','pagedown':'PgDn','insert':'Ins','escape':'Esc'};
     return M[normalizeKey(k)]||k.toUpperCase();
 }
-
 function applyMuteVolumes(){
     var m=settings.muted;
     gameMusic.volume=m?0:0.5; hardcoreMusic.volume=m?0:0.5;
     gameOverSound.volume=m?0:0.8; countdownSound.volume=m?0:0.7;
     hitSound.volume=m?0:0.7; clickSound.volume=m?0:0.6;
 }
-function playAudio(a,v){ if(!settings.muted)a.volume=v; a.play().catch(function(){}); }
+function playAudio(a,v){
+    /* Always set volume — even to 0 when muted — so the element is primed */
+    a.volume = settings.muted ? 0 : v;
+    var p = a.play();
+    if(p && p.catch) p.catch(function(err){
+        /* AbortError fires when a new play() interrupts a pending one — harmless */
+        if(err.name !== 'AbortError') console.warn('Audio play blocked:', err.message);
+    });
+}
+
 function applyHitbox(){
     var g=document.getElementById('game');
     settings.hitbox?g.classList.add('hitbox-on'):g.classList.remove('hitbox-on');
@@ -849,12 +857,23 @@ function resetSettingsDefaults(){
     document.getElementById('settings-error').innerHTML='<span style="color:#0f0;background:transparent;">✔ Reset to defaults!</span>';
 }
 
-/*audio check*/
-function stopAllMusic(){ gameMusic.pause();gameMusic.currentTime=0; hardcoreMusic.pause();hardcoreMusic.currentTime=0; gameOverSound.pause();gameOverSound.currentTime=0; countdownSound.pause();countdownSound.currentTime=0; }
+/*audio helpers*/
+function stopAllMusic(){
+    gameMusic.pause();gameMusic.currentTime=0;
+    hardcoreMusic.pause();hardcoreMusic.currentTime=0;
+    gameOverSound.pause();gameOverSound.currentTime=0;
+    countdownSound.pause();countdownSound.currentTime=0;
+}
 var lastHitSoundTime=0;
 function playHit(){ var now=Date.now();if(now-lastHitSoundTime<200)return;lastHitSoundTime=now;playAudio(hitSound,0.7); }
 function playGameOver(){ stopAllMusic(); playAudio(gameOverSound,0.8); }
 function playClick(){ playAudio(clickSound,0.6); }
+
+/*music starter*/
+function playGameMusic(){
+    if(mode==='hardcore') playAudio(hardcoreMusic,0.5);
+    else                  playAudio(gameMusic,0.5);
+}
 
 /*device check */
 var isTouchDevice=(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||("ontouchstart" in window)||(navigator.maxTouchPoints>0);
@@ -934,7 +953,7 @@ function mobSettingsBtnTap(){
 mobPauseBtn.addEventListener("touchstart",function(e){e.preventDefault();mobSettingsBtnTap();},{passive:false});
 mobPauseBtn.addEventListener("mousedown",function(){mobSettingsBtnTap();});
 
-/* pause*/
+/* pause */
 function spPause(){
     if(spDead||spCd)return; isPaused=true;
     spBlock.style.animationPlayState="paused"; spBlock2.style.animationPlayState="paused";
@@ -949,8 +968,8 @@ function spResume(){
     isPaused=false;
     spBlock.style.animationPlayState="running"; spBlock2.style.animationPlayState="running";
     spMeteor.style.animationPlayState="running"; spMonster.style.animationPlayState="running"; spMonster2.style.animationPlayState="running";
-    if(mode==='story')spStartScore_story(); else spStartScore();
-    if(mode==="easy"||mode==="medium"||mode==="story")playAudio(gameMusic,0.5); else playAudio(hardcoreMusic,0.5);
+    if(mode==='story') spStartScore_story(); else spStartScore();
+    playGameMusic(); /* ── FIX 2 applied here: was using wrong inverted condition ── */
     document.getElementById("pause-overlay").classList.remove("visible"); updateMobPauseBtnState();
 }
 function togglePause(){
@@ -971,7 +990,7 @@ function mpPauseAll(){
 }
 function mpResume(){
     if(!mpState)return; mpIsPaused=false;
-    if(mode==="hardcore")playAudio(hardcoreMusic,0.5); else playAudio(gameMusic,0.5);
+    playGameMusic(); /* ── FIX 2 applied here too ── */
     mpState.forEach(function(p,idx){
         if(p.dead)return;
         p.obs.forEach(function(o){o.style.animationPlayState="running";});
@@ -1034,17 +1053,14 @@ function showStart(){
     document.getElementById("start-best-med").textContent=bestMed;
     document.getElementById("start-best-hc").textContent=bestHC;
     document.getElementById("start-story-level").textContent=storyProgress.unlocked;
-    // clean story classes off game/hud
     ['game','hud','hud-score','hud-best'].forEach(function(id){ var el=document.getElementById(id); if(el)el.classList.remove('story'); });
 }
 function showTypeSelect(){ stopAllMusic(); hideAll(); document.getElementById("type-select").style.display="block"; }
-/*Classic sets gameType to single before showing difficulty screen*/
 function showClassicModeSelect(){ stopAllMusic(); gameType='single'; hideAll(); document.getElementById("mode-select").style.display="block"; }
-/*MP sets gameType to multi before showing difficulty screen*/
 function showMpModeSelect(){ if(isTouchDevice)return; stopAllMusic(); gameType='multi'; hideAll(); document.getElementById("mode-select").style.display="block"; }
 function startTutorial(){ stopAllMusic(); hideAll(); document.getElementById("tutorial").style.display="block"; }
 
-/*singeplayer*/
+/*singleplayer*/
 var spScore=0,spLives=3,spDead=false,spInv=false,spCd=false,spCharX=300;
 var spChar   =document.getElementById("character");
 var spBlock  =document.getElementById("block");
@@ -1100,7 +1116,6 @@ function startStoryLevel(lvl){
     applyHitbox(); applyScoreSize(); applyFpsCounter(); applyBtnSize();
     document.getElementById("pause-overlay").classList.remove("visible");
     document.getElementById('story-win-overlay').classList.remove('show');
-    // progress bar
     document.getElementById('story-progress-bar-wrap').classList.add('show');
     document.getElementById('story-pb-goal').textContent=storyGoal;
     document.getElementById('story-pb-num').textContent='0';
@@ -1125,7 +1140,7 @@ function spStartAnims_story(){
     if(cnt>=3)spMonster.style.animation='monster '+sp[3]+' infinite linear';
     if(cnt>=4)spBlock2.style.animation='slide '+sp[4]+' infinite linear';
     if(cnt>=5)spMonster2.style.animation='monster '+sp[0]+' infinite linear';
-    playAudio(gameMusic,0.5);
+    playGameMusic(); /* ── FIX 2 applied here ── */
     spStartCollision_story(); spStartScore_story();
 }
 
@@ -1230,8 +1245,10 @@ function spFlash(){
     f.style.opacity=mode==="hardcore"?"0.7":"0.45"; spChar.classList.add("hit"); triggerShake();
     setTimeout(function(){f.style.opacity="0";spChar.classList.remove("hit");},180);
 }
+
+/* ── FIX 3: Block hits during countdown — prevents permanent invincibility ── */
 function spHit(){
-    if(spDead||isPaused||storyWinPending)return; if(spInv)return;
+    if(spDead||isPaused||spCd||storyWinPending)return; if(spInv)return;
     spFlash(); playHit();
     var oneHit=(mode==="hardcore")||(mode==="story"&&storyLives(currentStoryLevel)===1);
     if(oneHit){spEnd();return;}
@@ -1347,7 +1364,7 @@ function spStartAnims(){
     spBlock.style.animation="slide "+sp[1]+" infinite linear";
     spMonster.style.animation="monster "+sp[2]+" infinite linear";
     spBlock2.style.top="-1000px"; spMonster2.style.top="-1000px";
-    if(mode==="easy"||mode==="medium")playAudio(gameMusic,0.5); else playAudio(hardcoreMusic,0.5);
+    playGameMusic(); /* ── FIX 2 applied here ── */
     spStartCollision(); spStartScore();
 }
 [spBlock,spBlock2,spMeteor,spMonster,spMonster2].forEach(function(el){
@@ -1396,7 +1413,7 @@ function mpKill(p){
     if(mpState&&mpState[0].dead&&mpState[1].dead){playGameOver();setTimeout(showMpResult,900);}
 }
 function mpStartPlayer(p){
-    if(p.n===1){if(mode==="hardcore")playAudio(hardcoreMusic,0.5);else playAudio(gameMusic,0.5);}
+    if(p.n===1) playGameMusic(); /* ── FIX 2 applied here ── */
     var sp=mpSpeeds(mode),stagger=["0s","0.4s","0.8s"];
     for(var i=0;i<3;i++){var col=Math.floor(Math.random()*MP_COLS);var el=mpMakeObs(p.gameEl,col,sp[i],stagger[i]);p.obs.push(el);p.obsCol.push(col);}
     p.obs.forEach(function(el,i){el.addEventListener("animationiteration",function(){if(mpIsPaused)return;var c=Math.floor(Math.random()*MP_COLS);p.obsCol[i]=c;el.style.left=(c*MP_STEP+4)+"px";});});
