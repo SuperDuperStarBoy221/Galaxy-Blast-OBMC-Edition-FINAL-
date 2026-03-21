@@ -348,7 +348,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.21.4</h5>
+<h5>Version_1.21.5</h5>
 <div id="mob-pause-btn">⚙ SET</div>
 <div id="fps-counter">FPS: --</div>
 
@@ -969,7 +969,7 @@ function spResume(){
     spBlock.style.animationPlayState="running"; spBlock2.style.animationPlayState="running";
     spMeteor.style.animationPlayState="running"; spMonster.style.animationPlayState="running"; spMonster2.style.animationPlayState="running";
     if(mode==='story') spStartScore_story(); else spStartScore();
-    playGameMusic(); /* ── FIX 2 applied here: was using wrong inverted condition ── */
+    playGameMusic();
     document.getElementById("pause-overlay").classList.remove("visible"); updateMobPauseBtnState();
 }
 function togglePause(){
@@ -990,7 +990,7 @@ function mpPauseAll(){
 }
 function mpResume(){
     if(!mpState)return; mpIsPaused=false;
-    playGameMusic(); /* ── FIX 2 applied here too ── */
+    playGameMusic(); 
     mpState.forEach(function(p,idx){
         if(p.dead)return;
         p.obs.forEach(function(o){o.style.animationPlayState="running";});
@@ -1140,7 +1140,7 @@ function spStartAnims_story(){
     if(cnt>=3)spMonster.style.animation='monster '+sp[3]+' infinite linear';
     if(cnt>=4)spBlock2.style.animation='slide '+sp[4]+' infinite linear';
     if(cnt>=5)spMonster2.style.animation='monster '+sp[0]+' infinite linear';
-    playGameMusic(); /* ── FIX 2 applied here ── */
+    playGameMusic();
     spStartCollision_story(); spStartScore_story();
 }
 
@@ -1246,7 +1246,6 @@ function spFlash(){
     setTimeout(function(){f.style.opacity="0";spChar.classList.remove("hit");},180);
 }
 
-/* ── FIX 3: Block hits during countdown — prevents permanent invincibility ── */
 function spHit(){
     if(spDead||isPaused||spCd||storyWinPending)return; if(spInv)return;
     spFlash(); playHit();
@@ -1354,7 +1353,7 @@ function spCountdown(cb){
     var n=3; cd.textContent=n;
     var t=setInterval(function(){
         n--; if(n>0)cd.textContent=n;
-        else if(n===0)cd.textContent=mode==="hardcore"?"DIE.":mode==="story"?"▶ GO!":"GO!";
+        else if(n===0)cd.textContent=mode==="hardcore"?"DIE.":mode==="story"?"GO!":"GO!";
         else{clearInterval(t);cd.style.display="none";spCd=false;cb();}
     },1000);
 }
@@ -1364,7 +1363,7 @@ function spStartAnims(){
     spBlock.style.animation="slide "+sp[1]+" infinite linear";
     spMonster.style.animation="monster "+sp[2]+" infinite linear";
     spBlock2.style.top="-1000px"; spMonster2.style.top="-1000px";
-    playGameMusic(); /* ── FIX 2 applied here ── */
+    playGameMusic(); 
     spStartCollision(); spStartScore();
 }
 [spBlock,spBlock2,spMeteor,spMonster,spMonster2].forEach(function(el){
@@ -1413,7 +1412,7 @@ function mpKill(p){
     if(mpState&&mpState[0].dead&&mpState[1].dead){playGameOver();setTimeout(showMpResult,900);}
 }
 function mpStartPlayer(p){
-    if(p.n===1) playGameMusic(); /* ── FIX 2 applied here ── */
+    if(p.n===1) playGameMusic();
     var sp=mpSpeeds(mode),stagger=["0s","0.4s","0.8s"];
     for(var i=0;i<3;i++){var col=Math.floor(Math.random()*MP_COLS);var el=mpMakeObs(p.gameEl,col,sp[i],stagger[i]);p.obs.push(el);p.obsCol.push(col);}
     p.obs.forEach(function(el,i){el.addEventListener("animationiteration",function(){if(mpIsPaused)return;var c=Math.floor(Math.random()*MP_COLS);p.obsCol[i]=c;el.style.left=(c*MP_STEP+4)+"px";});});
@@ -1430,7 +1429,7 @@ function mpCountdown(p,cb){
     var cd=document.getElementById("mp-cd-"+p.n); cd.style.display="block"; cd.style.color=mode==="medium"?"#ffd700":"red";
     if(p.n===1){countdownSound.currentTime=0;playAudio(countdownSound,0.7);}
     var n=3; cd.textContent=n;
-    var t=setInterval(function(){n--;if(n>0)cd.textContent=n;else if(n===0)cd.textContent=mode==="hardcore"?"DIE.":mode==="medium"?"⚡GO!":"GO!";else{clearInterval(t);cd.style.display="none";cb();}},1000);
+    var t=setInterval(function(){n--;if(n>0)cd.textContent=n;else if(n===0)cd.textContent=mode==="hardcore"?"DIE.":mode==="medium"?"GO!":"GO!";else{clearInterval(t);cd.style.display="none";cb();}},1000);
 }
 function showMpResult(){
     ["start","type-select","mode-select","story-select","hud","game","tutorial","mp-wrapper"].forEach(function(id){document.getElementById(id).style.display="none";});
