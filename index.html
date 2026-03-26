@@ -304,6 +304,15 @@
     .set-reset-btn:hover { border-color:#888!important; color:#aaa!important; }
     .set-note { font-size:6px; color:#3a3a3a; text-align:center; margin-top:6px; background:transparent; letter-spacing:1px; }
 
+    /* reset scores button */
+    .set-reset-scores-btn { width:200px!important; height:28px!important; font-size:6px!important; border-color:#550000!important; color:#aa4444!important; background:rgba(20,0,0,0.7)!important; }
+    .set-reset-scores-btn:hover { border-color:#ff4444!important; color:#ff8888!important; border-width:3px!important; }
+    .set-reset-scores-btn.confirmed { border-color:#ff4444!important; color:#ff4444!important; animation:kbPulse 0.4s ease-in-out 3; }
+
+    /* zoom */
+    .set-zoom-btn { width:160px!important; height:28px!important; font-size:7px!important; border:2px solid #888!important; color:#ddd!important; background:rgba(0,0,0,0.6)!important; cursor:pointer!important; }
+    .set-zoom-btn:hover { border-color:#0ff!important; border-width:3px!important; }
+
     /* hitbox */
     #game.hitbox-on #character { outline:2px solid lime; box-shadow:0 0 6px lime,inset 0 0 6px rgba(0,255,0,0.15); z-index:1000; }
     #game.hitbox-on #block, #game.hitbox-on #block2, #game.hitbox-on #meteor, #game.hitbox-on #monster, #game.hitbox-on #monster2 { outline:2px solid orangered; box-shadow:0 0 6px orangered,inset 0 0 6px rgba(255,80,0,0.15); }
@@ -348,7 +357,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.21.5</h5>
+<h5>Version_1.21.8</h5>
 <div id="mob-pause-btn">⚙ SET</div>
 <div id="fps-counter">FPS: --</div>
 
@@ -546,6 +555,8 @@
     <div class="set-row"><span class="set-label">💥 Screen Shake<small>Shake on hit</small></span><button class="set-toggle" id="set-shake-btn" onclick="settingsToggleShake()">SHAKE ON</button></div>
     <div class="set-row"><span class="set-label">↺ Auto-Restart<small>Skip game over screen</small></span><button class="set-toggle off" id="set-autorestart-btn" onclick="settingsToggleAutoRestart()">AUTO OFF</button></div>
     <div class="set-row"><span class="set-label">✨ Inv. Flicker<small>Flash when invincible</small></span><button class="set-toggle" id="set-invflash-btn" onclick="settingsToggleInvFlash()">FLICKER ON</button></div>
+    <div class="set-row"><span class="set-label">🔍 Zoom<small>Scale the game window</small></span><button class="set-zoom-btn" id="set-zoom-btn" onclick="settingsCycleZoom()">DEFAULT</button></div>
+    <div class="set-row"><span class="set-label">🗑 Reset Best Scores<small>Clear Easy / Med / HC records</small></span><button class="set-reset-scores-btn" id="set-reset-scores-btn" onclick="settingsResetBestScores()">RESET SCORES</button></div>
     <div class="set-section-label" id="set-section-mobile">── Mobile Controls ──</div>
     <div class="set-row" id="set-btnsize-row"><span class="set-label">📱 Button Size<small>Touch button dimensions</small></span><button class="set-cycle" id="set-btnsize-btn" onclick="settingsCycleBtnSize()">NORMAL</button></div>
     <div class="set-row" id="set-btnpos-row"><span class="set-label">↔ Button Gap<small>Space between buttons</small></span><button class="set-cycle" id="set-btnpos-btn" onclick="settingsCycleBtnGap()">SPREAD</button></div>
@@ -628,14 +639,18 @@
 
 <script>
 /*scale resolution*/
+var zoomMultiplier = 1.0;
 (function(){
     var GW=660,GH=720;
     function sc(){
-        var s=Math.min(window.innerWidth/GW,window.innerHeight/GH,1);
+        var base=Math.min(window.innerWidth/GW,window.innerHeight/GH,1);
+        var s=Math.min(base*zoomMultiplier, window.innerWidth/GW, window.innerHeight/GH);
         document.getElementById("scale-root").style.transform="scale("+s+")";
         document.getElementById("scale-root").style.marginTop="0px";
     }
-    window.addEventListener("resize",sc); sc();
+    window.addEventListener("resize",sc);
+    window._applyScale=sc;
+    sc();
 })();
 
 /*audio*/
@@ -650,7 +665,7 @@ var clickSound     = document.getElementById("click-sound");
 var DEFAULT_SETTINGS = {
     muted:false, hitbox:false, skipCountdown:false, screenShake:true,
     autoRestart:false, showInvFlash:true, showFps:false,
-    scoreSize:'normal', btnSize:'normal', btnGap:'spread',
+    scoreSize:'normal', btnSize:'normal', btnGap:'spread', zoom:'default',
     keybinds:{
         sp:{ left:'arrowleft', right:'arrowright' },
         p1:{ left:'a',         right:'d'          },
@@ -664,6 +679,7 @@ var settings;
         if(s && s.keybinds && s.keybinds.sp && s.keybinds.p1 && s.keybinds.p2){
             settings=Object.assign({},DEFAULT_SETTINGS,s);
             settings.keybinds=Object.assign({},DEFAULT_SETTINGS.keybinds,s.keybinds);
+            if(!settings.zoom)settings.zoom='default';
         } else { settings=JSON.parse(JSON.stringify(DEFAULT_SETTINGS)); }
     } catch(e){ settings=JSON.parse(JSON.stringify(DEFAULT_SETTINGS)); }
 })();
@@ -684,11 +700,9 @@ function applyMuteVolumes(){
     hitSound.volume=m?0:0.7; clickSound.volume=m?0:0.6;
 }
 function playAudio(a,v){
-    /* Always set volume — even to 0 when muted — so the element is primed */
     a.volume = settings.muted ? 0 : v;
     var p = a.play();
     if(p && p.catch) p.catch(function(err){
-        /* AbortError fires when a new play() interrupts a pending one — harmless */
         if(err.name !== 'AbortError') console.warn('Audio play blocked:', err.message);
     });
 }
@@ -709,6 +723,19 @@ function applyScoreSize(){
 function applyFpsCounter(){ document.getElementById('fps-counter').style.display=settings.showFps?'block':'none'; }
 function applyBtnSize(){ document.querySelectorAll('.mob-btn').forEach(function(b){ b.classList.remove('size-sm','size-lg'); if(settings.btnSize==='small')b.classList.add('size-sm'); if(settings.btnSize==='large')b.classList.add('size-lg'); }); }
 function applyBtnGap(){ var mc=document.getElementById('mobile-controls'); mc.style.justifyContent=settings.btnGap==='center'?'center':'space-between'; mc.style.gap=settings.btnGap==='center'?'20px':'0px'; }
+
+var ZOOM_VALS=['-3x','-2x','-1x','default'];
+var ZOOM_MULTS={'-3x':0.25,'-2x':0.4,'-1x':0.7,'default':1.0};
+function applyZoom(){
+    zoomMultiplier=ZOOM_MULTS[settings.zoom]||1.0;
+    if(window._applyScale)window._applyScale();
+}
+function settingsCycleZoom(){
+    var idx=ZOOM_VALS.indexOf(settings.zoom); if(idx===-1)idx=3;
+    settings.zoom=ZOOM_VALS[(idx+1)%ZOOM_VALS.length];
+    saveSettings(); applyZoom(); _updateZoomBtn();
+}
+function _updateZoomBtn(){ document.getElementById('set-zoom-btn').textContent=settings.zoom.toUpperCase(); }
 function triggerShake(){
     if(!settings.screenShake)return;
     var g=document.getElementById('game');
@@ -745,6 +772,38 @@ function settingsCycleBtnSize(){ settings.btnSize=BTNSIZE_VALS[(BTNSIZE_VALS.ind
 var BTNGAP_VALS=['spread','center'];
 function settingsCycleBtnGap(){ settings.btnGap=BTNGAP_VALS[(BTNGAP_VALS.indexOf(settings.btnGap)+1)%2]; saveSettings(); applyBtnGap(); _updateBtnGapBtn(); }
 
+/*double click to reset best scores*/
+var _resetScoresConfirmPending=false, _resetScoresConfirmTimer=null;
+function settingsResetBestScores(){
+    var btn=document.getElementById('set-reset-scores-btn');
+    var errEl=document.getElementById('settings-error');
+    if(!_resetScoresConfirmPending){
+        _resetScoresConfirmPending=true;
+        btn.textContent='CONFIRM?';
+        btn.classList.add('confirmed');
+        errEl.innerHTML='<span style="color:#ff8844;background:transparent;">⚠ Click again to confirm reset!</span>';
+        _resetScoresConfirmTimer=setTimeout(function(){
+            _resetScoresConfirmPending=false;
+            btn.textContent='RESET SCORES';
+            btn.classList.remove('confirmed');
+            errEl.textContent='';
+        },3000);
+    } else {
+        clearTimeout(_resetScoresConfirmTimer);
+        _resetScoresConfirmPending=false;
+        bestEasy=0; bestMed=0; bestHC=0;
+        localStorage.removeItem('galaxyblast_best_easy');
+        localStorage.removeItem('galaxyblast_best_med');
+        localStorage.removeItem('galaxyblast_best_hc');
+        document.getElementById('start-best-easy').textContent='0';
+        document.getElementById('start-best-med').textContent='0';
+        document.getElementById('start-best-hc').textContent='0';
+        btn.textContent='RESET SCORES';
+        btn.classList.remove('confirmed');
+        errEl.innerHTML='<span style="color:#0f0;background:transparent;">✔ Best scores cleared!</span>';
+    }
+}
+
 function _updateSoundBtn(){ var b=document.getElementById('set-sound-btn'); settings.muted?(b.textContent='🔇 MUTED',b.classList.add('off')):(b.textContent='🔊 SOUND ON',b.classList.remove('off')); }
 function _updateHitboxBtn(){ var b=document.getElementById('set-hitbox-btn'); settings.hitbox?(b.textContent='📦 HITBOX ON',b.classList.remove('off')):(b.textContent='📦 HITBOX OFF',b.classList.add('off')); }
 function _updateSkipCdBtn(){ var b=document.getElementById('set-skipcd-btn'); settings.skipCountdown?(b.textContent='SKIP ON',b.classList.remove('off')):(b.textContent='SKIP OFF',b.classList.add('off')); }
@@ -766,7 +825,11 @@ function _updateAllKbBtns(){
 function updateSettingsUI(){
     _updateSoundBtn();_updateHitboxBtn();_updateSkipCdBtn();_updateShakeBtn();
     _updateAutoRestartBtn();_updateInvFlashBtn();_updateFpsBtn();
-    _updateScoreSizeBtn();_updateBtnSizeBtn();_updateBtnGapBtn();_updateAllKbBtns();
+    _updateScoreSizeBtn();_updateBtnSizeBtn();_updateBtnGapBtn();_updateZoomBtn();_updateAllKbBtns();
+    /* reset scores button always shows reset when settings opens */
+    var rsb=document.getElementById('set-reset-scores-btn');
+    rsb.textContent='RESET SCORES'; rsb.classList.remove('confirmed');
+    _resetScoresConfirmPending=false; if(_resetScoresConfirmTimer){clearTimeout(_resetScoresConfirmTimer);_resetScoresConfirmTimer=null;}
     ['set-section-mobile','set-btnsize-row','set-btnpos-row'].forEach(function(id){
         var el=document.getElementById(id); if(el)el.style.display=isTouchDevice?(id==='set-section-mobile'?'block':'flex'):'none';
     });
@@ -851,9 +914,10 @@ function applySettings(){
     errEl.innerHTML='<span style="color:#0f0;background:transparent;">✔ Settings saved!</span>';
 }
 function resetSettingsDefaults(){
+    /*doesn't touch best scores */
     settings=JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
     tempKeybinds=JSON.parse(JSON.stringify(settings.keybinds)); listeningFor=null;
-    saveSettings(); applyMuteVolumes(); applyHitbox(); applyScoreSize(); applyFpsCounter(); applyBtnSize(); applyBtnGap(); updateSettingsUI();
+    saveSettings(); applyMuteVolumes(); applyHitbox(); applyScoreSize(); applyFpsCounter(); applyBtnSize(); applyBtnGap(); applyZoom(); updateSettingsUI();
     document.getElementById('settings-error').innerHTML='<span style="color:#0f0;background:transparent;">✔ Reset to defaults!</span>';
 }
 
@@ -1490,7 +1554,7 @@ document.addEventListener("keydown",function(e){
 });
 
 /*init*/
-applyMuteVolumes(); applyHitbox(); applyScoreSize(); applyFpsCounter(); applyBtnSize(); applyBtnGap();
+applyMuteVolumes(); applyHitbox(); applyScoreSize(); applyFpsCounter(); applyBtnSize(); applyBtnGap(); applyZoom();
 if(settings.showFps)startFpsCounter();
 document.addEventListener("click",function(e){if(e.target.tagName==="BUTTON")playClick();});
 </script>
