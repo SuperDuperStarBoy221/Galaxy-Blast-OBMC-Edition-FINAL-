@@ -163,7 +163,24 @@
     p  { color:gray; font-size:12px; }
     h3 { font-size:1.9vw; color:white; }
     span { color:white; }
-    .rotated-text { display:inline-block; transform:rotate(-35deg); color:yellow; background:transparent; position:relative; left:35%; top:-6%; }
+
+    /*random menu tag*/
+    #random-tag {
+        display: inline-block;
+        transform: rotate(-35deg);
+        color: yellow;
+        background: transparent;
+        position: relative;
+        left: 35%;
+        top: -6%;
+        font-size: 11px;
+        white-space: nowrap;
+        pointer-events: none;
+        max-width: 360px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     #game-backdrop { display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:black; z-index:-1; }
     @keyframes hcflicker { 0%,100%{border-color:red} 50%{border-color:#ff000055} }
 
@@ -357,7 +374,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.21.8</h5>
+<h5>Version_1.21.9</h5>
 <div id="mob-pause-btn">⚙ SET</div>
 <div id="fps-counter">FPS: --</div>
 
@@ -369,7 +386,10 @@
     <br/>
     <h2>Galaxy Blast</h2>
     <h6>!OBMC Edition!</h6>
-    <p class="rotated-text">Perfect School Game!</p>
+
+    <!-- Random rotating tag — JS writes the message, CSS keeps it in place -->
+    <p id="random-tag"></p>
+
     <br/><br/>
     <a href="#" onclick="showTypeSelect()"><button>▶ Play Game</button></a>
     <br/><br/>
@@ -638,6 +658,30 @@
 <audio id="click-sound"><source src="floraphonic-8-bit-game-2-186976.mp3" type="audio/mpeg"></audio>
 
 <script>
+
+// random menu tag
+var ROTATED_MSGS = [
+    "Perfect School Game!",  
+    "Made by Jacob Opilla!",
+    "OBMC Tweaks is tuff...",
+    "ADolore ad gloriam!",
+    "We're finally public!",
+    "High School Drama!",
+    "Math sucks doesn't it?",
+    "Hello from 9-Sapphire!",
+    "I know you're bored...",
+    "Do your homework!!"
+];
+
+function setRandomTag() {
+    var tag = document.getElementById("random-tag");
+    if (!tag) return;
+    var msg = ROTATED_MSGS[Math.floor(Math.random() * ROTATED_MSGS.length)];
+    tag.textContent = msg;
+}
+
+setRandomTag();
+
 /*scale resolution*/
 var zoomMultiplier = 1.0;
 (function(){
@@ -1118,6 +1162,8 @@ function showStart(){
     document.getElementById("start-best-hc").textContent=bestHC;
     document.getElementById("start-story-level").textContent=storyProgress.unlocked;
     ['game','hud','hud-score','hud-best'].forEach(function(id){ var el=document.getElementById(id); if(el)el.classList.remove('story'); });
+    // refresh the tag every time the main menu is shown
+    setRandomTag();
 }
 function showTypeSelect(){ stopAllMusic(); hideAll(); document.getElementById("type-select").style.display="block"; }
 function showClassicModeSelect(){ stopAllMusic(); gameType='single'; hideAll(); document.getElementById("mode-select").style.display="block"; }
