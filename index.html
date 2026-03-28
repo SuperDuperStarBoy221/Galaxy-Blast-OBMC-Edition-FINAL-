@@ -126,7 +126,7 @@
         width:660px; height:670px; margin:1rem auto;
         font-size:30px; color:white;
         background: transparent;
-        position:relative; top:0; left:0; overflow:hidden;
+        position:relative; top:0; left:0
     }
     #mode-select  { display:none; }
     #type-select  { display:none; }
@@ -171,12 +171,12 @@
         color: yellow;
         background: transparent;
         position: relative;
-        left: 35%;
-        top: -6%;
+        left: 38%;
+        top: -7%;
         font-size: 11px;
         white-space: nowrap;
         pointer-events: none;
-        max-width: 360px;
+        max-width: 400px;
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -374,7 +374,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.21.9</h5>
+<h5>Version_1.21.12</h5>
 <div id="mob-pause-btn">⚙ SET</div>
 <div id="fps-counter">FPS: --</div>
 
@@ -383,7 +383,6 @@
 
 <!--Menu-->
 <div id="start" style="display:block;">
-    <br/>
     <h2>Galaxy Blast</h2>
     <h6>!OBMC Edition!</h6>
 
@@ -411,7 +410,6 @@
 
 <!--select game mode-->
 <div id="type-select">
-    <br/><br/>
     <h2 style="background:transparent;">SELECT MODE</h2>
     <br/><br/>
     <a href="#" onclick="showStorySelect()">
@@ -437,7 +435,6 @@
 
 <!--Default Difficulty-->
 <div id="mode-select">
-    <br/><br/>
     <h2 style="color:white;background:transparent;" id="mode-select-title">SELECT DIFFICULTY</h2>
     <br/><br/>
     <a href="#" onclick="beginGame('easy')">
@@ -463,7 +460,6 @@
 
 <!-- Select Levels-->
 <div id="story-select">
-    <br/>
     <h2 style="color:#00ccff;font-size:16px;text-shadow:0 0 12px #00ccff;background:transparent;">🌟 STORY MODE</h2>
     <div style="font-size:8px;color:#555;background:transparent;margin:6px 0;">
         UNLOCKED: LVL <span id="story-unlocked-display" style="color:#00ccff;background:transparent;">1</span>
@@ -527,7 +523,6 @@
 
 <!--Game Over-->
 <div id="result">
-    <br/><br/>
     <h1 id="result-title">GAME OVER</h1><br/>
     <div id="random-msg" style="font-size:15px;color:gray;background:transparent;"></div>
     <br/><br/>
@@ -539,7 +534,6 @@
 
 <!--Tutorial-->
 <div id="tutorial">
-    <br/>
     <h4>Press "Play Game" to start.</h4><br/>
     <h4>← → Arrow keys to move.</h4><br/>
     <h4>On mobile: tap ◀ ▶ buttons!</h4><br/>
@@ -670,7 +664,12 @@ var ROTATED_MSGS = [
     "Math sucks doesn't it?",
     "Hello from 9-Sapphire!",
     "I know you're bored...",
-    "Do your homework!!"
+    "Glee, Dance, or Band?",
+    "Homeworks suck right?!",
+    "Bored? Play this now!",
+    "Remember Data Files?",
+    "Remember Scrapbooks?",
+    "We all procrastinate!"
 ];
 
 function setRandomTag() {
