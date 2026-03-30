@@ -135,6 +135,165 @@
     #story-select::-webkit-scrollbar-track { background:#111; border-radius:3px; }
     #story-select::-webkit-scrollbar-thumb { background:#00557a; border-radius:3px; }
     #story-select::-webkit-scrollbar-thumb:hover { background:#0088cc; }
+
+    /*save slot style*/
+    #save-slot-select {
+        display: none;
+        width: 660px;
+        min-height: 670px;
+        margin: 1rem auto;
+        background: transparent;
+        position: relative;
+        top: 0;
+    }
+    #save-slot-select h2 {
+        color: #00ccff;
+        font-size: 16px;
+        text-shadow: 0 0 14px #00ccff, 0 0 30px #00ccff55;
+        margin-bottom: 6px;
+    }
+    #save-slot-select .slot-subtitle {
+        font-size: 7px;
+        color: #446677;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+    }
+    .save-slot-card {
+        width: 580px;
+        margin: 0 auto 14px auto;
+        background: rgba(0, 20, 35, 0.85);
+        border: 2px solid #005577;
+        border-radius: 4px;
+        padding: 14px 18px;
+        cursor: pointer;
+        transition: border-color 0.15s, background 0.15s, transform 0.1s;
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        text-align: left;
+    }
+    .save-slot-card:hover {
+        border-color: #00ccff;
+        background: rgba(0, 40, 65, 0.92);
+        transform: scale(1.018);
+    }
+    .save-slot-card:active { transform: scale(0.98); }
+    .save-slot-card.empty {
+        border-color: #1a2233;
+        background: rgba(0,0,0,0.4);
+        opacity: 0.7;
+    }
+    .save-slot-card.empty:hover {
+        border-color: #00ccff;
+        opacity: 1;
+        background: rgba(0, 20, 40, 0.7);
+    }
+    .slot-icon {
+        font-size: 28px;
+        min-width: 40px;
+        text-align: center;
+        background: transparent;
+    }
+    .slot-info { flex: 1; background: transparent; }
+    .slot-name {
+        font-size: 10px;
+        color: #00ccff;
+        letter-spacing: 2px;
+        background: transparent;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .slot-name .slot-num {
+        font-size: 8px;
+        color: #447799;
+        background: transparent;
+    }
+    .slot-progress-row {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        background: transparent;
+        margin-bottom: 5px;
+        flex-wrap: wrap;
+    }
+    .slot-stat {
+        font-size: 7px;
+        color: #5599aa;
+        background: transparent;
+        letter-spacing: 1px;
+    }
+    .slot-stat span {
+        color: #00ffcc;
+        background: transparent;
+    }
+    .slot-stat.warn span { color: #ff8888; }
+    .slot-pb-outer {
+        width: 100%;
+        height: 5px;
+        background: #0a1520;
+        border-radius: 3px;
+        margin-top: 4px;
+        border: 1px solid #003344;
+    }
+    .slot-pb-inner {
+        height: 100%;
+        background: linear-gradient(90deg, #00ccff, #00ff88);
+        border-radius: 3px;
+        transition: width 0.4s;
+    }
+    .slot-empty-label {
+        font-size: 9px;
+        color: #334455;
+        background: transparent;
+        letter-spacing: 2px;
+    }
+    .slot-new-badge {
+        font-size: 6px;
+        color: #000;
+        background: #00ccff;
+        padding: 2px 5px;
+        border-radius: 2px;
+        letter-spacing: 1px;
+    }
+    .slot-delete-btn {
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px;
+        background: rgba(80,0,0,0.5) !important;
+        border: 1px solid #441111 !important;
+        color: #884444 !important;
+        font-size: 12px !important;
+        padding: 0;
+        cursor: pointer;
+        border-radius: 3px;
+        transition: border-color 0.12s, color 0.12s, background 0.12s;
+        font-family: "Press Start 2P", consolas;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .slot-delete-btn:hover {
+        border-color: #ff4444 !important;
+        color: #ff4444 !important;
+        background: rgba(120,0,0,0.6) !important;
+        border-width: 2px !important;
+    }
+    .slot-delete-btn.confirming {
+        border-color: #ff4444 !important;
+        color: #ff4444 !important;
+        animation: kbPulse 0.4s ease-in-out 4;
+    }
+    .save-slot-card.boss-active { border-color: #ff4444 !important; }
+    .save-slot-card.boss-active:hover { border-color: #ff8888 !important; }
+    @keyframes slotIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
     button {
         width:250px; height:70px; background-color:rgba(0,0,0,0.7);
         border:2px solid purple; cursor:pointer;
@@ -164,7 +323,6 @@
     h3 { font-size:1.9vw; color:white; }
     span { color:white; }
 
-    /*random menu tag*/
     #random-tag {
         display: inline-block;
         transform: rotate(-35deg);
@@ -320,23 +478,15 @@
     .set-reset-btn { width:230px!important; height:38px!important; font-size:7px!important; border-color:#3a3a3a!important; color:#666!important; }
     .set-reset-btn:hover { border-color:#888!important; color:#aaa!important; }
     .set-note { font-size:6px; color:#3a3a3a; text-align:center; margin-top:6px; background:transparent; letter-spacing:1px; }
-
-    /* reset scores button */
     .set-reset-scores-btn { width:200px!important; height:28px!important; font-size:6px!important; border-color:#550000!important; color:#aa4444!important; background:rgba(20,0,0,0.7)!important; }
     .set-reset-scores-btn:hover { border-color:#ff4444!important; color:#ff8888!important; border-width:3px!important; }
     .set-reset-scores-btn.confirmed { border-color:#ff4444!important; color:#ff4444!important; animation:kbPulse 0.4s ease-in-out 3; }
-
-    /* zoom */
     .set-zoom-btn { width:160px!important; height:28px!important; font-size:7px!important; border:2px solid #888!important; color:#ddd!important; background:rgba(0,0,0,0.6)!important; cursor:pointer!important; }
     .set-zoom-btn:hover { border-color:#0ff!important; border-width:3px!important; }
-
-    /* hitbox */
     #game.hitbox-on #character { outline:2px solid lime; box-shadow:0 0 6px lime,inset 0 0 6px rgba(0,255,0,0.15); z-index:1000; }
     #game.hitbox-on #block, #game.hitbox-on #block2, #game.hitbox-on #meteor, #game.hitbox-on #monster, #game.hitbox-on #monster2 { outline:2px solid orangered; box-shadow:0 0 6px orangered,inset 0 0 6px rgba(255,80,0,0.15); }
     .mp-game.hitbox-on .mp-char { outline:2px solid lime; box-shadow:0 0 6px lime; }
     .mp-game.hitbox-on .mp-obs  { outline:2px solid orangered; box-shadow:0 0 6px orangered; }
-
-    /*story mode*/
     .story-level-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin:12px 0; background:transparent; padding:0 10px; }
     .lvl-btn { width:100%!important; height:52px!important; font-size:9px!important; border:2px solid #333!important; color:#555!important; cursor:not-allowed!important; pointer-events:none!important; background:rgba(0,0,0,0.5)!important; line-height:1.4; }
     .lvl-btn.unlocked { border-color:#00ccff!important; color:#00ccff!important; cursor:pointer!important; pointer-events:auto!important; text-shadow:0 0 6px #00ccff88; }
@@ -347,23 +497,17 @@
     .lvl-btn.boss.unlocked { animation:bossGlow 1s infinite; }
     @keyframes bossGlow { 0%,100%{box-shadow:0 0 8px red} 50%{box-shadow:0 0 20px red,inset 0 0 10px rgba(255,0,0,0.1)} }
     .story-zone-label { font-size:7px; color:#666; letter-spacing:2px; margin:8px 0 4px 0; background:transparent; }
-
-    /* story win overlay */
     #story-win-overlay { display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,10,0.88); flex-direction:column; align-items:center; justify-content:center; z-index:20000; pointer-events:none; }
     #story-win-overlay.show { display:flex; pointer-events:auto; }
     #story-win-title { font-size:28px; color:#00ffcc; text-shadow:0 0 20px #00ffcc,0 0 40px #00ffcc; background:transparent; animation:winPulse 0.8s ease-in-out infinite; }
     @keyframes winPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.75;transform:scale(1.04)} }
     #story-win-sub { font-size:9px; color:#aaa; margin-top:10px; background:transparent; }
     #story-win-next-btn { margin-top:18px; width:210px!important; height:52px!important; font-size:10px!important; border-color:#00ccff!important; color:#00ccff!important; pointer-events:auto; }
-
-    /* story progress bar */
     #story-progress-bar-wrap { display:none; position:absolute; bottom:38px; left:10px; width:180px; z-index:500; background:transparent; }
     #story-progress-bar-wrap.show { display:block; }
     #story-pb-label { font-size:6px; color:#00ccff; background:transparent; margin-bottom:2px; }
     #story-pb-outer { width:100%; height:8px; background:#111; border:1px solid #00ccff55; border-radius:4px; }
     #story-pb-inner { height:100%; width:0%; background:linear-gradient(90deg,#00ccff,#00ff88); border-radius:4px; transition:width 0.3s; }
-
-    /* grand finale */
     #finale-screen { display:none; width:660px; background-color:black; padding:20px; position:relative; top:0; overflow-y:auto; max-height:700px; }
     .finale-line { font-size:10px; color:#aaa; line-height:2.5; background:transparent; opacity:0; transition:opacity 0.6s; }
     .finale-line.vis { opacity:1; }
@@ -374,10 +518,9 @@
     </style>
 </head>
 <body>
-<h5>Version_1.21.15</h5>
+<h5>Version_1.22.0</h5>
 <div id="mob-pause-btn">⚙ SET</div>
 <div id="fps-counter">FPS: --</div>
-
 
 <button id="menu-music-btn" onclick="toggleMenuMusicBtn()" style="
     position:fixed; bottom:10px; left:10px; z-index:99999;
@@ -394,7 +537,6 @@
 <div id="start" style="display:block;">
     <h2 id="main-title">Galaxy Blast</h2>
 <script>
-// Rainbow name rare
 (function(){
     var COLORS = ['#ff0000','#ff7700','#ffff00','#00ff00','#00aaff','#8800ff','#ff00cc'];
     var letters = 'Galaxy Blast'.split('');
@@ -409,25 +551,16 @@
         }
         return span;
     }
-    function resetTitle(){
-        document.getElementById('main-title').innerHTML = 'Galaxy Blast';
-    }
+    function resetTitle(){ document.getElementById('main-title').innerHTML = 'Galaxy Blast'; }
     window._applyRainbowTitle = function(){
-        if(Math.random() < 0.02){
-            document.getElementById('main-title').innerHTML = applyRainbow();
-        } else {
-            resetTitle();
-        }
+        if(Math.random() < 0.02){ document.getElementById('main-title').innerHTML = applyRainbow(); }
+        else { resetTitle(); }
     };
-    // Run once on load
     window._applyRainbowTitle();
 })();
 </script>
     <h6>!OBMC Edition!</h6>
-
-    <!-- Random rotating tag -->
     <p id="random-tag"></p>
-
     <br/><br/>
     <a href="#" onclick="showTypeSelect()"><button>▶ Play Game</button></a>
     <br/><br/>
@@ -443,7 +576,7 @@
         HC BEST: <span id="start-best-hc" style="color:#f44;background:transparent;">0</span>
     </div>
     <div style="font-size:9px;color:#555;background:transparent;margin-top:6px;">
-        STORY: LVL <span id="start-story-level" style="color:#00ccff;background:transparent;">1</span> / 50
+        STORY: <span id="start-story-slot-label" style="color:#00ccff;background:transparent;">SLOT 1 · LV 1</span>
     </div>
 </div>
 
@@ -451,7 +584,7 @@
 <div id="type-select">
     <h2 style="background:transparent;">SELECT MODE</h2>
     <br/><br/>
-    <a href="#" onclick="showStorySelect()">
+    <a href="#" onclick="showSaveSlotSelect()">
         <button class="story-btn" style="width:280px;height:80px;font-size:13px;">
             🌟 STORY MODE<br/><span style="font-size:8px;color:#88ddff;background:transparent;">50 levels · progressive</span>
         </button>
@@ -497,11 +630,23 @@
     <a href="#" onclick="showTypeSelect()"><button style="width:150px;height:50px;font-size:10px;">← Back</button></a>
 </div>
 
+<!-- SAVE SLOT SELECT -->
+<div id="save-slot-select">
+    <h2>🌟 STORY MODE</h2>
+    <div class="slot-subtitle">── SELECT SAVE SLOT ──</div>
+    <div id="save-slot-cards"></div>
+    <br/>
+    <a href="#" onclick="showTypeSelect()"><button style="width:150px;height:50px;font-size:10px;">← Back</button></a>
+    <br/><br/>
+</div>
+
 <!-- Select Levels-->
 <div id="story-select">
     <h2 style="color:#00ccff;font-size:16px;text-shadow:0 0 12px #00ccff;background:transparent;">🌟 STORY MODE</h2>
     <div style="font-size:8px;color:#555;background:transparent;margin:6px 0;">
-        UNLOCKED: LVL <span id="story-unlocked-display" style="color:#00ccff;background:transparent;">1</span>
+        <span id="story-slot-indicator" style="color:#00ccff88;background:transparent;">SLOT 1</span>
+        &nbsp;·&nbsp;
+        UNLOCKED: LV <span id="story-unlocked-display" style="color:#00ccff;background:transparent;">1</span>
         &nbsp;|&nbsp; CLEARED: <span id="story-cleared-display" style="color:#00ff88;background:transparent;">0</span>/50
     </div>
     <div class="story-zone-label">── ZONE 1: Levels 1–5 · 20pts ──</div>
@@ -517,7 +662,7 @@
     <div class="story-zone-label" style="color:#ff4444;">── ☠ FINAL BOSS: Level 50 · 200pts ──</div>
     <div class="story-level-grid" id="story-grid-6"></div>
     <br/>
-    <a href="#" onclick="showTypeSelect()"><button style="width:150px;height:50px;font-size:10px;">← Back</button></a>
+    <a href="#" onclick="showSaveSlotSelect()"><button style="width:150px;height:50px;font-size:10px;">← Back</button></a>
     <br/><br/>
 </div>
 
@@ -692,6 +837,181 @@
 <audio id="menu-music" loop><source src="darren_hirst-gamer-music-140-bpm-355954.mp3"></audio>
 <script>
 
+// save  game
+var NUM_SLOTS = 3;
+var SLOT_ICONS = ['🚀', '⭐', '🔥'];
+var SLOT_NAMES = ['SAVE SLOT 1', 'SAVE SLOT 2', 'SAVE SLOT 3'];
+var activeSlot = 0; // 0-indexed
+
+function getSlotKey(slotIdx) {
+    return 'galaxyblast_story_slot' + slotIdx;
+}
+function loadSlot(slotIdx) {
+    try {
+        var raw = localStorage.getItem(getSlotKey(slotIdx));
+        if (raw) {
+            var sp = JSON.parse(raw);
+            if (sp && typeof sp.unlocked === 'number') {
+                if (!Array.isArray(sp.beaten)) sp.beaten = [];
+                return sp;
+            }
+        }
+    } catch(e) {}
+    return null; // empty slot
+}
+function saveSlot(slotIdx, data) {
+    try { localStorage.setItem(getSlotKey(slotIdx), JSON.stringify(data)); } catch(e) {}
+}
+function deleteSlot(slotIdx) {
+    try { localStorage.removeItem(getSlotKey(slotIdx)); } catch(e) {}
+}
+function getSlotData(slotIdx) {
+    var d = loadSlot(slotIdx);
+    if (!d) return null;
+    return d;
+}
+
+// Migrate old game
+(function migrateLegacy(){
+    try {
+        var old = localStorage.getItem('galaxyblast_story');
+        if (old && !localStorage.getItem(getSlotKey(0))) {
+            var parsed = JSON.parse(old);
+            if (parsed && typeof parsed.unlocked === 'number') {
+                saveSlot(0, parsed);
+            }
+        }
+    } catch(e) {}
+})();
+
+// Active slot progress
+var storyProgress = { unlocked: 1, beaten: [] };
+
+function loadActiveSlot() {
+    var d = loadSlot(activeSlot);
+    if (d) {
+        storyProgress = d;
+    } else {
+        storyProgress = { unlocked: 1, beaten: [] };
+    }
+}
+function saveStory() {
+    saveSlot(activeSlot, storyProgress);
+    updateStartSlotLabel();
+}
+
+function updateStartSlotLabel() {
+    var lbl = document.getElementById('start-story-slot-label');
+    if (!lbl) return;
+    var d = loadSlot(activeSlot);
+    if (d) {
+        lbl.textContent = 'SLOT '+(activeSlot+1)+' · LV '+d.unlocked;
+    } else {
+        lbl.textContent = 'SLOT '+(activeSlot+1)+' · NEW';
+    }
+}
+
+// slot render
+var _slotDeleteConfirm = [false, false, false];
+var _slotDeleteTimers  = [null,  null,  null ];
+
+function buildSaveSlotCards() {
+    var container = document.getElementById('save-slot-cards');
+    container.innerHTML = '';
+    for (var i = 0; i < NUM_SLOTS; i++) {
+        container.appendChild(buildSlotCard(i));
+    }
+}
+
+function buildSlotCard(i) {
+    var d = getSlotData(i);
+    var card = document.createElement('div');
+    card.className = 'save-slot-card' + (d === null ? ' empty' : '');
+    if (d && d.beaten && d.beaten.indexOf(50) !== -1) card.classList.add('boss-active');
+    card.id = 'slot-card-' + i;
+
+    var slotIdx = i; // closure
+
+    if (d === null) {
+        // Empty slot
+        card.innerHTML =
+            '<div class="slot-icon">' + SLOT_ICONS[i] + '</div>' +
+            '<div class="slot-info">' +
+                '<div class="slot-name"><span class="slot-num">' + SLOT_NAMES[i] + '</span>' +
+                '<span class="slot-new-badge">NEW</span></div>' +
+                '<div class="slot-empty-label">── EMPTY ──</div>' +
+            '</div>';
+        card.addEventListener('click', function() {
+            playClick();
+            activeSlot = slotIdx;
+            loadActiveSlot();
+            showStorySelect();
+        });
+    } else {
+        var pct = Math.min(100, Math.round((d.beaten.length / 50) * 100));
+        var isBoss = d.beaten.indexOf(50) !== -1;
+        card.innerHTML =
+            '<div class="slot-icon">' + SLOT_ICONS[i] + '</div>' +
+            '<div class="slot-info">' +
+                '<div class="slot-name">' + SLOT_NAMES[i] +
+                    (isBoss ? ' <span style="color:#ffd700;font-size:7px;background:transparent;">👑 COMPLETE</span>' : '') +
+                '</div>' +
+                '<div class="slot-progress-row">' +
+                    '<div class="slot-stat">LVL <span>' + d.unlocked + '</span> / 50</div>' +
+                    '<div class="slot-stat">CLEARED <span>' + d.beaten.length + '</span>/50</div>' +
+                    '<div class="slot-stat' + (isBoss ? ' warn' : '') + '">BOSS <span>' + (isBoss ? '✓' : '✗') + '</span></div>' +
+                '</div>' +
+                '<div class="slot-pb-outer"><div class="slot-pb-inner" style="width:' + pct + '%"></div></div>' +
+            '</div>' +
+            '<button class="slot-delete-btn" id="slot-del-' + i + '" title="Delete save">✕</button>';
+
+        // Click card body = load slot
+        card.addEventListener('click', function(e) {
+            if (e.target.classList.contains('slot-delete-btn')) return;
+            playClick();
+            activeSlot = slotIdx;
+            loadActiveSlot();
+            showStorySelect();
+        });
+
+        // Delete save slot
+        var delBtn = card.querySelector('.slot-delete-btn');
+        delBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            playClick();
+            if (_slotDeleteConfirm[slotIdx]) {
+                // Confirmed — delete
+                clearTimeout(_slotDeleteTimers[slotIdx]);
+                _slotDeleteConfirm[slotIdx] = false;
+                deleteSlot(slotIdx);
+                if (activeSlot === slotIdx) {
+                    storyProgress = { unlocked: 1, beaten: [] };
+                }
+                buildSaveSlotCards();
+                updateStartSlotLabel();
+            } else {
+                // First click — ask confirm
+                _slotDeleteConfirm[slotIdx] = true;
+                var btn = document.getElementById('slot-del-' + slotIdx);
+                if (btn) { btn.textContent = '?'; btn.classList.add('confirming'); }
+                _slotDeleteTimers[slotIdx] = setTimeout(function() {
+                    _slotDeleteConfirm[slotIdx] = false;
+                    var b2 = document.getElementById('slot-del-' + slotIdx);
+                    if (b2) { b2.textContent = '✕'; b2.classList.remove('confirming'); }
+                }, 2500);
+            }
+        });
+    }
+    return card;
+}
+
+function showSaveSlotSelect() {
+    hideAll();
+    buildSaveSlotCards();
+    document.getElementById('save-slot-select').style.display = 'block';
+    playMenuMusic();
+}
+
 // random menu tag
 var ROTATED_MSGS = [
     "Perfect School Game!",  
@@ -710,14 +1030,11 @@ var ROTATED_MSGS = [
     "Remember Scrapbooks?",
     "We all procrastinate!"
 ];
-
 function setRandomTag() {
     var tag = document.getElementById("random-tag");
     if (!tag) return;
-    var msg = ROTATED_MSGS[Math.floor(Math.random() * ROTATED_MSGS.length)];
-    tag.textContent = msg;
+    tag.textContent = ROTATED_MSGS[Math.floor(Math.random() * ROTATED_MSGS.length)];
 }
-
 setRandomTag();
 
 /*scale resolution*/
@@ -752,10 +1069,7 @@ function playMenuMusic() {
         if (p && p.catch) p.catch(function(err) {});
     }
 }
-function stopMenuMusic() {
-    menuMusic.pause();
-    menuMusic.currentTime = 0;
-}
+function stopMenuMusic() { menuMusic.pause(); menuMusic.currentTime = 0; }
 
 /*settings */
 var DEFAULT_SETTINGS = {
@@ -799,11 +1113,8 @@ function applyMuteVolumes(){
 function playAudio(a,v){
     a.volume = settings.muted ? 0 : v;
     var p = a.play();
-    if(p && p.catch) p.catch(function(err){
-        if(err.name !== 'AbortError') console.warn('Audio play blocked:', err.message);
-    });
+    if(p && p.catch) p.catch(function(err){ if(err.name !== 'AbortError') console.warn('Audio play blocked:', err.message); });
 }
-
 function applyHitbox(){
     var g=document.getElementById('game');
     settings.hitbox?g.classList.add('hitbox-on'):g.classList.remove('hitbox-on');
@@ -811,8 +1122,7 @@ function applyHitbox(){
 }
 function applyScoreSize(){
     ['hud-score','hud-best'].forEach(function(id){
-        var e=document.getElementById(id);
-        e.classList.remove('score-sm','score-lg');
+        var e=document.getElementById(id); e.classList.remove('score-sm','score-lg');
         if(settings.scoreSize==='small')e.classList.add('score-sm');
         if(settings.scoreSize==='large')e.classList.add('score-lg');
     });
@@ -823,10 +1133,7 @@ function applyBtnGap(){ var mc=document.getElementById('mobile-controls'); mc.st
 
 var ZOOM_VALS=['-3x','-2x','-1x','default'];
 var ZOOM_MULTS={'-3x':0.25,'-2x':0.4,'-1x':0.7,'default':1.0};
-function applyZoom(){
-    zoomMultiplier=ZOOM_MULTS[settings.zoom]||1.0;
-    if(window._applyScale)window._applyScale();
-}
+function applyZoom(){ zoomMultiplier=ZOOM_MULTS[settings.zoom]||1.0; if(window._applyScale)window._applyScale(); }
 function settingsCycleZoom(){
     var idx=ZOOM_VALS.indexOf(settings.zoom); if(idx===-1)idx=3;
     settings.zoom=ZOOM_VALS[(idx+1)%ZOOM_VALS.length];
@@ -842,8 +1149,7 @@ function triggerShake(){
 
 var fpsFC=0,fpsLT=performance.now(),fpsInt=null;
 function startFpsCounter(){
-    if(fpsInt)clearInterval(fpsInt);
-    fpsFC=0; fpsLT=performance.now();
+    if(fpsInt)clearInterval(fpsInt); fpsFC=0; fpsLT=performance.now();
     function tick(){ fpsFC++; requestAnimationFrame(tick); }
     requestAnimationFrame(tick);
     fpsInt=setInterval(function(){
@@ -854,7 +1160,6 @@ function startFpsCounter(){
 }
 function stopFpsCounter(){ if(fpsInt){clearInterval(fpsInt);fpsInt=null;} var fc=document.getElementById('fps-counter'); if(fc)fc.textContent='FPS: --'; }
 
-/*settings toggle*/
 function settingsToggleSound(){ settings.muted=!settings.muted; saveSettings(); applyMuteVolumes(); _updateSoundBtn(); }
 function settingsToggleHitbox(){ settings.hitbox=!settings.hitbox; saveSettings(); applyHitbox(); _updateHitboxBtn(); }
 function settingsToggleSkipCd(){ settings.skipCountdown=!settings.skipCountdown; saveSettings(); _updateSkipCdBtn(); }
@@ -869,38 +1174,27 @@ function settingsCycleBtnSize(){ settings.btnSize=BTNSIZE_VALS[(BTNSIZE_VALS.ind
 var BTNGAP_VALS=['spread','center'];
 function settingsCycleBtnGap(){ settings.btnGap=BTNGAP_VALS[(BTNGAP_VALS.indexOf(settings.btnGap)+1)%2]; saveSettings(); applyBtnGap(); _updateBtnGapBtn(); }
 
-/*double click to reset best scores*/
 var _resetScoresConfirmPending=false, _resetScoresConfirmTimer=null;
 function settingsResetBestScores(){
     var btn=document.getElementById('set-reset-scores-btn');
     var errEl=document.getElementById('settings-error');
     if(!_resetScoresConfirmPending){
-        _resetScoresConfirmPending=true;
-        btn.textContent='CONFIRM?';
-        btn.classList.add('confirmed');
+        _resetScoresConfirmPending=true; btn.textContent='CONFIRM?'; btn.classList.add('confirmed');
         errEl.innerHTML='<span style="color:#ff8844;background:transparent;">⚠ Click again to confirm reset!</span>';
         _resetScoresConfirmTimer=setTimeout(function(){
-            _resetScoresConfirmPending=false;
-            btn.textContent='RESET SCORES';
-            btn.classList.remove('confirmed');
-            errEl.textContent='';
+            _resetScoresConfirmPending=false; btn.textContent='RESET SCORES'; btn.classList.remove('confirmed'); errEl.textContent='';
         },3000);
     } else {
-        clearTimeout(_resetScoresConfirmTimer);
-        _resetScoresConfirmPending=false;
+        clearTimeout(_resetScoresConfirmTimer); _resetScoresConfirmPending=false;
         bestEasy=0; bestMed=0; bestHC=0;
-        localStorage.removeItem('galaxyblast_best_easy');
-        localStorage.removeItem('galaxyblast_best_med');
-        localStorage.removeItem('galaxyblast_best_hc');
+        localStorage.removeItem('galaxyblast_best_easy'); localStorage.removeItem('galaxyblast_best_med'); localStorage.removeItem('galaxyblast_best_hc');
         document.getElementById('start-best-easy').textContent='0';
         document.getElementById('start-best-med').textContent='0';
         document.getElementById('start-best-hc').textContent='0';
-        btn.textContent='RESET SCORES';
-        btn.classList.remove('confirmed');
+        btn.textContent='RESET SCORES'; btn.classList.remove('confirmed');
         errEl.innerHTML='<span style="color:#0f0;background:transparent;">✔ Best scores cleared!</span>';
     }
 }
-
 function _updateSoundBtn(){ var b=document.getElementById('set-sound-btn'); settings.muted?(b.textContent='🔇 MUTED',b.classList.add('off')):(b.textContent='🔊 SOUND ON',b.classList.remove('off')); }
 function _updateHitboxBtn(){ var b=document.getElementById('set-hitbox-btn'); settings.hitbox?(b.textContent='📦 HITBOX ON',b.classList.remove('off')):(b.textContent='📦 HITBOX OFF',b.classList.add('off')); }
 function _updateSkipCdBtn(){ var b=document.getElementById('set-skipcd-btn'); settings.skipCountdown?(b.textContent='SKIP ON',b.classList.remove('off')):(b.textContent='SKIP OFF',b.classList.add('off')); }
@@ -923,7 +1217,6 @@ function updateSettingsUI(){
     _updateSoundBtn();_updateHitboxBtn();_updateSkipCdBtn();_updateShakeBtn();
     _updateAutoRestartBtn();_updateInvFlashBtn();_updateFpsBtn();
     _updateScoreSizeBtn();_updateBtnSizeBtn();_updateBtnGapBtn();_updateZoomBtn();_updateAllKbBtns();
-    /* reset scores button always shows reset when settings opens */
     var rsb=document.getElementById('set-reset-scores-btn');
     rsb.textContent='RESET SCORES'; rsb.classList.remove('confirmed');
     _resetScoresConfirmPending=false; if(_resetScoresConfirmTimer){clearTimeout(_resetScoresConfirmTimer);_resetScoresConfirmTimer=null;}
@@ -943,7 +1236,6 @@ function updateSettingsUI(){
 }
 
 var settingsOrigin='menu', listeningFor=null, tempKeybinds=null;
-
 function openSettings(origin){
     settingsOrigin=origin||'menu'; listeningFor=null;
     if(origin==='sp-pause'){
@@ -1011,14 +1303,12 @@ function applySettings(){
     errEl.innerHTML='<span style="color:#0f0;background:transparent;">✔ Settings saved!</span>';
 }
 function resetSettingsDefaults(){
-    /*doesn't touch best scores */
     settings=JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
     tempKeybinds=JSON.parse(JSON.stringify(settings.keybinds)); listeningFor=null;
     saveSettings(); applyMuteVolumes(); applyHitbox(); applyScoreSize(); applyFpsCounter(); applyBtnSize(); applyBtnGap(); applyZoom(); updateSettingsUI();
     document.getElementById('settings-error').innerHTML='<span style="color:#0f0;background:transparent;">✔ Reset to defaults!</span>';
 }
 
-/*audio helpers*/
 function stopAllMusic(){
     gameMusic.pause();gameMusic.currentTime=0;
     hardcoreMusic.pause();hardcoreMusic.currentTime=0;
@@ -1029,14 +1319,11 @@ var lastHitSoundTime=0;
 function playHit(){ var now=Date.now();if(now-lastHitSoundTime<200)return;lastHitSoundTime=now;playAudio(hitSound,0.7); }
 function playGameOver(){ stopAllMusic(); playAudio(gameOverSound,0.8); }
 function playClick(){ playAudio(clickSound,0.6); }
-
-/*music starter*/
 function playGameMusic(){
     if(mode==='hardcore') playAudio(hardcoreMusic,0.5);
     else                  playAudio(gameMusic,0.5);
 }
 
-/*device check */
 var isTouchDevice=(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||("ontouchstart" in window)||(navigator.maxTouchPoints>0);
 if(isTouchDevice){
     var mpLink=document.getElementById("mp-link"),mpBtn=document.getElementById("mp-btn");
@@ -1046,11 +1333,6 @@ if(isTouchDevice){
     document.getElementById("mp-btn-sub").textContent="PC only 🖥"; document.getElementById("mp-btn-sub").style.color="#666";
 }
 
-/*story mode data*/
-var storyProgress={unlocked:1,beaten:[]};
-(function(){ try{ var sp=JSON.parse(localStorage.getItem('galaxyblast_story')); if(sp&&typeof sp.unlocked==='number'){storyProgress=sp;if(!Array.isArray(storyProgress.beaten))storyProgress.beaten=[];} }catch(e){} })();
-function saveStory(){ try{localStorage.setItem('galaxyblast_story',JSON.stringify(storyProgress));}catch(e){} }
-
 function storyLevelGoal(l){ if(l<=5)return 20; if(l<=15)return 50; if(l<=35)return 75; if(l<=45)return 100; if(l<=49)return 150; return 200; }
 function storySpeedMult(l){ return 1.0+(l-1)*0.024; }
 function storyObsCount(l){ if(l<=5)return 2; if(l<=15)return 3; if(l<=30)return 3; if(l<=40)return 4; return 5; }
@@ -1058,6 +1340,10 @@ function storyScoreTick(l){ return Math.max(200,300-(l-1)*2); }
 function storyLives(l){ if(l<=15)return 3; if(l<=45)return 2; return 1; }
 
 function buildStoryGrid(){
+    // Update slot indicator
+    var ind = document.getElementById('story-slot-indicator');
+    if(ind) ind.textContent = 'SLOT '+(activeSlot+1);
+
     var zones=[
         {grid:'story-grid-1',range:[1,5]},{grid:'story-grid-2',range:[6,15]},
         {grid:'story-grid-3',range:[16,35]},{grid:'story-grid-4',range:[36,45]},
@@ -1081,7 +1367,7 @@ function buildStoryGrid(){
     });
     document.getElementById('story-unlocked-display').textContent=storyProgress.unlocked;
     document.getElementById('story-cleared-display').textContent=storyProgress.beaten.length;
-    document.getElementById('start-story-level').textContent=storyProgress.unlocked;
+    updateStartSlotLabel();
 }
 function showStorySelect(){ hideAll(); buildStoryGrid(); document.getElementById('story-select').style.display='block'; playMenuMusic(); }
 
@@ -1098,7 +1384,6 @@ document.getElementById("start-best-hc").textContent=bestHC;
 var isPaused=false, mpIsPaused=false;
 function saveScores(){ localStorage.setItem("galaxyblast_best_easy",bestEasy); localStorage.setItem("galaxyblast_best_med",bestMed); localStorage.setItem("galaxyblast_best_hc",bestHC); }
 
-/* mobile pause */
 var mobPauseBtn=document.getElementById("mob-pause-btn");
 function showMobPauseBtn(visible,m){
     if(visible&&isTouchDevice){
@@ -1114,7 +1399,6 @@ function mobSettingsBtnTap(){
 mobPauseBtn.addEventListener("touchstart",function(e){e.preventDefault();mobSettingsBtnTap();},{passive:false});
 mobPauseBtn.addEventListener("mousedown",function(){mobSettingsBtnTap();});
 
-/* pause */
 function spPause(){
     if(spDead||spCd)return; isPaused=true;
     spBlock.style.animationPlayState="paused"; spBlock2.style.animationPlayState="paused";
@@ -1161,7 +1445,6 @@ function mpResume(){
     document.getElementById('mp-vs-settings-btn').classList.remove('show'); updateMobPauseBtnState();
 }
 
-/*mobile buttons*/
 var mobInterval=null;
 function moveLeft(){ if(!isPaused&&spCharX>0){spCharX-=100;spChar.style.left=spCharX+"px";} }
 function moveRight(){ if(!isPaused&&spCharX<500){spCharX+=100;spChar.style.left=spCharX+"px";} }
@@ -1192,9 +1475,8 @@ function showMobileControls(visible,m){
     } else { mc.style.display="none"; }
 }
 
-/*nav*/
 function hideAll(){
-    ["start","type-select","mode-select","story-select","hud","game","result","tutorial",
+    ["start","type-select","mode-select","story-select","save-slot-select","hud","game","result","tutorial",
      "mp-wrapper","mp-result","mobile-controls","settings","finale-screen"]
     .forEach(function(id){ var el=document.getElementById(id); if(el){el.style.display="none";} });
     document.getElementById("game-backdrop").style.display="none";
@@ -1202,7 +1484,7 @@ function hideAll(){
     document.getElementById('story-progress-bar-wrap').classList.remove('show');
     showMobPauseBtn(false);
 }
-function quitToMenu(){ if(mode==='story')showStorySelect(); else showStart(); }
+function quitToMenu(){ if(mode==='story')showSaveSlotSelect(); else showStart(); }
 function showStart(){
     stopMp(); stopFpsCounter(); isPaused=false; mpIsPaused=false; stopAllMusic();
     bestEasy=parseInt(localStorage.getItem("galaxyblast_best_easy"))||0;
@@ -1213,9 +1495,8 @@ function showStart(){
     document.getElementById("start-best-easy").textContent=bestEasy;
     document.getElementById("start-best-med").textContent=bestMed;
     document.getElementById("start-best-hc").textContent=bestHC;
-    document.getElementById("start-story-level").textContent=storyProgress.unlocked;
+    updateStartSlotLabel();
     ['game','hud','hud-score','hud-best'].forEach(function(id){ var el=document.getElementById(id); if(el)el.classList.remove('story'); });
-    // refresh the tag every time the main menu is shown
     setRandomTag();
     if(window._applyRainbowTitle) window._applyRainbowTitle();
     playMenuMusic();
@@ -1331,8 +1612,8 @@ function triggerStoryWin(){
     stopAllMusic();
     if(storyProgress.beaten.indexOf(currentStoryLevel)===-1)storyProgress.beaten.push(currentStoryLevel);
     if(currentStoryLevel<50&&currentStoryLevel+1>storyProgress.unlocked)storyProgress.unlocked=currentStoryLevel+1;
-    saveStory();
-    document.getElementById('start-story-level').textContent=storyProgress.unlocked;
+    saveStory(); // saves to active slot
+    updateStartSlotLabel();
     var wtitle=document.getElementById('story-win-title'),wsub=document.getElementById('story-win-sub'),wnxt=document.getElementById('story-win-next-btn');
     if(currentStoryLevel===50){
         wtitle.textContent='🌟 YOU WIN! 🌟'; wtitle.style.color='#ffd700'; wtitle.style.textShadow='0 0 30px #ffd700,0 0 60px #ffd700';
@@ -1353,7 +1634,6 @@ function storyWinNext(){
     if(currentStoryLevel===50)showFinale(); else showStorySelect();
 }
 
-/*finale dialog*/
 var FINALE_DIALOG=[
     {text:"★ ★ ★ ★ ★ ★ ★ ★ ★ ★",star:true},
     {text:"You made it.",col:'#00ffcc'},
@@ -1391,11 +1671,10 @@ function showFinale(){
     setTimeout(function(){ document.getElementById('finale-back-btn').style.display='inline-block'; fs.scrollTop=fs.scrollHeight; },200+lines.length*700+500);
 }
 
-/*singleplayer core*/
 function spUpdateHUD(){
     document.getElementById("hud-score-val").textContent=spScore;
     if(mode==='story'){
-        document.getElementById("hud-best-val").textContent='LV '+currentStoryLevel;
+        document.getElementById("hud-best-val").textContent='LV '+currentStoryLevel+' S'+(activeSlot+1);
         var max=storyLives(currentStoryLevel),h='';
         for(var i=0;i<max;i++)h+=i<spLives?'<span style="color:#00ccff;background:transparent;">♥</span>':'<span class="heart-empty" style="background:transparent;">♥</span>';
         document.getElementById("hud-lives").innerHTML=h; return;
@@ -1412,7 +1691,6 @@ function spFlash(){
     f.style.opacity=mode==="hardcore"?"0.7":"0.45"; spChar.classList.add("hit"); triggerShake();
     setTimeout(function(){f.style.opacity="0";spChar.classList.remove("hit");},180);
 }
-
 function spHit(){
     if(spDead||isPaused||spCd||storyWinPending)return; if(spInv)return;
     spFlash(); playHit();
@@ -1439,14 +1717,14 @@ function spEnd(){
         var ri=document.getElementById("result"); ri.classList.remove("hardcore","medium");
         document.getElementById("result-title").textContent='GAME OVER';
         document.getElementById("result-title").style.color="rgb(231,15,15)";
-        document.getElementById("random-msg").textContent='Level '+currentStoryLevel+' — '+msgs[Math.floor(Math.random()*msgs.length)];
+        document.getElementById("random-msg").textContent='[SLOT '+(activeSlot+1)+'] LV '+currentStoryLevel+' — '+msgs[Math.floor(Math.random()*msgs.length)];
         document.getElementById("score").textContent=spScore;
         document.getElementById("best-display").textContent=storyLevelGoal(currentStoryLevel)+' needed';
         document.getElementById("best-line").style.color='#00ccff';
         var rb=document.getElementById("restart-btn"),qb=document.getElementById("quit-btn");
         rb.classList.remove('hc-btn','med-btn'); qb.classList.remove('hc-btn','med-btn');
-        rb.textContent='↺ Retry Level'; qb.textContent='✕ Level Select';
-        qb.onclick=function(){showStorySelect();};
+        rb.textContent='↺ Retry Level'; qb.textContent='✕ Slot Select';
+        qb.onclick=function(){showSaveSlotSelect();};
         ri.style.display='block'; return;
     }
     if(mode==="hardcore"){if(spScore>bestHC)bestHC=spScore;}
@@ -1634,7 +1912,6 @@ function stopMp(){
 }
 function restartMp(){ stopAllMusic(); document.getElementById("mp-result").style.display="none"; beginMp(mode); }
 
-/* keyboard input*/
 document.addEventListener("keydown",function(e){
     if(listeningFor!==null){
         e.preventDefault();
@@ -1660,23 +1937,17 @@ document.addEventListener("keydown",function(e){
 /*init*/
 applyMuteVolumes(); applyHitbox(); applyScoreSize(); applyFpsCounter(); applyBtnSize(); applyBtnGap(); applyZoom();
 if(settings.showFps)startFpsCounter();
-
-// menu music started manually via button
-
+updateStartSlotLabel();
 
 var _menuMusicEnabled = false;
 function toggleMenuMusicBtn(){
     var btn = document.getElementById('menu-music-btn');
     if(_menuMusicEnabled){
-        _menuMusicEnabled = false;
-        stopMenuMusic();
-        btn.style.color = '#555';
-        btn.style.borderColor = '#333';
+        _menuMusicEnabled = false; stopMenuMusic();
+        btn.style.color = '#555'; btn.style.borderColor = '#333';
     } else {
-        _menuMusicEnabled = true;
-        playMenuMusic();
-        btn.style.color = '#0ff';
-        btn.style.borderColor = '#0ff';
+        _menuMusicEnabled = true; playMenuMusic();
+        btn.style.color = '#0ff'; btn.style.borderColor = '#0ff';
     }
 }
 
