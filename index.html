@@ -518,7 +518,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.22.0</h5>
+<h5>Version_1.22.2</h5>
 <div id="mob-pause-btn">⚙ SET</div>
 <div id="fps-counter">FPS: --</div>
 
@@ -630,7 +630,7 @@
     <a href="#" onclick="showTypeSelect()"><button style="width:150px;height:50px;font-size:10px;">← Back</button></a>
 </div>
 
-<!-- SAVE SLOT SELECT -->
+<!--save slot-->
 <div id="save-slot-select">
     <h2>🌟 STORY MODE</h2>
     <div class="slot-subtitle">── SELECT SAVE SLOT ──</div>
@@ -841,7 +841,7 @@
 var NUM_SLOTS = 3;
 var SLOT_ICONS = ['🚀', '⭐', '🔥'];
 var SLOT_NAMES = ['SAVE SLOT 1', 'SAVE SLOT 2', 'SAVE SLOT 3'];
-var activeSlot = 0; // 0-indexed
+var activeSlot = 0; 
 
 function getSlotKey(slotIdx) {
     return 'galaxyblast_story_slot' + slotIdx;
@@ -930,7 +930,7 @@ function buildSlotCard(i) {
     if (d && d.beaten && d.beaten.indexOf(50) !== -1) card.classList.add('boss-active');
     card.id = 'slot-card-' + i;
 
-    var slotIdx = i; // closure
+    var slotIdx = i;
 
     if (d === null) {
         // Empty slot
@@ -965,7 +965,7 @@ function buildSlotCard(i) {
             '</div>' +
             '<button class="slot-delete-btn" id="slot-del-' + i + '" title="Delete save">✕</button>';
 
-        // Click card body = load slot
+        // slot load
         card.addEventListener('click', function(e) {
             if (e.target.classList.contains('slot-delete-btn')) return;
             playClick();
@@ -980,7 +980,7 @@ function buildSlotCard(i) {
             e.stopPropagation();
             playClick();
             if (_slotDeleteConfirm[slotIdx]) {
-                // Confirmed — delete
+                // 2nd click action
                 clearTimeout(_slotDeleteTimers[slotIdx]);
                 _slotDeleteConfirm[slotIdx] = false;
                 deleteSlot(slotIdx);
@@ -990,7 +990,7 @@ function buildSlotCard(i) {
                 buildSaveSlotCards();
                 updateStartSlotLabel();
             } else {
-                // First click — ask confirm
+                // click once confirm
                 _slotDeleteConfirm[slotIdx] = true;
                 var btn = document.getElementById('slot-del-' + slotIdx);
                 if (btn) { btn.textContent = '?'; btn.classList.add('confirming'); }
@@ -1674,7 +1674,7 @@ function showFinale(){
 function spUpdateHUD(){
     document.getElementById("hud-score-val").textContent=spScore;
     if(mode==='story'){
-        document.getElementById("hud-best-val").textContent='LV '+currentStoryLevel+' S'+(activeSlot+1);
+        document.getElementById("hud-best-val").textContent='LV '+currentStoryLevel;
         var max=storyLives(currentStoryLevel),h='';
         for(var i=0;i<max;i++)h+=i<spLives?'<span style="color:#00ccff;background:transparent;">♥</span>':'<span class="heart-empty" style="background:transparent;">♥</span>';
         document.getElementById("hud-lives").innerHTML=h; return;
@@ -1717,7 +1717,7 @@ function spEnd(){
         var ri=document.getElementById("result"); ri.classList.remove("hardcore","medium");
         document.getElementById("result-title").textContent='GAME OVER';
         document.getElementById("result-title").style.color="rgb(231,15,15)";
-        document.getElementById("random-msg").textContent='[SLOT '+(activeSlot+1)+'] LV '+currentStoryLevel+' — '+msgs[Math.floor(Math.random()*msgs.length)];
+        document.getElementById("random-msg").textContent='LV '+currentStoryLevel+' — '+msgs[Math.floor(Math.random()*msgs.length)];
         document.getElementById("score").textContent=spScore;
         document.getElementById("best-display").textContent=storyLevelGoal(currentStoryLevel)+' needed';
         document.getElementById("best-line").style.color='#00ccff';
