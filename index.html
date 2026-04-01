@@ -522,7 +522,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.22.3</h5>
+<h5>Version_1.22.4</h5>
 <div id="mob-pause-btn">⚙ SET</div>
 <div id="fps-counter">FPS: --</div>
 
@@ -1071,30 +1071,60 @@ var hitSound       = document.getElementById("hit-sound");
 var clickSound     = document.getElementById("click-sound");
 var menuMusic      = document.getElementById("menu-music");
 
+/*master volume*/
+function getMasterVolume() {
+    if (settings.muted) return 0;
+    return (settings.volume !== undefined ? settings.volume : 50) / 100;
+}
+
+function playAudio(audioEl, relativeVol) {
+    audioEl.volume = getMasterVolume() * relativeVol;
+    var p = audioEl.play();
+    if (p && p.catch) p.catch(function(err){
+        if (err.name !== 'AbortError') console.warn('Audio play blocked:', err.message);
+    });
+}
+
+function applyMuteVolumes() {
+    var mv = getMasterVolume();
+    menuMusic.volume     = mv * 0.45;
+    gameMusic.volume     = mv * 0.5;
+    hardcoreMusic.volume = mv * 0.5;
+    gameOverSound.volume = mv * 0.8;
+    countdownSound.volume= mv * 0.7;
+    hitSound.volume      = mv * 0.7;
+    clickSound.volume    = mv * 0.6;
+
+    var slider = document.getElementById('set-vol-slider');
+    var label  = document.getElementById('set-vol-label');
+    var row    = document.getElementById('set-vol-row');
+    if (slider) slider.value = settings.volume !== undefined ? settings.volume : 50;
+    if (label)  label.textContent = (settings.volume !== undefined ? settings.volume : 50) + '%';
+    if (row) {
+        row.style.opacity      = settings.muted ? '0.35' : '1';
+        row.style.pointerEvents= settings.muted ? 'none'  : 'auto';
+    }
+}
+
+// Live-update volume as slider moves
+document.addEventListener('input', function(e){
+    if (e.target.id === 'set-vol-slider') {
+        settings.volume = parseInt(e.target.value);
+        document.getElementById('set-vol-label').textContent = settings.volume + '%';
+        saveSettings();
+        applyMuteVolumes(); // updates all currently-playing audio elements
+    }
+});
+
 function playMenuMusic() {
     if(!_menuMusicEnabled) return;
     if (menuMusic.paused) {
+        menuMusic.volume = getMasterVolume() * 0.45;
         var p = menuMusic.play();
         if (p && p.catch) p.catch(function(err) {});
     }
 }
- 
-function playAudio(a, v) {
-    var p = a.play();
-    if(p && p.catch) p.catch(function(err){
-        if(err.name !== 'AbortError') console.warn('Audio play blocked:', err.message);
-    });
-}
- 
-function playGameMusic() {
-    if(mode === 'hardcore') {
-        var p = hardcoreMusic.play();
-        if(p && p.catch) p.catch(function(){});
-    } else {
-        var p = gameMusic.play();
-        if(p && p.catch) p.catch(function(){});
-    }
-}
+
 function stopMenuMusic() { menuMusic.pause(); menuMusic.currentTime = 0; }
 
 /*settings */
@@ -1130,36 +1160,7 @@ function keyLabel(k){
            'pageup':'PgUp','pagedown':'PgDn','insert':'Ins','escape':'Esc'};
     return M[normalizeKey(k)]||k.toUpperCase();
 }
-function applyMuteVolumes(){
-    var m = settings.muted;
-    var v = (settings.volume !== undefined ? settings.volume : 50) / 100;
-    menuMusic.volume    = m ? 0 : 0.45 * v;
-    gameMusic.volume    = m ? 0 : 0.5  * v;
-    hardcoreMusic.volume= m ? 0 : 0.5  * v;
-    gameOverSound.volume= m ? 0 : 0.8  * v;
-    countdownSound.volume=m ? 0 : 0.7  * v;
-    hitSound.volume     = m ? 0 : 0.7  * v;
-    clickSound.volume   = m ? 0 : 0.6  * v;
-    var slider = document.getElementById('set-vol-slider');
-    var label  = document.getElementById('set-vol-label');
-    var row    = document.getElementById('set-vol-row');
-    if(slider){ slider.value = settings.volume !== undefined ? settings.volume : 50; }
-    if(label) { label.textContent = (settings.volume !== undefined ? settings.volume : 50) + '%'; }
-    if(row)   { row.style.opacity = m ? '0.35' : '1'; row.style.pointerEvents = m ? 'none' : 'auto'; }
-}
-document.addEventListener('input', function(e){
-    if(e.target.id === 'set-vol-slider'){
-        settings.volume = parseInt(e.target.value);
-        document.getElementById('set-vol-label').textContent = settings.volume + '%';
-        saveSettings();
-        applyMuteVolumes();
-    }
-});
-function playAudio(a,v){
-    a.volume = settings.muted ? 0 : v;
-    var p = a.play();
-    if(p && p.catch) p.catch(function(err){ if(err.name !== 'AbortError') console.warn('Audio play blocked:', err.message); });
-}
+
 function applyHitbox(){
     var g=document.getElementById('game');
     settings.hitbox?g.classList.add('hitbox-on'):g.classList.remove('hitbox-on');
@@ -1277,6 +1278,8 @@ function updateSettingsUI(){
         document.getElementById('set-kb-mobile-note-sp').style.display='none';
         document.getElementById('set-kb-mobile-note-mp').style.display='none';
     }
+    // sync volume slider to current settings
+    applyMuteVolumes();
     var sc=document.getElementById('settings-scroll'); if(sc)sc.scrollTop=0;
 }
 
@@ -1361,7 +1364,7 @@ function stopAllMusic(){
     countdownSound.pause();countdownSound.currentTime=0;
 }
 var lastHitSoundTime=0;
-function playHit(){ var now=Date.now();if(now-lastHitSoundTime<200)return;lastHitSoundTime=now;playAudio(hitSound,0.7); }
+function playHit(){ var now=Date.now();if(now-lastHitSoundTime<200)return;lastHitSoundTime=now; playAudio(hitSound,0.7); }
 function playGameOver(){ stopAllMusic(); playAudio(gameOverSound,0.8); }
 function playClick(){ playAudio(clickSound,0.6); }
 function playGameMusic(){
@@ -1917,7 +1920,7 @@ function mpStartPlayer(p){
 function mpCountdown(p,cb){
     if(settings.skipCountdown){cb();return;}
     var cd=document.getElementById("mp-cd-"+p.n); cd.style.display="block"; cd.style.color=mode==="medium"?"#ffd700":"red";
-    if(p.n===1){countdownSound.currentTime=0;playAudio(countdownSound,0.7);}
+    if(p.n===1){countdownSound.currentTime=0; playAudio(countdownSound,0.7);}
     var n=3; cd.textContent=n;
     var t=setInterval(function(){n--;if(n>0)cd.textContent=n;else if(n===0)cd.textContent=mode==="hardcore"?"DIE.":mode==="medium"?"GO!":"GO!";else{clearInterval(t);cd.style.display="none";cb();}},1000);
 }
