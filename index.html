@@ -515,6 +515,10 @@
     .finale-star-row.vis { opacity:1; }
     @keyframes finaleGlow { 0%,100%{color:#fff;text-shadow:0 0 10px #fff} 50%{color:#00ffcc;text-shadow:0 0 30px #00ffcc,0 0 60px #00ffcc} }
     #finale-title { font-size:22px; animation:finaleGlow 2s infinite; background:transparent; }
+    
+    .set-vol-row { display:flex; align-items:center; justify-content:space-between; padding:3px 10px 6px 10px; background:rgba(255,255,255,0.015); margin:-4px 0 2px 0; border-left:2px solid #1e1e1e; }
+    #set-vol-slider { width:130px; accent-color:#0ff; cursor:pointer; }
+    #set-vol-label { font-size:7px; color:#0ff; min-width:30px; text-align:right; background:transparent; font-family:"Press Start 2P",consolas; }
     </style>
 </head>
 <body>
@@ -630,7 +634,7 @@
     <a href="#" onclick="showTypeSelect()"><button style="width:150px;height:50px;font-size:10px;">← Back</button></a>
 </div>
 
-<!--save slot-->
+<!-- SAVE SLOT SELECT -->
 <div id="save-slot-select">
     <h2>🌟 STORY MODE</h2>
     <div class="slot-subtitle">── SELECT SAVE SLOT ──</div>
@@ -746,6 +750,12 @@
   <div class="set-inner">
     <div class="set-section-label" style="border-top:none;margin-top:0;padding-top:0;">── General ──</div>
     <div class="set-row"><span class="set-label">🔊 Sound</span><button class="set-toggle" id="set-sound-btn" onclick="settingsToggleSound()">SOUND ON</button></div>
+    <div class="set-vol-row" id="set-vol-row">
+    <span class="set-label" style="font-size:7px;color:#888;">Volume</span>
+    <input type="range" id="set-vol-slider" min="0" max="100" step="1" value="50">
+    <span id="set-vol-label">50%</span>
+    </div>
+
     <div class="set-row"><span class="set-label">📦 Hitbox<small>Show collision boxes</small></span><button class="set-toggle off" id="set-hitbox-btn" onclick="settingsToggleHitbox()">HITBOX OFF</button></div>
     <div class="set-row"><span class="set-label">⏩ Skip Countdown<small>Skip 3-2-1 intro</small></span><button class="set-toggle off" id="set-skipcd-btn" onclick="settingsToggleSkipCd()">SKIP OFF</button></div>
     <div class="set-row"><span class="set-label">📊 Score Size<small>HUD score text size</small></span><button class="set-cycle" id="set-scoresize-btn" onclick="settingsCycleScoreSize()">NORMAL</button></div>
@@ -841,7 +851,7 @@
 var NUM_SLOTS = 3;
 var SLOT_ICONS = ['🚀', '⭐', '🔥'];
 var SLOT_NAMES = ['SAVE SLOT 1', 'SAVE SLOT 2', 'SAVE SLOT 3'];
-var activeSlot = 0; 
+var activeSlot = 0; // 0-indexed
 
 function getSlotKey(slotIdx) {
     return 'galaxyblast_story_slot' + slotIdx;
@@ -930,7 +940,7 @@ function buildSlotCard(i) {
     if (d && d.beaten && d.beaten.indexOf(50) !== -1) card.classList.add('boss-active');
     card.id = 'slot-card-' + i;
 
-    var slotIdx = i;
+    var slotIdx = i; // closure
 
     if (d === null) {
         // Empty slot
@@ -965,7 +975,7 @@ function buildSlotCard(i) {
             '</div>' +
             '<button class="slot-delete-btn" id="slot-del-' + i + '" title="Delete save">✕</button>';
 
-        // slot load
+        // Click card body = load slot
         card.addEventListener('click', function(e) {
             if (e.target.classList.contains('slot-delete-btn')) return;
             playClick();
@@ -980,7 +990,7 @@ function buildSlotCard(i) {
             e.stopPropagation();
             playClick();
             if (_slotDeleteConfirm[slotIdx]) {
-                // 2nd click action
+                // Confirmed — delete
                 clearTimeout(_slotDeleteTimers[slotIdx]);
                 _slotDeleteConfirm[slotIdx] = false;
                 deleteSlot(slotIdx);
@@ -990,7 +1000,7 @@ function buildSlotCard(i) {
                 buildSaveSlotCards();
                 updateStartSlotLabel();
             } else {
-                // click once confirm
+                // First click — ask confirm
                 _slotDeleteConfirm[slotIdx] = true;
                 var btn = document.getElementById('slot-del-' + slotIdx);
                 if (btn) { btn.textContent = '?'; btn.classList.add('confirming'); }
@@ -1076,6 +1086,7 @@ var DEFAULT_SETTINGS = {
     muted:false, hitbox:false, skipCountdown:false, screenShake:true,
     autoRestart:false, showInvFlash:true, showFps:false,
     scoreSize:'normal', btnSize:'normal', btnGap:'spread', zoom:'default',
+    volume: 50,
     keybinds:{
         sp:{ left:'arrowleft', right:'arrowright' },
         p1:{ left:'a',         right:'d'          },
@@ -1104,12 +1115,30 @@ function keyLabel(k){
     return M[normalizeKey(k)]||k.toUpperCase();
 }
 function applyMuteVolumes(){
-    var m=settings.muted;
-    menuMusic.volume=m?0:0.45;
-    gameMusic.volume=m?0:0.5; hardcoreMusic.volume=m?0:0.5;
-    gameOverSound.volume=m?0:0.8; countdownSound.volume=m?0:0.7;
-    hitSound.volume=m?0:0.7; clickSound.volume=m?0:0.6;
+    var m = settings.muted;
+    var v = (settings.volume !== undefined ? settings.volume : 50) / 100;
+    menuMusic.volume    = m ? 0 : 0.45 * v;
+    gameMusic.volume    = m ? 0 : 0.5  * v;
+    hardcoreMusic.volume= m ? 0 : 0.5  * v;
+    gameOverSound.volume= m ? 0 : 0.8  * v;
+    countdownSound.volume=m ? 0 : 0.7  * v;
+    hitSound.volume     = m ? 0 : 0.7  * v;
+    clickSound.volume   = m ? 0 : 0.6  * v;
+    var slider = document.getElementById('set-vol-slider');
+    var label  = document.getElementById('set-vol-label');
+    var row    = document.getElementById('set-vol-row');
+    if(slider){ slider.value = settings.volume !== undefined ? settings.volume : 50; }
+    if(label) { label.textContent = (settings.volume !== undefined ? settings.volume : 50) + '%'; }
+    if(row)   { row.style.opacity = m ? '0.35' : '1'; row.style.pointerEvents = m ? 'none' : 'auto'; }
 }
+document.addEventListener('input', function(e){
+    if(e.target.id === 'set-vol-slider'){
+        settings.volume = parseInt(e.target.value);
+        document.getElementById('set-vol-label').textContent = settings.volume + '%';
+        saveSettings();
+        applyMuteVolumes();
+    }
+});
 function playAudio(a,v){
     a.volume = settings.muted ? 0 : v;
     var p = a.play();
@@ -1674,7 +1703,7 @@ function showFinale(){
 function spUpdateHUD(){
     document.getElementById("hud-score-val").textContent=spScore;
     if(mode==='story'){
-        document.getElementById("hud-best-val").textContent='LV '+currentStoryLevel;
+        document.getElementById("hud-best-val").textContent='LV '+currentStoryLevel+' S'+(activeSlot+1);
         var max=storyLives(currentStoryLevel),h='';
         for(var i=0;i<max;i++)h+=i<spLives?'<span style="color:#00ccff;background:transparent;">♥</span>':'<span class="heart-empty" style="background:transparent;">♥</span>';
         document.getElementById("hud-lives").innerHTML=h; return;
@@ -1717,7 +1746,7 @@ function spEnd(){
         var ri=document.getElementById("result"); ri.classList.remove("hardcore","medium");
         document.getElementById("result-title").textContent='GAME OVER';
         document.getElementById("result-title").style.color="rgb(231,15,15)";
-        document.getElementById("random-msg").textContent='LV '+currentStoryLevel+' — '+msgs[Math.floor(Math.random()*msgs.length)];
+        document.getElementById("random-msg").textContent='[SLOT '+(activeSlot+1)+'] LV '+currentStoryLevel+' — '+msgs[Math.floor(Math.random()*msgs.length)];
         document.getElementById("score").textContent=spScore;
         document.getElementById("best-display").textContent=storyLevelGoal(currentStoryLevel)+' needed';
         document.getElementById("best-line").style.color='#00ccff';
