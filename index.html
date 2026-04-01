@@ -522,7 +522,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.22.2</h5>
+<h5>Version_1.22.3</h5>
 <div id="mob-pause-btn">⚙ SET</div>
 <div id="fps-counter">FPS: --</div>
 
@@ -1073,10 +1073,26 @@ var menuMusic      = document.getElementById("menu-music");
 
 function playMenuMusic() {
     if(!_menuMusicEnabled) return;
-    menuMusic.volume = settings.muted ? 0 : 0.45;
     if (menuMusic.paused) {
         var p = menuMusic.play();
         if (p && p.catch) p.catch(function(err) {});
+    }
+}
+ 
+function playAudio(a, v) {
+    var p = a.play();
+    if(p && p.catch) p.catch(function(err){
+        if(err.name !== 'AbortError') console.warn('Audio play blocked:', err.message);
+    });
+}
+ 
+function playGameMusic() {
+    if(mode === 'hardcore') {
+        var p = hardcoreMusic.play();
+        if(p && p.catch) p.catch(function(){});
+    } else {
+        var p = gameMusic.play();
+        if(p && p.catch) p.catch(function(){});
     }
 }
 function stopMenuMusic() { menuMusic.pause(); menuMusic.currentTime = 0; }
