@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,19 +57,16 @@
     #hud.hardcore { border-color: red; background: #1a0000; }
     #hud.medium   { border: 9px solid purple; }
     #hud.story    { border-color: #00ccff; background: #000d1a; }
-    #hud.story-red { border-color: red; background: #1a0000; }
     #hud-score { font-size: 10px; color: #0ff; }
     #hud-score.hardcore { color: #ff4444; }
     #hud-score.medium   { color: #ffd700; }
     #hud-score.story    { color: #00ffcc; }
-    #hud-score.story-red { color: #ff4444; }
     #hud-score.score-lg { font-size: 14px !important; }
     #hud-score.score-sm { font-size: 7px !important; }
     #hud-best  { font-size: 10px; color: #ff0; }
     #hud-best.hardcore  { color: #ff4444; }
     #hud-best.medium    { color: #ffd700; }
     #hud-best.story     { color: #00ccff; font-size: 8px; }
-    #hud-best.story-red { color: #ff4444; font-size: 8px; }
     #hud-best.score-lg  { font-size: 14px !important; }
     #hud-best.score-sm  { font-size: 7px !important; }
     #hud-lives { font-size: 12px; letter-spacing: 4px; }
@@ -90,7 +86,6 @@
     #game.hardcore { border-color: red; animation: hcflicker 1.5s infinite; }
     #game.medium   { border-color: purple; }
     #game.story    { border-color: #00ccff; animation: storyGlow 2s infinite; }
-    #game.story-red { border-color: red; animation: hcflicker 1.5s infinite; }
     @keyframes storyGlow { 0%,100%{border-color:#00ccff;box-shadow:0 0 18px #00ccff55;} 50%{border-color:#0088cc;box-shadow:0 0 8px #0088cc33;} }
     @keyframes spShake {
         0%{transform:translate(0,0)} 15%{transform:translate(-5px,3px)} 30%{transform:translate(5px,-3px)}
@@ -100,7 +95,6 @@
     #game.shaking { animation: spShake 0.25s ease-out; }
     #game.hardcore.shaking { animation: spShake 0.25s ease-out, hcflicker 1.5s infinite; }
     #game.story.shaking { animation: spShake 0.25s ease-out, storyGlow 2s infinite; }
-    #game.story-red.shaking { animation: spShake 0.25s ease-out, hcflicker 1.5s infinite; }
     #flash {
         position: absolute; top:0; left:0; width:100%; height:100%;
         opacity:0; pointer-events:none; z-index:50; background:transparent;
@@ -440,7 +434,6 @@
     #pause-text.hardcore { color:#ff4444; text-shadow:0 0 20px red,0 0 40px red; }
     #pause-text.medium   { color:#ffd700; text-shadow:0 0 20px #ffd700,0 0 40px #ffd700; }
     #pause-text.story    { color:#00ccff; text-shadow:0 0 20px #00ccff,0 0 40px #00ccff; }
-    #pause-text.story-red { color:#ff4444; text-shadow:0 0 20px red,0 0 40px red; }
     #pause-hint { font-size:9px; color:rgba(255,255,255,0.55); margin-top:18px; letter-spacing:2px; background:transparent; }
     #pause-settings-btn { margin-top:22px; width:180px!important; height:46px!important; font-size:9px!important; border-color:rgba(180,0,255,0.7)!important; color:rgba(220,180,255,0.9)!important; background:rgba(0,0,0,0.6)!important; }
     #pause-settings-btn:hover { border-color:#fff!important; color:#fff!important; }
@@ -493,21 +486,12 @@
     #game.hitbox-on #block, #game.hitbox-on #block2, #game.hitbox-on #meteor, #game.hitbox-on #monster, #game.hitbox-on #monster2 { outline:2px solid orangered; box-shadow:0 0 6px orangered,inset 0 0 6px rgba(255,80,0,0.15); }
     .mp-game.hitbox-on .mp-char { outline:2px solid lime; box-shadow:0 0 6px lime; }
     .mp-game.hitbox-on .mp-obs  { outline:2px solid orangered; box-shadow:0 0 6px orangered; }
-
-    /* ── Level button base styles ── */
     .story-level-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin:12px 0; background:transparent; padding:0 10px; }
     .lvl-btn { width:100%!important; height:52px!important; font-size:9px!important; border:2px solid #333!important; color:#555!important; cursor:not-allowed!important; pointer-events:none!important; background:rgba(0,0,0,0.5)!important; line-height:1.4; }
     .lvl-btn.unlocked { border-color:#00ccff!important; color:#00ccff!important; cursor:pointer!important; pointer-events:auto!important; text-shadow:0 0 6px #00ccff88; }
     .lvl-btn.unlocked:hover { border-width:3px!important; background:rgba(0,80,120,0.4)!important; }
-    /* Default beaten = green (zones 1-4 up to lv35) */
     .lvl-btn.beaten { border-color:#00ff88!important; color:#00ff88!important; cursor:pointer!important; pointer-events:auto!important; background:rgba(0,40,20,0.5)!important; }
     .lvl-btn.beaten:hover { border-width:3px!important; }
-    /* Red zone beaten (lv36+) = red instead of green */
-    .lvl-btn.beaten.red-zone { border-color:#ff4444!important; color:#ff4444!important; background:rgba(40,0,0,0.5)!important; text-shadow:0 0 6px #ff444488!important; }
-    .lvl-btn.beaten.red-zone:hover { border-color:#ff8888!important; background:rgba(60,0,0,0.6)!important; }
-    /* Currently selected level = white highlight */
-    .lvl-btn.selected { border-color:#ffffff!important; color:#ffffff!important; background:rgba(255,255,255,0.12)!important; text-shadow:0 0 8px #ffffff, 0 0 16px #ffffffaa!important; box-shadow:0 0 10px #ffffff55!important; }
-    .lvl-btn.selected:hover { border-width:3px!important; background:rgba(255,255,255,0.18)!important; }
     .lvl-btn.boss { border-color:#ff4444!important; color:#ff4444!important; text-shadow:0 0 8px red!important; }
     .lvl-btn.boss.unlocked { animation:bossGlow 1s infinite; }
     @keyframes bossGlow { 0%,100%{box-shadow:0 0 8px red} 50%{box-shadow:0 0 20px red,inset 0 0 10px rgba(255,0,0,0.1)} }
@@ -523,10 +507,6 @@
     #story-pb-label { font-size:6px; color:#00ccff; background:transparent; margin-bottom:2px; }
     #story-pb-outer { width:100%; height:8px; background:#111; border:1px solid #00ccff55; border-radius:4px; }
     #story-pb-inner { height:100%; width:0%; background:linear-gradient(90deg,#00ccff,#00ff88); border-radius:4px; transition:width 0.3s; }
-    /* Red-zone progress bar */
-    #story-pb-label.red-zone { color:#ff4444; }
-    #story-pb-outer.red-zone { border-color:#ff444455; }
-    #story-pb-inner.red-zone { background:linear-gradient(90deg,#ff4444,#ff8844); }
     #finale-screen { display:none; width:660px; background-color:black; padding:20px; position:relative; top:0; overflow-y:auto; max-height:700px; }
     .finale-line { font-size:10px; color:#aaa; line-height:2.5; background:transparent; opacity:0; transition:opacity 0.6s; }
     .finale-line.vis { opacity:1; }
@@ -541,7 +521,7 @@
     </style>
 </head>
 <body>
-<h5>Version_1.22.6</h5>
+<h5>Version_1.22.5</h5>
 <div id="mob-pause-btn">⚙ SET</div>
 <div id="fps-counter">FPS: --</div>
 
@@ -678,9 +658,9 @@
     <div class="story-level-grid" id="story-grid-2"></div>
     <div class="story-zone-label">── ZONE 3: Levels 16–35 · 75pts ──</div>
     <div class="story-level-grid" id="story-grid-3"></div>
-    <div class="story-zone-label" style="color:#ff8888;">── ZONE 4: Levels 36–45 · 100pts ──</div>
+    <div class="story-zone-label">── ZONE 4: Levels 36–45 · 100pts ──</div>
     <div class="story-level-grid" id="story-grid-4"></div>
-    <div class="story-zone-label" style="color:#ff4444;">── ZONE 5: Levels 46–49 · 150pts ──</div>
+    <div class="story-zone-label" style="color:#ff8888;">── ZONE 5: Levels 46–49 · 150pts ──</div>
     <div class="story-level-grid" id="story-grid-5"></div>
     <div class="story-zone-label" style="color:#ff4444;">── ☠ FINAL BOSS: Level 50 · 200pts ──</div>
     <div class="story-level-grid" id="story-grid-6"></div>
@@ -1131,7 +1111,7 @@ document.addEventListener('input', function(e){
         settings.volume = parseInt(e.target.value);
         document.getElementById('set-vol-label').textContent = settings.volume + '%';
         saveSettings();
-        applyMuteVolumes();
+        applyMuteVolumes(); // updates all currently-playing audio elements
     }
 });
 
@@ -1297,6 +1277,7 @@ function updateSettingsUI(){
         document.getElementById('set-kb-mobile-note-sp').style.display='none';
         document.getElementById('set-kb-mobile-note-mp').style.display='none';
     }
+    // sync volume slider to current settings
     applyMuteVolumes();
     var sc=document.getElementById('settings-scroll'); if(sc)sc.scrollTop=0;
 }
@@ -1386,9 +1367,8 @@ function playHit(){ var now=Date.now();if(now-lastHitSoundTime<200)return;lastHi
 function playGameOver(){ stopAllMusic(); playAudio(gameOverSound,0.8); }
 function playClick(){ playAudio(clickSound,0.6); }
 function playGameMusic(){
-    // For story levels 36+
-    if(mode==='hardcore'||(mode==='story'&&currentStoryLevel>=36)) playAudio(hardcoreMusic,0.5);
-    else playAudio(gameMusic,0.5);
+    if(mode==='hardcore') playAudio(hardcoreMusic,0.5);
+    else                  playAudio(gameMusic,0.5);
 }
 
 var isTouchDevice=(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||("ontouchstart" in window)||(navigator.maxTouchPoints>0);
@@ -1405,9 +1385,6 @@ function storySpeedMult(l){ return 1.0+(l-1)*0.024; }
 function storyObsCount(l){ if(l<=5)return 2; if(l<=15)return 3; if(l<=30)return 3; if(l<=40)return 4; return 5; }
 function storyScoreTick(l){ return Math.max(200,300-(l-1)*2); }
 function storyLives(l){ if(l<=15)return 3; if(l<=45)return 2; return 1; }
-
-// if this level should use the red/hardcore visual theme
-function isRedZoneLevel(l){ return l >= 36; }
 
 function buildStoryGrid(){
     // Update slot indicator
@@ -1427,23 +1404,9 @@ function buildStoryGrid(){
                 if(l===50)btn.classList.add('boss');
                 var cleared=storyProgress.beaten.indexOf(l)!==-1;
                 var unlocked=l<=storyProgress.unlocked;
-                var isRedZone=isRedZoneLevel(l);
-                var isSelected=(l===currentStoryLevel);
-
-                if(cleared){
-                    btn.classList.add('beaten');
-                    if(isRedZone) btn.classList.add('red-zone');
-                    btn.innerHTML='LV '+l+'<br/>✓';
-                } else if(unlocked){
-                    btn.classList.add('unlocked');
-                    btn.innerHTML='LV '+l+'<br/><span style="font-size:6px;background:transparent;">'+storyLevelGoal(l)+'pts</span>';
-                } else {
-                    btn.innerHTML='LV '+l+'<br/>🔒';
-                }
-
-                // White highlight for currently selected/active level
-                if(isSelected && unlocked) btn.classList.add('selected');
-
+                if(cleared){ btn.classList.add('beaten'); btn.innerHTML='LV '+l+'<br/>✓'; }
+                else if(unlocked){ btn.classList.add('unlocked'); btn.innerHTML='LV '+l+'<br/><span style="font-size:6px;background:transparent;">'+storyLevelGoal(l)+'pts</span>'; }
+                else{ btn.innerHTML='LV '+l+'<br/>🔒'; }
                 if(unlocked) btn.onclick=function(){ playClick(); startStoryLevel(l); };
                 el.appendChild(btn);
             })(lvl);
@@ -1489,11 +1452,8 @@ function spPause(){
     spMeteor.style.animationPlayState="paused"; spMonster.style.animationPlayState="paused"; spMonster2.style.animationPlayState="paused";
     if(spScoreInt){clearInterval(spScoreInt);spScoreInt=null;}
     gameMusic.pause(); hardcoreMusic.pause();
-    var pt=document.getElementById("pause-text"); pt.classList.remove("hardcore","medium","story","story-red");
-    if(mode==="hardcore") pt.classList.add("hardcore");
-    else if(mode==="medium") pt.classList.add("medium");
-    else if(mode==="story"&&isRedZoneLevel(currentStoryLevel)) pt.classList.add("story-red");
-    else if(mode==="story") pt.classList.add("story");
+    var pt=document.getElementById("pause-text"); pt.classList.remove("hardcore","medium","story");
+    if(mode==="hardcore")pt.classList.add("hardcore"); else if(mode==="medium")pt.classList.add("medium"); else if(mode==="story")pt.classList.add("story");
     document.getElementById("pause-overlay").classList.add("visible"); updateMobPauseBtnState();
 }
 function spResume(){
@@ -1583,7 +1543,7 @@ function showStart(){
     document.getElementById("start-best-med").textContent=bestMed;
     document.getElementById("start-best-hc").textContent=bestHC;
     updateStartSlotLabel();
-    ['game','hud','hud-score','hud-best'].forEach(function(id){ var el=document.getElementById(id); if(el)el.classList.remove('story','story-red'); });
+    ['game','hud','hud-score','hud-best'].forEach(function(id){ var el=document.getElementById(id); if(el)el.classList.remove('story'); });
     setRandomTag();
     if(window._applyRainbowTitle) window._applyRainbowTitle();
     playMenuMusic();
@@ -1616,7 +1576,7 @@ function beginGame(m){
     spScore=0; spLives=m==="easy"?3:m==="medium"?2:1;
     spDead=false; spInv=false; spCd=false; spCharX=300; storyWinPending=false;
     var ge=spGame,hu=document.getElementById("hud"),hs=document.getElementById("hud-score"),hb=document.getElementById("hud-best");
-    [ge,hu,hs,hb].forEach(function(e){e.classList.remove("hardcore","medium","story","story-red");});
+    [ge,hu,hs,hb].forEach(function(e){e.classList.remove("hardcore","medium","story");});
     if(m==="hardcore")[ge,hu,hs,hb].forEach(function(e){e.classList.add("hardcore");});
     else if(m==="medium")[ge,hu,hs,hb].forEach(function(e){e.classList.add("medium");});
     hideAll();
@@ -1642,17 +1602,7 @@ function startStoryLevel(lvl){
     mode='story'; gameType='single'; isPaused=false;
     spScore=0; spLives=storyLives(lvl); spDead=false; spInv=false; spCd=false; spCharX=300;
     var ge=spGame,hu=document.getElementById("hud"),hs=document.getElementById("hud-score"),hb=document.getElementById("hud-best");
-
-    // Clear all mode classes
-    [ge,hu,hs,hb].forEach(function(e){e.classList.remove("hardcore","medium","story","story-red");});
-
-    // Apply red zone styling for levels 36+, normal story for below
-    if(isRedZoneLevel(lvl)){
-        [ge,hu,hs,hb].forEach(function(e){e.classList.add("story-red");});
-    } else {
-        [ge,hu,hs,hb].forEach(function(e){e.classList.add("story");});
-    }
-
+    [ge,hu,hs,hb].forEach(function(e){e.classList.remove("hardcore","medium","story");e.classList.add("story");});
     hideAll();
     ge.style.display="block"; hu.style.display="flex";
     document.getElementById("game-backdrop").style.display="block";
@@ -1664,22 +1614,7 @@ function startStoryLevel(lvl){
     document.getElementById('story-pb-goal').textContent=storyGoal;
     document.getElementById('story-pb-num').textContent='0';
     document.getElementById('story-pb-inner').style.width='0%';
-    document.getElementById('hud-best-val').textContent='LV '+lvl+' S'+(activeSlot+1);
-
-    // Progress bar color: red for zone 36+
-    var pbLabel=document.getElementById('story-pb-label');
-    var pbOuter=document.getElementById('story-pb-outer');
-    var pbInner=document.getElementById('story-pb-inner');
-    if(isRedZoneLevel(lvl)){
-        pbLabel.classList.add('red-zone'); pbOuter.classList.add('red-zone'); pbInner.classList.add('red-zone');
-    } else {
-        pbLabel.classList.remove('red-zone'); pbOuter.classList.remove('red-zone'); pbInner.classList.remove('red-zone');
-    }
-
-    // Countdown color: red for zone 36+
-    var cd=document.getElementById("countdown");
-    cd.style.color=isRedZoneLevel(lvl)?'red':'#00ccff';
-
+    document.getElementById('hud-best-val').textContent='LV '+lvl;
     [spBlock,spBlock2,spMeteor,spMonster,spMonster2].forEach(function(o){o.style.animation="none";o.style.top="-1000px";});
     void spBlock.offsetWidth;
     spRandomizeObstaclePositions();
@@ -1724,20 +1659,14 @@ function triggerStoryWin(){
     stopAllMusic();
     if(storyProgress.beaten.indexOf(currentStoryLevel)===-1)storyProgress.beaten.push(currentStoryLevel);
     if(currentStoryLevel<50&&currentStoryLevel+1>storyProgress.unlocked)storyProgress.unlocked=currentStoryLevel+1;
-    saveStory();
+    saveStory(); // saves to active slot
     updateStartSlotLabel();
     var wtitle=document.getElementById('story-win-title'),wsub=document.getElementById('story-win-sub'),wnxt=document.getElementById('story-win-next-btn');
     if(currentStoryLevel===50){
         wtitle.textContent='🌟 YOU WIN! 🌟'; wtitle.style.color='#ffd700'; wtitle.style.textShadow='0 0 30px #ffd700,0 0 60px #ffd700';
         wsub.textContent='ALL 50 LEVELS CONQUERED!'; wnxt.textContent='🌟 VIEW ENDING';
     } else {
-        wtitle.textContent='LEVEL '+currentStoryLevel+' CLEAR!';
-        // Red win color
-        if(isRedZoneLevel(currentStoryLevel)){
-            wtitle.style.color='#ff8844'; wtitle.style.textShadow='0 0 20px #ff4444,0 0 40px #ff4444';
-        } else {
-            wtitle.style.color='#00ffcc'; wtitle.style.textShadow='0 0 20px #00ffcc,0 0 40px #00ffcc';
-        }
+        wtitle.textContent='LEVEL '+currentStoryLevel+' CLEAR!'; wtitle.style.color='#00ffcc'; wtitle.style.textShadow='0 0 20px #00ffcc,0 0 40px #00ffcc';
         wsub.textContent='Score: '+spScore+' · Next: Level '+(currentStoryLevel+1);
         wnxt.textContent='▶ LEVEL '+(currentStoryLevel+1);
     }
@@ -1794,8 +1723,7 @@ function spUpdateHUD(){
     if(mode==='story'){
         document.getElementById("hud-best-val").textContent='LV '+currentStoryLevel+' S'+(activeSlot+1);
         var max=storyLives(currentStoryLevel),h='';
-        var heartColor=isRedZoneLevel(currentStoryLevel)?'#ff4444':'#00ccff';
-        for(var i=0;i<max;i++)h+=i<spLives?'<span style="color:'+heartColor+';background:transparent;">♥</span>':'<span class="heart-empty" style="background:transparent;">♥</span>';
+        for(var i=0;i<max;i++)h+=i<spLives?'<span style="color:#00ccff;background:transparent;">♥</span>':'<span class="heart-empty" style="background:transparent;">♥</span>';
         document.getElementById("hud-lives").innerHTML=h; return;
     }
     var b=mode==="hardcore"?bestHC:mode==="medium"?bestMed:bestEasy;
@@ -1807,8 +1735,7 @@ function spUpdateHUD(){
 }
 function spFlash(){
     var f=document.getElementById("flash"); f.style.backgroundColor="red";
-    f.style.opacity=(mode==="hardcore"||(mode==='story'&&isRedZoneLevel(currentStoryLevel)))?"0.7":"0.45";
-    spChar.classList.add("hit"); triggerShake();
+    f.style.opacity=mode==="hardcore"?"0.7":"0.45"; spChar.classList.add("hit"); triggerShake();
     setTimeout(function(){f.style.opacity="0";spChar.classList.remove("hit");},180);
 }
 function spHit(){
@@ -1836,14 +1763,13 @@ function spEnd(){
         document.getElementById('story-progress-bar-wrap').classList.remove('show');
         var ri=document.getElementById("result"); ri.classList.remove("hardcore","medium");
         document.getElementById("result-title").textContent='GAME OVER';
-        document.getElementById("result-title").style.color=isRedZoneLevel(currentStoryLevel)?"#ff4444":"rgb(231,15,15)";
-        document.getElementById("random-msg").textContent=isRedZoneLevel(currentStoryLevel)?hcMsgs[Math.floor(Math.random()*hcMsgs.length)]:msgs[Math.floor(Math.random()*msgs.length)];
+        document.getElementById("result-title").style.color="rgb(231,15,15)";
+        document.getElementById("random-msg").textContent=msgs[Math.floor(Math.random()*msgs.length)];
         document.getElementById("score").textContent=spScore;
         document.getElementById("best-display").textContent=storyLevelGoal(currentStoryLevel)+' needed';
-        document.getElementById("best-line").style.color=isRedZoneLevel(currentStoryLevel)?'#ff4444':'#00ccff';
+        document.getElementById("best-line").style.color='#00ccff';
         var rb=document.getElementById("restart-btn"),qb=document.getElementById("quit-btn");
         rb.classList.remove('hc-btn','med-btn'); qb.classList.remove('hc-btn','med-btn');
-        if(isRedZoneLevel(currentStoryLevel)){ rb.classList.add('hc-btn'); qb.classList.add('hc-btn'); }
         rb.textContent='↺ Retry Level'; qb.textContent='✕ Slot Select';
         qb.onclick=function(){showSaveSlotSelect();};
         ri.style.display='block'; return;
@@ -1915,16 +1841,11 @@ function spStartScore(){
 function spCountdown(cb){
     spCd=true; countdownSound.currentTime=0; playAudio(countdownSound,0.7);
     var cd=document.getElementById("countdown"); cd.style.display="block";
-    // Red zone
-    if(mode==='story'){
-        cd.style.color=isRedZoneLevel(currentStoryLevel)?'red':'#00ccff';
-    } else {
-        cd.style.color=mode==="medium"?"#ff0000":"red";
-    }
+    cd.style.color=mode==="medium"?"#ff0000":mode==="story"?"#00ccff":"red";
     var n=3; cd.textContent=n;
     var t=setInterval(function(){
         n--; if(n>0)cd.textContent=n;
-        else if(n===0)cd.textContent=(mode==="hardcore"||(mode==='story'&&isRedZoneLevel(currentStoryLevel)))?"DIE.":"GO!";
+        else if(n===0)cd.textContent=mode==="hardcore"?"DIE.":mode==="story"?"GO!":"GO!";
         else{clearInterval(t);cd.style.display="none";spCd=false;cb();}
     },1000);
 }
