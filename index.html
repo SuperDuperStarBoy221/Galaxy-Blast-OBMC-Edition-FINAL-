@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,17 +57,14 @@
     }
     #hud.hardcore { border-color: red; background: #1a0000; }
     #hud.medium   { border: 9px solid purple; }
-    #hud.story    { border-color: #00ccff; background: #000d1a; }
     #hud-score { font-size: 10px; color: #0ff; }
     #hud-score.hardcore { color: #ff4444; }
     #hud-score.medium   { color: #ffd700; }
-    #hud-score.story    { color: #00ffcc; }
     #hud-score.score-lg { font-size: 14px !important; }
     #hud-score.score-sm { font-size: 7px !important; }
     #hud-best  { font-size: 10px; color: #ff0; }
     #hud-best.hardcore  { color: #ff4444; }
     #hud-best.medium    { color: #ffd700; }
-    #hud-best.story     { color: #00ccff; font-size: 8px; }
     #hud-best.score-lg  { font-size: 14px !important; }
     #hud-best.score-sm  { font-size: 7px !important; }
     #hud-lives { font-size: 12px; letter-spacing: 4px; }
@@ -85,8 +83,6 @@
     }
     #game.hardcore { border-color: red; animation: hcflicker 1.5s infinite; }
     #game.medium   { border-color: purple; }
-    #game.story    { border-color: #00ccff; animation: storyGlow 2s infinite; }
-    @keyframes storyGlow { 0%,100%{border-color:#00ccff;box-shadow:0 0 18px #00ccff55;} 50%{border-color:#0088cc;box-shadow:0 0 8px #0088cc33;} }
     @keyframes spShake {
         0%{transform:translate(0,0)} 15%{transform:translate(-5px,3px)} 30%{transform:translate(5px,-3px)}
         45%{transform:translate(-4px,2px)} 60%{transform:translate(4px,-2px)}
@@ -94,7 +90,6 @@
     }
     #game.shaking { animation: spShake 0.25s ease-out; }
     #game.hardcore.shaking { animation: spShake 0.25s ease-out, hcflicker 1.5s infinite; }
-    #game.story.shaking { animation: spShake 0.25s ease-out, storyGlow 2s infinite; }
     #flash {
         position: absolute; top:0; left:0; width:100%; height:100%;
         opacity:0; pointer-events:none; z-index:50; background:transparent;
@@ -121,7 +116,7 @@
         top:25%; left:50%; transform:translate(-50%,-50%);
         font-size:80px; color:red; z-index:9999; background:transparent;
     }
-    #start, #mode-select, #type-select, #story-select {
+    #start, #mode-select, #type-select{
         width:660px; height:670px; margin:1rem auto;
         font-size:30px; color:white;
         background: transparent;
@@ -129,169 +124,6 @@
     }
     #mode-select  { display:none; }
     #type-select  { display:none; }
-    #story-select { display:none; overflow-y:auto; overflow-x:hidden; scrollbar-width:thin; scrollbar-color:#00557a #111; }
-    #story-select::-webkit-scrollbar { width:6px; }
-    #story-select::-webkit-scrollbar-track { background:#111; border-radius:3px; }
-    #story-select::-webkit-scrollbar-thumb { background:#00557a; border-radius:3px; }
-    #story-select::-webkit-scrollbar-thumb:hover { background:#0088cc; }
-
-    /*save slot style*/
-    #save-slot-select {
-        display: none;
-        width: 660px;
-        min-height: 670px;
-        margin: 1rem auto;
-        background: transparent;
-        position: relative;
-        top: 0;
-    }
-    #save-slot-select h2 {
-        color: #00ccff;
-        font-size: 16px;
-        text-shadow: 0 0 14px #00ccff, 0 0 30px #00ccff55;
-        margin-bottom: 6px;
-    }
-    #save-slot-select .slot-subtitle {
-        font-size: 7px;
-        color: #446677;
-        letter-spacing: 2px;
-        margin-bottom: 20px;
-    }
-    .save-slot-card {
-        width: 580px;
-        margin: 0 auto 14px auto;
-        background: rgba(0, 20, 35, 0.85);
-        border: 2px solid #005577;
-        border-radius: 4px;
-        padding: 14px 18px;
-        cursor: pointer;
-        transition: border-color 0.15s, background 0.15s, transform 0.1s;
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        text-align: left;
-    }
-    .save-slot-card:hover {
-        border-color: #00ccff;
-        background: rgba(0, 40, 65, 0.92);
-        transform: scale(1.018);
-    }
-    .save-slot-card:active { transform: scale(0.98); }
-    .save-slot-card.empty {
-        border-color: #1a2233;
-        background: rgba(0,0,0,0.4);
-        opacity: 0.7;
-    }
-    .save-slot-card.empty:hover {
-        border-color: #00ccff;
-        opacity: 1;
-        background: rgba(0, 20, 40, 0.7);
-    }
-    .slot-icon {
-        font-size: 28px;
-        min-width: 40px;
-        text-align: center;
-        background: transparent;
-    }
-    .slot-info { flex: 1; background: transparent; }
-    .slot-name {
-        font-size: 10px;
-        color: #00ccff;
-        letter-spacing: 2px;
-        background: transparent;
-        margin-bottom: 6px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    .slot-name .slot-num {
-        font-size: 8px;
-        color: #447799;
-        background: transparent;
-    }
-    .slot-progress-row {
-        display: flex;
-        gap: 14px;
-        align-items: center;
-        background: transparent;
-        margin-bottom: 5px;
-        flex-wrap: wrap;
-    }
-    .slot-stat {
-        font-size: 7px;
-        color: #5599aa;
-        background: transparent;
-        letter-spacing: 1px;
-    }
-    .slot-stat span {
-        color: #00ffcc;
-        background: transparent;
-    }
-    .slot-stat.warn span { color: #ff8888; }
-    .slot-pb-outer {
-        width: 100%;
-        height: 5px;
-        background: #0a1520;
-        border-radius: 3px;
-        margin-top: 4px;
-        border: 1px solid #003344;
-    }
-    .slot-pb-inner {
-        height: 100%;
-        background: linear-gradient(90deg, #00ccff, #00ff88);
-        border-radius: 3px;
-        transition: width 0.4s;
-    }
-    .slot-empty-label {
-        font-size: 9px;
-        color: #334455;
-        background: transparent;
-        letter-spacing: 2px;
-    }
-    .slot-new-badge {
-        font-size: 6px;
-        color: #000;
-        background: #00ccff;
-        padding: 2px 5px;
-        border-radius: 2px;
-        letter-spacing: 1px;
-    }
-    .slot-delete-btn {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px;
-        background: rgba(80,0,0,0.5) !important;
-        border: 1px solid #441111 !important;
-        color: #884444 !important;
-        font-size: 12px !important;
-        padding: 0;
-        cursor: pointer;
-        border-radius: 3px;
-        transition: border-color 0.12s, color 0.12s, background 0.12s;
-        font-family: "Press Start 2P", consolas;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-    .slot-delete-btn:hover {
-        border-color: #ff4444 !important;
-        color: #ff4444 !important;
-        background: rgba(120,0,0,0.6) !important;
-        border-width: 2px !important;
-    }
-    .slot-delete-btn.confirming {
-        border-color: #ff4444 !important;
-        color: #ff4444 !important;
-        animation: kbPulse 0.4s ease-in-out 4;
-    }
-    .save-slot-card.boss-active { border-color: #ff4444 !important; }
-    .save-slot-card.boss-active:hover { border-color: #ff8888 !important; }
-    @keyframes slotIn {
-        from { opacity: 0; transform: translateY(12px); }
-        to   { opacity: 1; transform: translateY(0); }
-    }
 
     button {
         width:250px; height:70px; background-color:rgba(0,0,0,0.7);
@@ -304,8 +136,6 @@
     button.hc-btn:hover { border-color:red; border-width:4px; }
     button.med-btn { border-color:#ffd700; color:#ffd700; }
     button.med-btn:hover { border-color:#ffd700; border-width:4px; }
-    button.story-btn { border-color:#00ccff; color:#00ccff; text-shadow:0 0 8px #00ccff; }
-    button.story-btn:hover { border-color:#00ccff; border-width:4px; }
     #result {
         height:510px; width:660px; margin:1rem auto; font-size:30px;
         color:white; display:none; position:relative; top:0; overflow:hidden;
@@ -433,7 +263,6 @@
     #pause-text { font-size:42px; color:#fff; text-shadow:0 0 20px #a000ff,0 0 40px #a000ff; letter-spacing:6px; background:transparent; animation:pausePulse 1.2s ease-in-out infinite; }
     #pause-text.hardcore { color:#ff4444; text-shadow:0 0 20px red,0 0 40px red; }
     #pause-text.medium   { color:#ffd700; text-shadow:0 0 20px #ffd700,0 0 40px #ffd700; }
-    #pause-text.story    { color:#00ccff; text-shadow:0 0 20px #00ccff,0 0 40px #00ccff; }
     #pause-hint { font-size:9px; color:rgba(255,255,255,0.55); margin-top:18px; letter-spacing:2px; background:transparent; }
     #pause-settings-btn { margin-top:22px; width:180px!important; height:46px!important; font-size:9px!important; border-color:rgba(180,0,255,0.7)!important; color:rgba(220,180,255,0.9)!important; background:rgba(0,0,0,0.6)!important; }
     #pause-settings-btn:hover { border-color:#fff!important; color:#fff!important; }
@@ -486,42 +315,14 @@
     #game.hitbox-on #block, #game.hitbox-on #block2, #game.hitbox-on #meteor, #game.hitbox-on #monster, #game.hitbox-on #monster2 { outline:2px solid orangered; box-shadow:0 0 6px orangered,inset 0 0 6px rgba(255,80,0,0.15); }
     .mp-game.hitbox-on .mp-char { outline:2px solid lime; box-shadow:0 0 6px lime; }
     .mp-game.hitbox-on .mp-obs  { outline:2px solid orangered; box-shadow:0 0 6px orangered; }
-    .story-level-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin:12px 0; background:transparent; padding:0 10px; }
-    .lvl-btn { width:100%!important; height:52px!important; font-size:9px!important; border:2px solid #333!important; color:#555!important; cursor:not-allowed!important; pointer-events:none!important; background:rgba(0,0,0,0.5)!important; line-height:1.4; }
-    .lvl-btn.unlocked { border-color:#00ccff!important; color:#00ccff!important; cursor:pointer!important; pointer-events:auto!important; text-shadow:0 0 6px #00ccff88; }
-    .lvl-btn.unlocked:hover { border-width:3px!important; background:rgba(0,80,120,0.4)!important; }
-    .lvl-btn.beaten { border-color:#00ff88!important; color:#00ff88!important; cursor:pointer!important; pointer-events:auto!important; background:rgba(0,40,20,0.5)!important; }
-    .lvl-btn.beaten:hover { border-width:3px!important; }
-    .lvl-btn.boss { border-color:#ff4444!important; color:#ff4444!important; text-shadow:0 0 8px red!important; }
-    .lvl-btn.boss.unlocked { animation:bossGlow 1s infinite; }
-    @keyframes bossGlow { 0%,100%{box-shadow:0 0 8px red} 50%{box-shadow:0 0 20px red,inset 0 0 10px rgba(255,0,0,0.1)} }
-    .story-zone-label { font-size:7px; color:#666; letter-spacing:2px; margin:8px 0 4px 0; background:transparent; }
-    #story-win-overlay { display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,10,0.88); flex-direction:column; align-items:center; justify-content:center; z-index:20000; pointer-events:none; }
-    #story-win-overlay.show { display:flex; pointer-events:auto; }
-    #story-win-title { font-size:28px; color:#00ffcc; text-shadow:0 0 20px #00ffcc,0 0 40px #00ffcc; background:transparent; animation:winPulse 0.8s ease-in-out infinite; }
-    @keyframes winPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.75;transform:scale(1.04)} }
-    #story-win-sub { font-size:9px; color:#aaa; margin-top:10px; background:transparent; }
-    #story-win-next-btn { margin-top:18px; width:210px!important; height:52px!important; font-size:10px!important; border-color:#00ccff!important; color:#00ccff!important; pointer-events:auto; }
-    #story-progress-bar-wrap { display:none; position:absolute; bottom:38px; left:10px; width:180px; z-index:500; background:transparent; }
-    #story-progress-bar-wrap.show { display:block; }
-    #story-pb-label { font-size:6px; color:#00ccff; background:transparent; margin-bottom:2px; }
-    #story-pb-outer { width:100%; height:8px; background:#111; border:1px solid #00ccff55; border-radius:4px; }
-    #story-pb-inner { height:100%; width:0%; background:linear-gradient(90deg,#00ccff,#00ff88); border-radius:4px; transition:width 0.3s; }
-    #finale-screen { display:none; width:660px; background-color:black; padding:20px; position:relative; top:0; overflow-y:auto; max-height:700px; }
-    .finale-line { font-size:10px; color:#aaa; line-height:2.5; background:transparent; opacity:0; transition:opacity 0.6s; }
-    .finale-line.vis { opacity:1; }
-    .finale-star-row { font-size:20px; background:transparent; letter-spacing:6px; margin:8px 0; opacity:0; transition:opacity 0.6s; }
-    .finale-star-row.vis { opacity:1; }
-    @keyframes finaleGlow { 0%,100%{color:#fff;text-shadow:0 0 10px #fff} 50%{color:#00ffcc;text-shadow:0 0 30px #00ffcc,0 0 60px #00ffcc} }
-    #finale-title { font-size:22px; animation:finaleGlow 2s infinite; background:transparent; }
-    
+
     .set-vol-row { display:flex; align-items:center; justify-content:space-between; padding:3px 10px 6px 10px; background:rgba(255,255,255,0.015); margin:-4px 0 2px 0; border-left:2px solid #1e1e1e; }
     #set-vol-slider { width:130px; accent-color:#0ff; cursor:pointer; }
     #set-vol-label { font-size:7px; color:#0ff; min-width:30px; text-align:right; background:transparent; font-family:"Press Start 2P",consolas; }
     </style>
 </head>
 <body>
-<h5>Version_1.22.5</h5>
+<h5>Version_1.22.4</h5>
 <div id="mob-pause-btn">⚙ SET</div>
 <div id="fps-counter">FPS: --</div>
 
@@ -578,20 +379,11 @@
         &nbsp;&nbsp;
         HC BEST: <span id="start-best-hc" style="color:#f44;background:transparent;">0</span>
     </div>
-    <div style="font-size:9px;color:#555;background:transparent;margin-top:6px;">
-        STORY: <span id="start-story-slot-label" style="color:#00ccff;background:transparent;">SLOT 1 · LV 1</span>
-    </div>
 </div>
 
 <!--select game mode-->
 <div id="type-select">
     <h2 style="background:transparent;">SELECT MODE</h2>
-    <br/><br/>
-    <a href="#" onclick="showSaveSlotSelect()">
-        <button class="story-btn" style="width:280px;height:80px;font-size:13px;">
-            🌟 STORY MODE<br/><span style="font-size:8px;color:#88ddff;background:transparent;">50 levels · progressive</span>
-        </button>
-    </a>
     <br/><br/>
     <a href="#" onclick="showClassicModeSelect()">
         <button style="border-color:#aaa;color:#aaa;width:280px;height:80px;font-size:13px;">
@@ -633,42 +425,6 @@
     <a href="#" onclick="showTypeSelect()"><button style="width:150px;height:50px;font-size:10px;">← Back</button></a>
 </div>
 
-<!-- SAVE SLOT SELECT -->
-<div id="save-slot-select">
-    <h2>🌟 STORY MODE</h2>
-    <div class="slot-subtitle">── SELECT SAVE SLOT ──</div>
-    <div id="save-slot-cards"></div>
-    <br/>
-    <a href="#" onclick="showTypeSelect()"><button style="width:150px;height:50px;font-size:10px;">← Back</button></a>
-    <br/><br/>
-</div>
-
-<!-- Select Levels-->
-<div id="story-select">
-    <h2 style="color:#00ccff;font-size:16px;text-shadow:0 0 12px #00ccff;background:transparent;">🌟 STORY MODE</h2>
-    <div style="font-size:8px;color:#555;background:transparent;margin:6px 0;">
-        <span id="story-slot-indicator" style="color:#00ccff88;background:transparent;">SLOT 1</span>
-        &nbsp;·&nbsp;
-        UNLOCKED: LV <span id="story-unlocked-display" style="color:#00ccff;background:transparent;">1</span>
-        &nbsp;|&nbsp; CLEARED: <span id="story-cleared-display" style="color:#00ff88;background:transparent;">0</span>/50
-    </div>
-    <div class="story-zone-label">── ZONE 1: Levels 1–5 · 20pts ──</div>
-    <div class="story-level-grid" id="story-grid-1"></div>
-    <div class="story-zone-label">── ZONE 2: Levels 6–15 · 50pts ──</div>
-    <div class="story-level-grid" id="story-grid-2"></div>
-    <div class="story-zone-label">── ZONE 3: Levels 16–35 · 75pts ──</div>
-    <div class="story-level-grid" id="story-grid-3"></div>
-    <div class="story-zone-label">── ZONE 4: Levels 36–45 · 100pts ──</div>
-    <div class="story-level-grid" id="story-grid-4"></div>
-    <div class="story-zone-label" style="color:#ff8888;">── ZONE 5: Levels 46–49 · 150pts ──</div>
-    <div class="story-level-grid" id="story-grid-5"></div>
-    <div class="story-zone-label" style="color:#ff4444;">── ☠ FINAL BOSS: Level 50 · 200pts ──</div>
-    <div class="story-level-grid" id="story-grid-6"></div>
-    <br/>
-    <a href="#" onclick="showSaveSlotSelect()"><button style="width:150px;height:50px;font-size:10px;">← Back</button></a>
-    <br/><br/>
-</div>
-
 <!--hud and game -->
 <div id="hud">
     <div id="hud-score">SCORE: <span id="hud-score-val">0</span></div>
@@ -690,18 +446,6 @@
         <button id="pause-settings-btn" onclick="openSettings('sp-pause')">⚙ SETTINGS</button>
         <button id="pause-quit-btn" onclick="quitToMenu()" style="margin-top:10px;width:140px!important;height:38px!important;font-size:8px!important;border-color:#666!important;color:#aaa!important;background:rgba(0,0,0,0.6)!important;">✕ Quit</button>
     </div>
-    <div id="story-progress-bar-wrap">
-        <div id="story-pb-label">PROGRESS: <span id="story-pb-num">0</span> / <span id="story-pb-goal">20</span></div>
-        <div id="story-pb-outer"><div id="story-pb-inner"></div></div>
-    </div>
-    <div id="story-win-overlay">
-        <div id="story-win-title">LEVEL CLEAR!</div>
-        <div id="story-win-sub"></div>
-        <button id="story-win-next-btn" onclick="storyWinNext()">▶ NEXT LEVEL</button>
-    </div>
-    <div style="position:absolute;bottom:0;left:0;width:100%;height:33px;background-color:#000;z-index:999;"></div>
-    <div style="position:absolute;top:0;left:0;width:100%;height:65px;background-color:#000;z-index:999;"></div>
-</div>
 
 <div id="mobile-controls">
     <div class="mob-btn" id="mob-left">◀</div>
@@ -725,7 +469,6 @@
     <h4>← → Arrow keys to move.</h4><br/>
     <h4>On mobile: tap ◀ ▶ buttons!</h4><br/>
     <h4>⚠ Avoid ALL fire meteors!</h4><br/>
-    <h4>STORY: reach score goal → win!</h4><br/>
     <h4>EASY: 3 lives ♥♥♥</h4><br/>
     <h4>MEDIUM: 2 lives ♥♥</h4><br/>
     <h4>HARDCORE: 1 hit = dead ☠</h4><br/>
@@ -824,16 +567,6 @@
     <button onclick="showStart()" style="width:200px;height:65px;font-size:12px;">✕ Quit</button>
 </div>
 
-<!--finale-->
-<div id="finale-screen">
-    <br/>
-    <div id="finale-title" style="font-size:22px;background:transparent;margin-bottom:8px;">🌟 YOU DID IT! 🌟</div>
-    <div id="finale-content" style="background:transparent;"></div>
-    <br/>
-    <button id="finale-back-btn" onclick="showStart()" style="display:none;border-color:#00ccff;color:#00ccff;width:220px;height:60px;font-size:11px;">↩ RETURN TO MENU</button>
-    <br/><br/>
-</div>
-
 </div><!--scale-root-->
 
 <div id="game-backdrop"></div>
@@ -845,181 +578,6 @@
 <audio id="click-sound"><source src="floraphonic-8-bit-game-2-186976.mp3" type="audio/mpeg"></audio>
 <audio id="menu-music" loop><source src="darren_hirst-gamer-music-140-bpm-355954.mp3"></audio>
 <script>
-
-// save  game
-var NUM_SLOTS = 3;
-var SLOT_ICONS = ['🚀', '⭐', '🔥'];
-var SLOT_NAMES = ['SAVE SLOT 1', 'SAVE SLOT 2', 'SAVE SLOT 3'];
-var activeSlot = 0; // 0-indexed
-
-function getSlotKey(slotIdx) {
-    return 'galaxyblast_story_slot' + slotIdx;
-}
-function loadSlot(slotIdx) {
-    try {
-        var raw = localStorage.getItem(getSlotKey(slotIdx));
-        if (raw) {
-            var sp = JSON.parse(raw);
-            if (sp && typeof sp.unlocked === 'number') {
-                if (!Array.isArray(sp.beaten)) sp.beaten = [];
-                return sp;
-            }
-        }
-    } catch(e) {}
-    return null; // empty slot
-}
-function saveSlot(slotIdx, data) {
-    try { localStorage.setItem(getSlotKey(slotIdx), JSON.stringify(data)); } catch(e) {}
-}
-function deleteSlot(slotIdx) {
-    try { localStorage.removeItem(getSlotKey(slotIdx)); } catch(e) {}
-}
-function getSlotData(slotIdx) {
-    var d = loadSlot(slotIdx);
-    if (!d) return null;
-    return d;
-}
-
-// Migrate old game
-(function migrateLegacy(){
-    try {
-        var old = localStorage.getItem('galaxyblast_story');
-        if (old && !localStorage.getItem(getSlotKey(0))) {
-            var parsed = JSON.parse(old);
-            if (parsed && typeof parsed.unlocked === 'number') {
-                saveSlot(0, parsed);
-            }
-        }
-    } catch(e) {}
-})();
-
-// Active slot progress
-var storyProgress = { unlocked: 1, beaten: [] };
-
-function loadActiveSlot() {
-    var d = loadSlot(activeSlot);
-    if (d) {
-        storyProgress = d;
-    } else {
-        storyProgress = { unlocked: 1, beaten: [] };
-    }
-}
-function saveStory() {
-    saveSlot(activeSlot, storyProgress);
-    updateStartSlotLabel();
-}
-
-function updateStartSlotLabel() {
-    var lbl = document.getElementById('start-story-slot-label');
-    if (!lbl) return;
-    var d = loadSlot(activeSlot);
-    if (d) {
-        lbl.textContent = 'SLOT '+(activeSlot+1)+' · LV '+d.unlocked;
-    } else {
-        lbl.textContent = 'SLOT '+(activeSlot+1)+' · NEW';
-    }
-}
-
-// slot render
-var _slotDeleteConfirm = [false, false, false];
-var _slotDeleteTimers  = [null,  null,  null ];
-
-function buildSaveSlotCards() {
-    var container = document.getElementById('save-slot-cards');
-    container.innerHTML = '';
-    for (var i = 0; i < NUM_SLOTS; i++) {
-        container.appendChild(buildSlotCard(i));
-    }
-}
-
-function buildSlotCard(i) {
-    var d = getSlotData(i);
-    var card = document.createElement('div');
-    card.className = 'save-slot-card' + (d === null ? ' empty' : '');
-    if (d && d.beaten && d.beaten.indexOf(50) !== -1) card.classList.add('boss-active');
-    card.id = 'slot-card-' + i;
-
-    var slotIdx = i; // closure
-
-    if (d === null) {
-        // Empty slot
-        card.innerHTML =
-            '<div class="slot-icon">' + SLOT_ICONS[i] + '</div>' +
-            '<div class="slot-info">' +
-                '<div class="slot-name"><span class="slot-num">' + SLOT_NAMES[i] + '</span>' +
-                '<span class="slot-new-badge">NEW</span></div>' +
-                '<div class="slot-empty-label">── EMPTY ──</div>' +
-            '</div>';
-        card.addEventListener('click', function() {
-            playClick();
-            activeSlot = slotIdx;
-            loadActiveSlot();
-            showStorySelect();
-        });
-    } else {
-        var pct = Math.min(100, Math.round((d.beaten.length / 50) * 100));
-        var isBoss = d.beaten.indexOf(50) !== -1;
-        card.innerHTML =
-            '<div class="slot-icon">' + SLOT_ICONS[i] + '</div>' +
-            '<div class="slot-info">' +
-                '<div class="slot-name">' + SLOT_NAMES[i] +
-                    (isBoss ? ' <span style="color:#ffd700;font-size:7px;background:transparent;">👑 COMPLETE</span>' : '') +
-                '</div>' +
-                '<div class="slot-progress-row">' +
-                    '<div class="slot-stat">LVL <span>' + d.unlocked + '</span> / 50</div>' +
-                    '<div class="slot-stat">CLEARED <span>' + d.beaten.length + '</span>/50</div>' +
-                    '<div class="slot-stat' + (isBoss ? ' warn' : '') + '">BOSS <span>' + (isBoss ? '✓' : '✗') + '</span></div>' +
-                '</div>' +
-                '<div class="slot-pb-outer"><div class="slot-pb-inner" style="width:' + pct + '%"></div></div>' +
-            '</div>' +
-            '<button class="slot-delete-btn" id="slot-del-' + i + '" title="Delete save">✕</button>';
-
-        // Click card body = load slot
-        card.addEventListener('click', function(e) {
-            if (e.target.classList.contains('slot-delete-btn')) return;
-            playClick();
-            activeSlot = slotIdx;
-            loadActiveSlot();
-            showStorySelect();
-        });
-
-        // Delete save slot
-        var delBtn = card.querySelector('.slot-delete-btn');
-        delBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            playClick();
-            if (_slotDeleteConfirm[slotIdx]) {
-                // Confirmed and delete
-                clearTimeout(_slotDeleteTimers[slotIdx]);
-                _slotDeleteConfirm[slotIdx] = false;
-                deleteSlot(slotIdx);
-                if (activeSlot === slotIdx) {
-                    storyProgress = { unlocked: 1, beaten: [] };
-                }
-                buildSaveSlotCards();
-                updateStartSlotLabel();
-            } else {
-                // First click ask
-                _slotDeleteConfirm[slotIdx] = true;
-                var btn = document.getElementById('slot-del-' + slotIdx);
-                if (btn) { btn.textContent = '?'; btn.classList.add('confirming'); }
-                _slotDeleteTimers[slotIdx] = setTimeout(function() {
-                    _slotDeleteConfirm[slotIdx] = false;
-                    var b2 = document.getElementById('slot-del-' + slotIdx);
-                    if (b2) { b2.textContent = '✕'; b2.classList.remove('confirming'); }
-                }, 2500);
-            }
-        });
-    }
-    return card;
-}
-
-function showSaveSlotSelect() {
-    hideAll();
-    buildSaveSlotCards();
-    document.getElementById('save-slot-select').style.display = 'block';
-    playMenuMusic();
-}
 
 // random menu tag
 var ROTATED_MSGS = [
@@ -1380,44 +938,6 @@ if(isTouchDevice){
     document.getElementById("mp-btn-sub").textContent="PC only 🖥"; document.getElementById("mp-btn-sub").style.color="#666";
 }
 
-function storyLevelGoal(l){ if(l<=5)return 20; if(l<=15)return 50; if(l<=35)return 75; if(l<=45)return 100; if(l<=49)return 150; return 200; }
-function storySpeedMult(l){ return 1.0+(l-1)*0.024; }
-function storyObsCount(l){ if(l<=5)return 2; if(l<=15)return 3; if(l<=30)return 3; if(l<=40)return 4; return 5; }
-function storyScoreTick(l){ return Math.max(200,300-(l-1)*2); }
-function storyLives(l){ if(l<=15)return 3; if(l<=45)return 2; return 1; }
-
-function buildStoryGrid(){
-    // Update slot indicator
-    var ind = document.getElementById('story-slot-indicator');
-    if(ind) ind.textContent = 'SLOT '+(activeSlot+1);
-
-    var zones=[
-        {grid:'story-grid-1',range:[1,5]},{grid:'story-grid-2',range:[6,15]},
-        {grid:'story-grid-3',range:[16,35]},{grid:'story-grid-4',range:[36,45]},
-        {grid:'story-grid-5',range:[46,49]},{grid:'story-grid-6',range:[50,50]}
-    ];
-    zones.forEach(function(z){
-        var el=document.getElementById(z.grid); el.innerHTML='';
-        for(var lvl=z.range[0];lvl<=z.range[1];lvl++){
-            (function(l){
-                var btn=document.createElement('button'); btn.className='lvl-btn';
-                if(l===50)btn.classList.add('boss');
-                var cleared=storyProgress.beaten.indexOf(l)!==-1;
-                var unlocked=l<=storyProgress.unlocked;
-                if(cleared){ btn.classList.add('beaten'); btn.innerHTML='LV '+l+'<br/>✓'; }
-                else if(unlocked){ btn.classList.add('unlocked'); btn.innerHTML='LV '+l+'<br/><span style="font-size:6px;background:transparent;">'+storyLevelGoal(l)+'pts</span>'; }
-                else{ btn.innerHTML='LV '+l+'<br/>🔒'; }
-                if(unlocked) btn.onclick=function(){ playClick(); startStoryLevel(l); };
-                el.appendChild(btn);
-            })(lvl);
-        }
-    });
-    document.getElementById('story-unlocked-display').textContent=storyProgress.unlocked;
-    document.getElementById('story-cleared-display').textContent=storyProgress.beaten.length;
-    updateStartSlotLabel();
-}
-function showStorySelect(){ hideAll(); buildStoryGrid(); document.getElementById('story-select').style.display='block'; playMenuMusic(); }
-
 /*game state*/
 var msgs=["Nice try!","Better Luck Next Time!","Almost there!","Don't let Asher laugh at you!","Never Give up!","Lock in!"];
 var hcMsgs=["TOO SLOW. ☠","PATHETIC.","THE FIRE WINS.","GET GOOD.","Asher is laughing. ☠"];
@@ -1452,15 +972,15 @@ function spPause(){
     spMeteor.style.animationPlayState="paused"; spMonster.style.animationPlayState="paused"; spMonster2.style.animationPlayState="paused";
     if(spScoreInt){clearInterval(spScoreInt);spScoreInt=null;}
     gameMusic.pause(); hardcoreMusic.pause();
-    var pt=document.getElementById("pause-text"); pt.classList.remove("hardcore","medium","story");
-    if(mode==="hardcore")pt.classList.add("hardcore"); else if(mode==="medium")pt.classList.add("medium"); else if(mode==="story")pt.classList.add("story");
+    var pt=document.getElementById("pause-text"); pt.classList.remove("hardcore","medium");
+    if(mode==="hardcore")pt.classList.add("hardcore"); else if(mode==="medium")pt.classList.add("medium");
     document.getElementById("pause-overlay").classList.add("visible"); updateMobPauseBtnState();
 }
 function spResume(){
     isPaused=false;
     spBlock.style.animationPlayState="running"; spBlock2.style.animationPlayState="running";
     spMeteor.style.animationPlayState="running"; spMonster.style.animationPlayState="running"; spMonster2.style.animationPlayState="running";
-    if(mode==='story') spStartScore_story(); else spStartScore();
+    spStartScore();
     playGameMusic();
     document.getElementById("pause-overlay").classList.remove("visible"); updateMobPauseBtnState();
 }
@@ -1523,15 +1043,14 @@ function showMobileControls(visible,m){
 }
 
 function hideAll(){
-    ["start","type-select","mode-select","story-select","save-slot-select","hud","game","result","tutorial",
-     "mp-wrapper","mp-result","mobile-controls","settings","finale-screen"]
+    ["start","type-select","mode-select","hud","game","result","tutorial",
+     "mp-wrapper","mp-result","mobile-controls","settings"]
     .forEach(function(id){ var el=document.getElementById(id); if(el){el.style.display="none";} });
     document.getElementById("game-backdrop").style.display="none";
     document.getElementById('mp-vs-settings-btn').classList.remove('show');
-    document.getElementById('story-progress-bar-wrap').classList.remove('show');
     showMobPauseBtn(false);
 }
-function quitToMenu(){ if(mode==='story')showSaveSlotSelect(); else showStart(); }
+function quitToMenu(){ showStart(); }
 function showStart(){
     stopMp(); stopFpsCounter(); isPaused=false; mpIsPaused=false; stopAllMusic();
     bestEasy=parseInt(localStorage.getItem("galaxyblast_best_easy"))||0;
@@ -1542,8 +1061,6 @@ function showStart(){
     document.getElementById("start-best-easy").textContent=bestEasy;
     document.getElementById("start-best-med").textContent=bestMed;
     document.getElementById("start-best-hc").textContent=bestHC;
-    updateStartSlotLabel();
-    ['game','hud','hud-score','hud-best'].forEach(function(id){ var el=document.getElementById(id); if(el)el.classList.remove('story'); });
     setRandomTag();
     if(window._applyRainbowTitle) window._applyRainbowTitle();
     playMenuMusic();
@@ -1562,7 +1079,6 @@ var spMeteor =document.getElementById("meteor");
 var spMonster=document.getElementById("monster");
 var spMonster2=document.getElementById("monster2");
 var spGame   =document.getElementById("game");
-var currentStoryLevel=1, storyGoal=20, storyWinPending=false;
 
 function spRandomizeObstaclePositions(){
     var cols=[0,100,200,300,400,500]; cols.sort(function(){return Math.random()-0.5;});
@@ -1574,9 +1090,9 @@ function beginGame(m){
     mode=m; isPaused=false;
     if(gameType==="multi"){beginMp(m);return;}
     spScore=0; spLives=m==="easy"?3:m==="medium"?2:1;
-    spDead=false; spInv=false; spCd=false; spCharX=300; storyWinPending=false;
+    spDead=false; spInv=false; spCd=false; spCharX=300;
     var ge=spGame,hu=document.getElementById("hud"),hs=document.getElementById("hud-score"),hb=document.getElementById("hud-best");
-    [ge,hu,hs,hb].forEach(function(e){e.classList.remove("hardcore","medium","story");});
+    [ge,hu,hs,hb].forEach(function(e){e.classList.remove("hardcore","medium");});
     if(m==="hardcore")[ge,hu,hs,hb].forEach(function(e){e.classList.add("hardcore");});
     else if(m==="medium")[ge,hu,hs,hb].forEach(function(e){e.classList.add("medium");});
     hideAll();
@@ -1585,8 +1101,6 @@ function beginGame(m){
     showMobileControls(true,m); showMobPauseBtn(true,m); updateMobPauseBtnState();
     applyHitbox(); applyScoreSize(); applyFpsCounter(); applyBtnSize();
     document.getElementById("pause-overlay").classList.remove("visible");
-    document.getElementById('story-progress-bar-wrap').classList.remove('show');
-    document.getElementById('story-win-overlay').classList.remove('show');
     [spBlock,spBlock2,spMeteor,spMonster,spMonster2].forEach(function(o){o.style.animation="none";o.style.top="-1000px";});
     void spBlock.offsetWidth;
     spRandomizeObstaclePositions();
@@ -1597,135 +1111,8 @@ function beginGame(m){
     if(settings.showFps)startFpsCounter();
 }
 
-function startStoryLevel(lvl){
-    currentStoryLevel=lvl; storyGoal=storyLevelGoal(lvl); storyWinPending=false;
-    mode='story'; gameType='single'; isPaused=false;
-    spScore=0; spLives=storyLives(lvl); spDead=false; spInv=false; spCd=false; spCharX=300;
-    var ge=spGame,hu=document.getElementById("hud"),hs=document.getElementById("hud-score"),hb=document.getElementById("hud-best");
-    [ge,hu,hs,hb].forEach(function(e){e.classList.remove("hardcore","medium","story");e.classList.add("story");});
-    hideAll();
-    ge.style.display="block"; hu.style.display="flex";
-    document.getElementById("game-backdrop").style.display="block";
-    showMobileControls(true,'story'); showMobPauseBtn(true,'story'); updateMobPauseBtnState();
-    applyHitbox(); applyScoreSize(); applyFpsCounter(); applyBtnSize();
-    document.getElementById("pause-overlay").classList.remove("visible");
-    document.getElementById('story-win-overlay').classList.remove('show');
-    document.getElementById('story-progress-bar-wrap').classList.add('show');
-    document.getElementById('story-pb-goal').textContent=storyGoal;
-    document.getElementById('story-pb-num').textContent='0';
-    document.getElementById('story-pb-inner').style.width='0%';
-    document.getElementById('hud-best-val').textContent='LV '+lvl;
-    [spBlock,spBlock2,spMeteor,spMonster,spMonster2].forEach(function(o){o.style.animation="none";o.style.top="-1000px";});
-    void spBlock.offsetWidth;
-    spRandomizeObstaclePositions();
-    spBlock.style.top="-120px"; spMeteor.style.top="-140px";
-    spChar.style.left=spCharX+"px"; spUpdateHUD();
-    stopMenuMusic();
-    if(settings.skipCountdown)spStartAnims_story(); else spCountdown(spStartAnims_story);
-    if(settings.showFps)startFpsCounter();
-}
-
-function spStartAnims_story(){
-    var lvl=currentStoryLevel, mult=storySpeedMult(lvl);
-    var base=[1.1,1.0,1.05,1.15,1.1];
-    var sp=base.map(function(b){return(b/mult).toFixed(3)+'s';});
-    var cnt=storyObsCount(lvl);
-    spMeteor.style.animation='meteor '+sp[2]+' infinite linear';
-    spBlock.style.animation='slide '+sp[1]+' infinite linear';
-    if(cnt>=3)spMonster.style.animation='monster '+sp[3]+' infinite linear';
-    if(cnt>=4)spBlock2.style.animation='slide '+sp[4]+' infinite linear';
-    if(cnt>=5)spMonster2.style.animation='monster '+sp[0]+' infinite linear';
-    playGameMusic();
-    spStartCollision_story(); spStartScore_story();
-}
-
-function spStartScore_story(){
-    if(spScoreInt)clearInterval(spScoreInt);
-    var tick=storyScoreTick(currentStoryLevel);
-    spScoreInt=setInterval(function(){
-        if(spDead||spInv||spCd||isPaused||gameType!=='single'||storyWinPending||mode!=='story')return;
-        spScore++; spUpdateHUD();
-        var pct=Math.min(100,(spScore/storyGoal)*100);
-        document.getElementById('story-pb-inner').style.width=pct+'%';
-        document.getElementById('story-pb-num').textContent=spScore;
-        if(spScore>=storyGoal&&!storyWinPending){ storyWinPending=true; setTimeout(storyWinCheck,1500); }
-    },tick);
-}
-function storyWinCheck(){ if(spDead||!storyWinPending)return; triggerStoryWin(); }
-function triggerStoryWin(){
-    if(spDead)return;
-    [spBlock,spBlock2,spMeteor,spMonster,spMonster2].forEach(function(o){o.style.animationPlayState='paused';});
-    if(spCollInt)clearInterval(spCollInt); if(spScoreInt)clearInterval(spScoreInt);
-    stopAllMusic();
-    if(storyProgress.beaten.indexOf(currentStoryLevel)===-1)storyProgress.beaten.push(currentStoryLevel);
-    if(currentStoryLevel<50&&currentStoryLevel+1>storyProgress.unlocked)storyProgress.unlocked=currentStoryLevel+1;
-    saveStory(); // saves to active slot
-    updateStartSlotLabel();
-    var wtitle=document.getElementById('story-win-title'),wsub=document.getElementById('story-win-sub'),wnxt=document.getElementById('story-win-next-btn');
-    if(currentStoryLevel===50){
-        wtitle.textContent='🌟 YOU WIN! 🌟'; wtitle.style.color='#ffd700'; wtitle.style.textShadow='0 0 30px #ffd700,0 0 60px #ffd700';
-        wsub.textContent='ALL 50 LEVELS CONQUERED!'; wnxt.textContent='🌟 VIEW ENDING';
-    } else {
-        wtitle.textContent='LEVEL '+currentStoryLevel+' CLEAR!'; wtitle.style.color='#00ffcc'; wtitle.style.textShadow='0 0 20px #00ffcc,0 0 40px #00ffcc';
-        wsub.textContent='Score: '+spScore+' · Next: Level '+(currentStoryLevel+1);
-        wnxt.textContent='▶ LEVEL '+(currentStoryLevel+1);
-    }
-    document.getElementById('story-win-overlay').classList.add('show');
-}
-function storyWinNext(){
-    playClick();
-    spGame.style.display='none'; document.getElementById('hud').style.display='none';
-    document.getElementById('mobile-controls').style.display='none';
-    document.getElementById('story-progress-bar-wrap').classList.remove('show');
-    showMobPauseBtn(false);
-    if(currentStoryLevel===50)showFinale(); else showStorySelect();
-}
-
-var FINALE_DIALOG=[
-    {text:"★ ★ ★ ★ ★ ★ ★ ★ ★ ★",star:true},
-    {text:"You made it.",col:'#00ffcc'},
-    {text:"50 levels. Countless fireballs.",col:'#aaa'},
-    {text:"Remember Level 1? Just two flames.",col:'#888'},
-    {text:"You dodged 20 points and called yourself a hero.",col:'#777'},
-    {text:"Then Level 6 hit. 50 points. The fire got faster.",col:'#aaa'},
-    {text:"Level 16. Three obstacles. 75 points. Real chaos.",col:'#aaa'},
-    {text:"Level 36 nearly broke you. Four obstacles. 100 points.",col:'#ff8888'},
-    {text:"Level 46... that was brutal. You survived anyway.",col:'#ff6644'},
-    {text:"And Level 50. Hardcore rules. 200 points.",col:'#ff4444'},
-    {text:"One hit. No mercy. The hardest thing in this game.",col:'#ff4444'},
-    {text:"★ ★ ★ ★ ★ ★ ★ ★ ★ ★",star:true},
-    {text:"But here you are.",col:'#00ffcc'},
-    {text:"Galaxy Blast — Complete.",col:'#ffd700'},
-    {text:"Asher is NOT laughing.",col:'#00ff88'},
-    {text:"★ ★ ★ ★ ★ ★ ★ ★ ★ ★",star:true},
-    {text:"Thank you for playing.",col:'#ffffff'},
-    {text:"~OBMC Edition~",col:'#9999ff'},
-];
-function showFinale(){
-    hideAll();
-    var fs=document.getElementById('finale-screen'); fs.style.display='block';
-    document.getElementById('game-backdrop').style.display='block';
-    document.getElementById('finale-back-btn').style.display='none';
-    var contentEl=document.getElementById('finale-content'); contentEl.innerHTML='';
-    FINALE_DIALOG.forEach(function(d){
-        var el=document.createElement('div');
-        el.className=d.star?'finale-star-row':'finale-line';
-        el.textContent=d.text; if(d.col)el.style.color=d.col;
-        contentEl.appendChild(el);
-    });
-    var lines=contentEl.querySelectorAll('.finale-line,.finale-star-row');
-    lines.forEach(function(line,i){ setTimeout(function(){ line.classList.add('vis'); fs.scrollTop=fs.scrollHeight; },200+i*700); });
-    setTimeout(function(){ document.getElementById('finale-back-btn').style.display='inline-block'; fs.scrollTop=fs.scrollHeight; },200+lines.length*700+500);
-}
-
 function spUpdateHUD(){
     document.getElementById("hud-score-val").textContent=spScore;
-    if(mode==='story'){
-        document.getElementById("hud-best-val").textContent='LV '+currentStoryLevel+' S'+(activeSlot+1);
-        var max=storyLives(currentStoryLevel),h='';
-        for(var i=0;i<max;i++)h+=i<spLives?'<span style="color:#00ccff;background:transparent;">♥</span>':'<span class="heart-empty" style="background:transparent;">♥</span>';
-        document.getElementById("hud-lives").innerHTML=h; return;
-    }
     var b=mode==="hardcore"?bestHC:mode==="medium"?bestMed:bestEasy;
     document.getElementById("hud-best-val").textContent=b;
     if(mode==="hardcore"){document.getElementById("hud-lives").innerHTML='<span style="color:red;font-size:10px;background:transparent;">☠ HARDCORE ☠</span>';return;}
@@ -1739,10 +1126,9 @@ function spFlash(){
     setTimeout(function(){f.style.opacity="0";spChar.classList.remove("hit");},180);
 }
 function spHit(){
-    if(spDead||isPaused||spCd||storyWinPending)return; if(spInv)return;
+    if(spDead||isPaused||spCd)return; if(spInv)return;
     spFlash(); playHit();
-    var oneHit=(mode==="hardcore")||(mode==="story"&&storyLives(currentStoryLevel)===1);
-    if(oneHit){spEnd();return;}
+    if(mode==="hardcore"){spEnd();return;}
     spLives--; spUpdateHUD();
     if(spLives<=0)spEnd();
     else{
@@ -1751,29 +1137,11 @@ function spHit(){
     }
 }
 function spEnd(){
-    if(storyWinPending)return;
-    spDead=true; isPaused=false; storyWinPending=false;
+    spDead=true; isPaused=false;
     document.getElementById("pause-overlay").classList.remove("visible");
     showMobPauseBtn(false); mobUp();
     if(spCollInt)clearInterval(spCollInt); if(spScoreInt)clearInterval(spScoreInt);
     stopFpsCounter(); playGameOver();
-    if(mode==='story'){
-        spGame.style.display='none'; document.getElementById('hud').style.display='none';
-        document.getElementById('mobile-controls').style.display='none';
-        document.getElementById('story-progress-bar-wrap').classList.remove('show');
-        var ri=document.getElementById("result"); ri.classList.remove("hardcore","medium");
-        document.getElementById("result-title").textContent='GAME OVER';
-        document.getElementById("result-title").style.color="rgb(231,15,15)";
-        document.getElementById("random-msg").textContent=msgs[Math.floor(Math.random()*msgs.length)];
-        document.getElementById("score").textContent=spScore;
-        document.getElementById("best-display").textContent=storyLevelGoal(currentStoryLevel)+' needed';
-        document.getElementById("best-line").style.color='#00ccff';
-        var rb=document.getElementById("restart-btn"),qb=document.getElementById("quit-btn");
-        rb.classList.remove('hc-btn','med-btn'); qb.classList.remove('hc-btn','med-btn');
-        rb.textContent='↺ Retry Level'; qb.textContent='✕ Slot Select';
-        qb.onclick=function(){showSaveSlotSelect();};
-        ri.style.display='block'; return;
-    }
     if(mode==="hardcore"){if(spScore>bestHC)bestHC=spScore;}
     else if(mode==="medium"){if(spScore>bestMed)bestMed=spScore;}
     else{if(spScore>bestEasy)bestEasy=spScore;}
@@ -1805,22 +1173,6 @@ function spEnd(){
 var SP_CHAR_MID=450-30-100+50, spCollInt=null;
 function spGetCol(px){return Math.round(parseInt(px)/100);}
 
-function spStartCollision_story(){
-    if(spCollInt)clearInterval(spCollInt);
-    var cnt=storyObsCount(currentStoryLevel);
-    var obsEls=[spBlock,spMeteor,spMonster,spBlock2,spMonster2];
-    var offsets=[50,60,60,50,60];
-    spCollInt=setInterval(function(){
-        if(spDead||spInv||isPaused||gameType!=='single'||storyWinPending)return;
-        var cc=spGetCol(spCharX);
-        for(var i=0;i<cnt;i++){
-            var o=obsEls[i]; if(parseInt(o.style.top)<-900)continue;
-            var obsCol=spGetCol(o.style.left);
-            var obsMid=parseFloat(window.getComputedStyle(o).top)+offsets[i];
-            if(cc===obsCol&&Math.abs(obsMid-SP_CHAR_MID)<38){spHit();break;}
-        }
-    },16);
-}
 function spStartCollision(){
     if(spCollInt)clearInterval(spCollInt);
     spCollInt=setInterval(function(){
@@ -1836,16 +1188,16 @@ function spStartCollision(){
 var spScoreInt=null;
 function spStartScore(){
     if(spScoreInt)clearInterval(spScoreInt);
-    spScoreInt=setInterval(function(){if(!spDead&&!spInv&&!spCd&&!isPaused&&gameType==="single"&&mode!=='story'){spScore++;spUpdateHUD();}},300);
+    spScoreInt=setInterval(function(){if(!spDead&&!spInv&&!spCd&&!isPaused&&gameType==="single"){spScore++;spUpdateHUD();}},300);
 }
 function spCountdown(cb){
     spCd=true; countdownSound.currentTime=0; playAudio(countdownSound,0.7);
     var cd=document.getElementById("countdown"); cd.style.display="block";
-    cd.style.color=mode==="medium"?"#ff0000":mode==="story"?"#00ccff":"red";
+    cd.style.color=mode==="medium"?"#ff0000":"red";
     var n=3; cd.textContent=n;
     var t=setInterval(function(){
         n--; if(n>0)cd.textContent=n;
-        else if(n===0)cd.textContent=mode==="hardcore"?"DIE.":mode==="story"?"GO!":"GO!";
+        else if(n===0)cd.textContent=mode==="hardcore"?"DIE.":"GO!";
         else{clearInterval(t);cd.style.display="none";spCd=false;cb();}
     },1000);
 }
@@ -1864,7 +1216,7 @@ function spStartAnims(){
 
 function restartGame(){
     stopAllMusic(); stopFpsCounter(); document.getElementById("result").style.display="none";
-    if(mode==='story')startStoryLevel(currentStoryLevel); else beginGame(mode);
+    beginGame(mode);
 }
 
 /*multiplayer*/
@@ -1924,7 +1276,7 @@ function mpCountdown(p,cb){
     var t=setInterval(function(){n--;if(n>0)cd.textContent=n;else if(n===0)cd.textContent=mode==="hardcore"?"DIE.":mode==="medium"?"GO!":"GO!";else{clearInterval(t);cd.style.display="none";cb();}},1000);
 }
 function showMpResult(){
-    ["start","type-select","mode-select","story-select","hud","game","tutorial","mp-wrapper"].forEach(function(id){document.getElementById(id).style.display="none";});
+    ["start","type-select","mode-select","hud","game","tutorial","mp-wrapper"].forEach(function(id){document.getElementById(id).style.display="none";});
     document.getElementById('mp-vs-settings-btn').classList.remove('show'); showMobPauseBtn(false);
     var p1=mpState[0],p2=mpState[1],title=document.getElementById("mp-result-title"),w,c;
     if(p1.score>p2.score){w="P1 WINS!";c="#a0f0ff";}else if(p2.score>p1.score){w="P2 WINS!";c="#ffdb70";}else{w="IT'S A TIE!";c="#f0f";}
@@ -1984,7 +1336,6 @@ document.addEventListener("keydown",function(e){
 /*init*/
 applyMuteVolumes(); applyHitbox(); applyScoreSize(); applyFpsCounter(); applyBtnSize(); applyBtnGap(); applyZoom();
 if(settings.showFps)startFpsCounter();
-updateStartSlotLabel();
 
 var _menuMusicEnabled = false;
 function toggleMenuMusicBtn(){
