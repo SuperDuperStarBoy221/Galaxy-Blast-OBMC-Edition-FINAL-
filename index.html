@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -274,6 +275,9 @@
     #mp-vs-settings-btn { display:none; margin-top:16px; width:60px!important; height:36px!important; font-size:14px!important; border-color:rgba(180,0,255,0.65)!important; color:rgba(220,180,255,0.85)!important; background:rgba(0,0,0,0.7)!important; }
     #mp-vs-settings-btn:hover { border-color:#fff!important; color:#fff!important; }
     #mp-vs-settings-btn.show { display:block; }
+    #mp-vs-quit-btn { display:none; margin-top:10px; width:60px!important; height:36px!important; font-size:14px!important; border-color:rgba(255,80,80,0.55)!important; color:rgba(255,160,160,0.85)!important; background:rgba(0,0,0,0.7)!important; }
+    #mp-vs-quit-btn:hover { border-color:#ff4444!important; color:#ff4444!important; }
+    #mp-vs-quit-btn.show { display:block; }
 
     /*settings*/
     #settings { width:660px; display:none; background:transparent; padding:0; position:relative; top:0; overflow:hidden; }
@@ -445,8 +449,6 @@
         <button id="pause-settings-btn" onclick="openSettings('sp-pause')">⚙ SETTINGS</button>
         <button id="pause-quit-btn" onclick="quitToMenu()" style="margin-top:10px;width:140px!important;height:38px!important;font-size:8px!important;border-color:#666!important;color:#aaa!important;background:rgba(0,0,0,0.6)!important;">✕ Quit</button>
     </div>
-     <div style="position:absolute;bottom:0;left:0;width:100%;height:33px;background-color:#000;z-index:999;"></div>
-    <div style="position:absolute;top:0;left:0;width:100%;height:65px;background-color:#000;z-index:999;"></div>
 </div>
 
 <div id="mobile-controls">
@@ -546,7 +548,7 @@
             <div style="position:absolute;top:0;left:0;width:100%;height:65px;background-color:#000;z-index:999;"></div>
         </div>
     </div>
-    <div id="vs-div">VS<button id="mp-vs-settings-btn" onclick="openSettings('mp-pause')" title="Settings">⚙</button></div>
+    <div id="vs-div">VS<button id="mp-vs-settings-btn" onclick="openSettings('mp-pause')" title="Settings">⚙</button><button id="mp-vs-quit-btn" onclick="quitMpToMenu()" title="Quit">✕</button></div>
     <div class="mp-panel">
         <div class="mp-plabel" style="color:#ffdb70;">◀ P2 — ← / → ▶</div>
         <div class="mp-hud" id="mp-hud-2"><div class="mp-hud-score" id="mp-hs-2">SCORE: <span id="mp-score-2">0</span></div><div class="mp-hud-lives" id="mp-lives-2"></div></div>
@@ -854,6 +856,7 @@ function openSettings(origin){
         document.getElementById('mp-wrapper').style.display='none';
         showMobPauseBtn(false);
         document.getElementById('mp-vs-settings-btn').classList.remove('show');
+        document.getElementById('mp-vs-quit-btn').classList.remove('show');
     } else { hideAll(); }
     tempKeybinds=JSON.parse(JSON.stringify(settings.keybinds));
     document.getElementById('settings-error').textContent='';
@@ -874,6 +877,7 @@ function closeSettings(){
         document.getElementById('game-backdrop').style.display='block';
         showMobPauseBtn(true,mode); updateMobPauseBtnState();
         document.getElementById('mp-vs-settings-btn').classList.add('show');
+        document.getElementById('mp-vs-quit-btn').classList.add('show');
     } else { showStart(); }
 }
 function listenKey(section,dir){
@@ -1000,7 +1004,8 @@ function mpPauseAll(){
         if(mode==="hardcore")pt.classList.add("hardcore"); else if(mode==="medium")pt.classList.add("medium");
         document.getElementById("mp-pause-"+(idx+1)).classList.add("visible");
     });
-    document.getElementById('mp-vs-settings-btn').classList.add('show'); updateMobPauseBtnState();
+    document.getElementById('mp-vs-settings-btn').classList.add('show');
+    document.getElementById('mp-vs-quit-btn').classList.add('show'); updateMobPauseBtnState();
 }
 function mpResume(){
     if(!mpState)return; mpIsPaused=false;
@@ -1011,7 +1016,8 @@ function mpResume(){
         p.scoreInt=setInterval(function(){if(!p.dead&&!mpIsPaused){p.score++;p.scoreEl.textContent=p.score;}},300);
         document.getElementById("mp-pause-"+(idx+1)).classList.remove("visible");
     });
-    document.getElementById('mp-vs-settings-btn').classList.remove('show'); updateMobPauseBtnState();
+    document.getElementById('mp-vs-settings-btn').classList.remove('show');
+    document.getElementById('mp-vs-quit-btn').classList.remove('show'); updateMobPauseBtnState();
 }
 
 var mobInterval=null;
@@ -1050,9 +1056,11 @@ function hideAll(){
     .forEach(function(id){ var el=document.getElementById(id); if(el){el.style.display="none";} });
     document.getElementById("game-backdrop").style.display="none";
     document.getElementById('mp-vs-settings-btn').classList.remove('show');
+    document.getElementById('mp-vs-quit-btn').classList.remove('show');
     showMobPauseBtn(false);
 }
 function quitToMenu(){ showStart(); }
+function quitMpToMenu(){ showStart(); }
 function showStart(){
     stopMp(); stopFpsCounter(); isPaused=false; mpIsPaused=false; stopAllMusic();
     bestEasy=parseInt(localStorage.getItem("galaxyblast_best_easy"))||0;
@@ -1279,7 +1287,8 @@ function mpCountdown(p,cb){
 }
 function showMpResult(){
     ["start","type-select","mode-select","hud","game","tutorial","mp-wrapper"].forEach(function(id){document.getElementById(id).style.display="none";});
-    document.getElementById('mp-vs-settings-btn').classList.remove('show'); showMobPauseBtn(false);
+    document.getElementById('mp-vs-settings-btn').classList.remove('show');
+    document.getElementById('mp-vs-quit-btn').classList.remove('show'); showMobPauseBtn(false);
     var p1=mpState[0],p2=mpState[1],title=document.getElementById("mp-result-title"),w,c;
     if(p1.score>p2.score){w="P1 WINS!";c="#a0f0ff";}else if(p2.score>p1.score){w="P2 WINS!";c="#ffdb70";}else{w="IT'S A TIE!";c="#f0f";}
     title.textContent=w;title.style.color=c;title.style.textShadow="0 0 20px "+c;
@@ -1302,7 +1311,9 @@ function beginMp(m){
     mpUpdateLives(p1);mpUpdateLives(p2);
     stopMenuMusic();
     hideAll(); document.getElementById("mp-wrapper").style.display="flex"; document.getElementById("game-backdrop").style.display="block";
-    applyHitbox(); showMobPauseBtn(true,m); updateMobPauseBtnState(); document.getElementById('mp-vs-settings-btn').classList.remove('show');
+    applyHitbox(); showMobPauseBtn(true,m); updateMobPauseBtnState();
+    document.getElementById('mp-vs-settings-btn').classList.remove('show');
+    document.getElementById('mp-vs-quit-btn').classList.remove('show');
     mpCountdown(p1,function(){mpStartPlayer(p1);}); mpCountdown(p2,function(){mpStartPlayer(p2);});
     if(settings.showFps)startFpsCounter();
 }
