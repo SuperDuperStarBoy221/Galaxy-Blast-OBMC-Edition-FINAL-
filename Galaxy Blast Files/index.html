@@ -1,0 +1,276 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Blast</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="Textures/Fire_gif.webp">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h5>Version_1.22.8</h5>
+<div id="mob-pause-btn">⚙ SET</div>
+<div id="fps-counter">FPS: --</div>
+
+<button id="menu-music-btn" onclick="toggleMenuMusicBtn()" style="
+    position:fixed; bottom:10px; left:10px; z-index:99999;
+    width:auto; height:auto; padding:5px 10px;
+    font-size:7px; font-family:'Press Start 2P',consolas;
+    background:rgba(0,0,0,0.7); color:#555;
+    border:2px solid #333; border-radius:4px;
+    cursor:pointer; letter-spacing:0.5px;">♪ MENU MUSIC</button>
+
+<div id="scale-root">
+<br/><br/><br/>
+
+<!--Menu-->
+<div id="start" style="display:block;">
+    <h2 id="main-title">Galaxy Blast</h2>
+<script>
+(function(){
+    var COLORS = ['#ff0000','#ff7700','#ffff00','#00ff00','#00aaff','#8800ff','#ff00cc'];
+    var letters = 'Galaxy Blast'.split('');
+    function applyRainbow(){
+        var span = '';
+        var colorIdx = 0;
+        for(var i = 0; i < letters.length; i++){
+            if(letters[i] === ' '){ span += ' '; continue; }
+            var c = COLORS[colorIdx % COLORS.length];
+            span += '<span style="color:'+c+';background:transparent;text-shadow:0 0 8px '+c+';">'+letters[i]+'</span>';
+            colorIdx++;
+        }
+        return span;
+    }
+    function resetTitle(){ document.getElementById('main-title').innerHTML = 'Galaxy Blast'; }
+    window._applyRainbowTitle = function(){
+        if(Math.random() < 0.02){ document.getElementById('main-title').innerHTML = applyRainbow(); }
+        else { resetTitle(); }
+    };
+    window._applyRainbowTitle();
+})();
+</script>
+    <h6>!OBMC Edition!</h6>
+    <p id="random-tag"></p>
+    <br/><br/>
+    <a href="#" onclick="showTypeSelect()"><button>▶ Play Game</button></a>
+    <br/><br/>
+    <a href="#" onclick="startTutorial()"><button>? How To Play</button></a>
+    <br/><br/>
+    <a href="#" onclick="openSettings('menu')"><button>⚙ Settings</button></a>
+    <br/><br/>
+    <div style="font-size:9px;color:#555;background:transparent;line-height:2.2;">
+        EASY BEST: <span id="start-best-easy" style="color:#0ff;background:transparent;">0</span>
+        &nbsp;&nbsp;
+        MED BEST: <span id="start-best-med" style="color:#ffd700;background:transparent;">0</span>
+        &nbsp;&nbsp;
+        HC BEST: <span id="start-best-hc" style="color:#f44;background:transparent;">0</span>
+    </div>
+</div>
+
+<!--select game mode-->
+<div id="type-select">
+    <h2 style="background:transparent;">SELECT MODE</h2>
+    <br/><br/>
+    <a href="#" onclick="showClassicModeSelect()">
+        <button style="border-color:#aaa;color:#aaa;width:280px;height:80px;font-size:13px;">
+            🎮 CLASSIC MODE<br/><span style="font-size:8px;color:#aaa;background:transparent;">Easy / Medium / Hardcore</span>
+        </button>
+    </a>
+    <br/><br/>
+    <a href="#" id="mp-link" onclick="showMpModeSelect()">
+        <button id="mp-btn" style="border-color:#f0f;color:#f0f;text-shadow:0 0 8px #f0f;width:280px;height:80px;font-size:13px;">
+            👥 MULTIPLAYER<br/><span id="mp-btn-sub" style="font-size:8px;color:#d0a0d0;background:transparent;">P1: A/D &nbsp;|&nbsp; P2: ←/→</span>
+        </button>
+    </a>
+    <br/><br/>
+    <a href="#" onclick="showStart()"><button style="width:150px;height:50px;font-size:10px;">← Back</button></a>
+</div>
+
+<!--Default Difficulty-->
+<div id="mode-select">
+    <h2 style="color:white;background:transparent;" id="mode-select-title">SELECT DIFFICULTY</h2>
+    <br/><br/>
+    <a href="#" onclick="beginGame('easy')">
+        <button style="border-color:#0ff;color:#0ff;width:280px;height:80px;font-size:13px;">
+            ★ EASY<br/><span style="font-size:8px;color:#aaa;background:transparent;">3 lives · invincibility</span>
+        </button>
+    </a>
+    <br/><br/>
+    <a href="#" onclick="beginGame('medium')">
+        <button class="med-btn" style="width:280px;height:80px;font-size:13px;">
+            ⚡ MEDIUM<br/><span style="font-size:8px;color:#ffe866;background:transparent;">2 lives · faster</span>
+        </button>
+    </a>
+    <br/><br/>
+    <a href="#" onclick="beginGame('hardcore')">
+        <button class="hc-btn" style="width:280px;height:80px;font-size:13px;">
+            ☠ HARDCORE<br/><span style="font-size:8px;color:#ff8888;background:transparent;">1 hit · fastest</span>
+        </button>
+    </a>
+    <br/><br/>
+    <a href="#" onclick="showTypeSelect()"><button style="width:150px;height:50px;font-size:10px;">← Back</button></a>
+</div>
+
+<!--hud and game -->
+<div id="hud">
+    <div id="hud-score">SCORE: <span id="hud-score-val">0</span></div>
+    <div id="hud-lives"></div>
+    <div id="hud-best">BEST: <span id="hud-best-val">0</span></div>
+</div>
+<div id="game" style="display:none;">
+    <div id="flash"></div>
+    <div id="character"><img src="Textures/character.gif" width="100" height="100"></div>
+    <div id="meteor"><img src="Textures/Fire_gif.webp" width="55" height="80"></div>
+    <div id="block"><img src="Textures/Fire_gif.webp" width="80" height="100"></div>
+    <div id="block2"><img src="Textures/Fire_gif.webp" width="80" height="100"></div>
+    <div id="monster"><img src="Textures/Fire_gif.webp" width="80" height="100"></div>
+    <div id="monster2"><img src="Textures/Fire_gif.webp" width="80" height="100"></div>
+    <div id="countdown"></div>
+    <div id="pause-overlay">
+        <div id="pause-text">PAUSED</div>
+        <div id="pause-hint">PRESS P TO RESUME</div>
+        <button id="pause-settings-btn" onclick="openSettings('sp-pause')">⚙ SETTINGS</button>
+        <button id="pause-quit-btn" onclick="quitToMenu()" style="margin-top:10px;width:140px!important;height:38px!important;font-size:8px!important;border-color:#666!important;color:#aaa!important;background:rgba(0,0,0,0.6)!important;">✕ Quit</button>
+    </div>
+     <div style="position:absolute;bottom:0;left:0;width:100%;height:33px;background-color:#000;z-index:999;"></div>
+        <div style="position:absolute;top:0;left:0;width:100%;height:65px;background-color:#000;z-index:999;"></div>
+</div>
+
+<div id="mobile-controls">
+    <div class="mob-btn" id="mob-left">◀</div>
+    <div class="mob-btn" id="mob-right">▶</div>
+</div>
+
+<!--Game Over-->
+<div id="result">
+    <h1 id="result-title">GAME OVER</h1><br/>
+    <div id="random-msg" style="font-size:15px;color:gray;background:transparent;"></div>
+    <br/><br/>
+    <h3><p>Score: <span id="score">0</span></p></h3><br/>
+    <h3><p id="best-line" style="background:transparent;">Best: <span id="best-display">0</span></p></h3><br/>
+    <button id="restart-btn" onclick="restartGame()">↺ Restart</button><br/><br/>
+    <button id="quit-btn">✕ Quit</button>
+</div>
+
+<!--Tutorial-->
+<div id="tutorial">
+    <h4>Press "Play Game" to start.</h4><br/>
+    <h4>← → Arrow keys to move.</h4><br/>
+    <h4>On mobile: tap ◀ ▶ buttons!</h4><br/>
+    <h4>⚠ Avoid ALL fire meteors!</h4><br/>
+    <h4>EASY: 3 lives ♥♥♥</h4><br/>
+    <h4>MEDIUM: 2 lives ♥♥</h4><br/>
+    <h4>HARDCORE: 1 hit = dead ☠</h4><br/>
+    <h4>MULTIPLAYER: P1=A/D, P2=←/→</h4><br/>
+    <h4>P key = PAUSE / UNPAUSE</h4><br/><br/>
+    <button onclick="showStart()">← Back</button>
+</div>
+
+<!--Settings-->
+<div id="settings">
+  <div id="settings-header">
+    <h2 style="color:white;background:transparent;font-size:18px;margin-top:6px;margin-bottom:6px;">⚙ SETTINGS</h2>
+    <div style="display:flex;justify-content:center;gap:10px;background:transparent;margin:0 0 6px 0;flex-wrap:wrap;">
+      <button onclick="applySettings()" style="width:160px!important;height:44px!important;font-size:9px!important;border-color:#0f0!important;color:#0f0!important;">✔ Apply</button>
+      <button onclick="closeSettings()" style="width:130px!important;height:44px!important;font-size:9px!important;border-color:#888!important;color:#aaa!important;">← Back</button>
+      <button class="set-reset-btn" onclick="resetSettingsDefaults()" style="width:180px!important;height:44px!important;font-size:7px!important;">↺ Reset Defaults</button>
+    </div>
+    <div id="settings-error" style="min-height:16px;font-size:7px;margin:2px 0 4px 0;"></div>
+  </div>
+  <div id="settings-scroll">
+  <div class="set-inner">
+    <div class="set-section-label" style="border-top:none;margin-top:0;padding-top:0;">── General ──</div>
+    <div class="set-row"><span class="set-label">🔊 Sound</span><button class="set-toggle" id="set-sound-btn" onclick="settingsToggleSound()">SOUND ON</button></div>
+    <div class="set-vol-row" id="set-vol-row">
+    <span class="set-label" style="font-size:7px;color:#888;">Volume</span>
+    <input type="range" id="set-vol-slider" min="0" max="100" step="1" value="50">
+    <span id="set-vol-label">50%</span>
+    </div>
+
+    <div class="set-row"><span class="set-label">📦 Hitbox<small>Show collision boxes</small></span><button class="set-toggle off" id="set-hitbox-btn" onclick="settingsToggleHitbox()">HITBOX OFF</button></div>
+    <div class="set-row"><span class="set-label">⏩ Skip Countdown<small>Skip 3-2-1 intro</small></span><button class="set-toggle off" id="set-skipcd-btn" onclick="settingsToggleSkipCd()">SKIP OFF</button></div>
+    <div class="set-row"><span class="set-label">📊 Score Size<small>HUD score text size</small></span><button class="set-cycle" id="set-scoresize-btn" onclick="settingsCycleScoreSize()">NORMAL</button></div>
+    <div class="set-row"><span class="set-label">🖥 FPS Counter<small>Show framerate in-game</small></span><button class="set-toggle off" id="set-fps-btn" onclick="settingsToggleFps()">FPS OFF</button></div>
+    <div class="set-row"><span class="set-label">💥 Screen Shake<small>Shake on hit</small></span><button class="set-toggle" id="set-shake-btn" onclick="settingsToggleShake()">SHAKE ON</button></div>
+    <div class="set-row"><span class="set-label">↺ Auto-Restart<small>Skip game over screen</small></span><button class="set-toggle off" id="set-autorestart-btn" onclick="settingsToggleAutoRestart()">AUTO OFF</button></div>
+    <div class="set-row"><span class="set-label">✨ Inv. Flicker<small>Flash when invincible</small></span><button class="set-toggle" id="set-invflash-btn" onclick="settingsToggleInvFlash()">FLICKER ON</button></div>
+    <div class="set-row"><span class="set-label">🔍 Zoom<small>Scale the game window</small></span><button class="set-zoom-btn" id="set-zoom-btn" onclick="settingsCycleZoom()">DEFAULT</button></div>
+    <div class="set-row"><span class="set-label">🗑 Reset Best Scores<small>Clear Easy / Med / HC records</small></span><button class="set-reset-scores-btn" id="set-reset-scores-btn" onclick="settingsResetBestScores()">RESET SCORES</button></div>
+    <div class="set-section-label" id="set-section-mobile">── Mobile Controls ──</div>
+    <div class="set-row" id="set-btnsize-row"><span class="set-label">📱 Button Size<small>Touch button dimensions</small></span><button class="set-cycle" id="set-btnsize-btn" onclick="settingsCycleBtnSize()">NORMAL</button></div>
+    <div class="set-row" id="set-btnpos-row"><span class="set-label">↔ Button Gap<small>Space between buttons</small></span><button class="set-cycle" id="set-btnpos-btn" onclick="settingsCycleBtnGap()">SPREAD</button></div>
+    <div class="set-section-label">── Keybinds ──</div>
+    <div class="set-subsection-label">Singleplayer</div>
+    <div id="set-kb-mobile-note-sp" class="set-lock-msg" style="display:none;">🖥 Keybinds are PC only</div>
+    <div class="set-row"><span class="set-label">Move Left</span><button class="set-kb" id="kb-sp-left" onclick="listenKey('sp','left')">←</button></div>
+    <div class="set-row"><span class="set-label">Move Right</span><button class="set-kb" id="kb-sp-right" onclick="listenKey('sp','right')">→</button></div>
+    <div class="set-section-label">── Multiplayer Keybinds ──</div>
+    <div id="set-kb-mobile-note-mp" class="set-lock-msg" style="display:none;">🖥 Keybinds are PC only</div>
+    <div class="set-subsection-label">P1 Keybinds</div>
+    <div class="set-row"><span class="set-label">Move Left</span><button class="set-kb" id="kb-p1-left" onclick="listenKey('p1','left')">A</button></div>
+    <div class="set-row"><span class="set-label">Move Right</span><button class="set-kb" id="kb-p1-right" onclick="listenKey('p1','right')">D</button></div>
+    <div class="set-subsection-label">P2 Keybinds</div>
+    <div class="set-row"><span class="set-label">Move Left</span><button class="set-kb" id="kb-p2-left" onclick="listenKey('p2','left')">←</button></div>
+    <div class="set-row"><span class="set-label">Move Right</span><button class="set-kb" id="kb-p2-right" onclick="listenKey('p2','right')">→</button></div>
+    <div class="set-note" style="margin-top:8px;">P = PAUSE always reserved &nbsp;·&nbsp; ESC cancels keybind capture</div>
+    <div style="height:10px;background:transparent;"></div>
+  </div>
+  </div>
+</div>
+
+<!--Multiplayer-->
+<div id="mp-wrapper">
+    <div class="mp-panel">
+        <div class="mp-plabel" style="color:#a0f0ff;">◀ P1 — A / D ▶</div>
+        <div class="mp-hud" id="mp-hud-1"><div class="mp-hud-score" id="mp-hs-1">SCORE: <span id="mp-score-1">0</span></div><div class="mp-hud-lives" id="mp-lives-1"></div></div>
+        <div class="mp-game" id="mp-game-1">
+            <div class="mp-flash" id="mp-flash-1"></div>
+            <img class="mp-char" id="mp-char-1" src="https://pixeljoint.com/files/icons/full/avion.gif" width="52" height="52">
+            <div class="mp-cd" id="mp-cd-1"></div>
+            <div class="mp-dead-overlay" id="mp-dead-1"><div class="mp-dead-title">GAME OVER</div><div class="mp-dead-score" id="mp-dead-sc-1"></div></div>
+            <div class="mp-pause-overlay" id="mp-pause-1"><div class="mp-pause-text" id="mp-pause-text-1">PAUSED</div></div>
+            <div style="position:absolute;bottom:0;left:0;width:100%;height:33px;background-color:#000;z-index:999;"></div>
+            <div style="position:absolute;top:0;left:0;width:100%;height:65px;background-color:#000;z-index:999;"></div>
+        </div>
+    </div>
+    <div id="vs-div">VS<button id="mp-vs-settings-btn" onclick="openSettings('mp-pause')" title="Settings">⚙</button><button id="mp-vs-quit-btn" onclick="quitMpToMenu()" title="Quit">✕</button></div>
+    <div class="mp-panel">
+        <div class="mp-plabel" style="color:#ffdb70;">◀ P2 — ← / → ▶</div>
+        <div class="mp-hud" id="mp-hud-2"><div class="mp-hud-score" id="mp-hs-2">SCORE: <span id="mp-score-2">0</span></div><div class="mp-hud-lives" id="mp-lives-2"></div></div>
+        <div class="mp-game" id="mp-game-2">
+            <div class="mp-flash" id="mp-flash-2"></div>
+            <img class="mp-char" id="mp-char-2" src="https://pixeljoint.com/files/icons/full/avion.gif" width="52" height="52">
+            <div class="mp-cd" id="mp-cd-2"></div>
+            <div class="mp-dead-overlay" id="mp-dead-2"><div class="mp-dead-title">GAME OVER</div><div class="mp-dead-score" id="mp-dead-sc-2"></div></div>
+            <div class="mp-pause-overlay" id="mp-pause-2"><div class="mp-pause-text" id="mp-pause-text-2">PAUSED</div></div>
+            <div style="position:absolute;bottom:0;left:0;width:100%;height:33px;background-color:#000;z-index:999;"></div>
+            <div style="position:absolute;top:0;left:0;width:100%;height:65px;background-color:#000;z-index:999;"></div>
+        </div>
+    </div>
+</div>
+<div id="mp-result">
+    <br/><h1 id="mp-result-title"></h1>
+    <div class="mpr-sub" id="mpr-sub"></div>
+    <div class="mpr-scrs" id="mpr-scrs"></div>
+    <button onclick="restartMp()" style="width:260px;height:75px;font-size:14px;border-color:#f0f;color:#f0f;">↺ Play Again</button><br/><br/>
+    <button onclick="showStart()" style="width:200px;height:65px;font-size:12px;">✕ Quit</button>
+</div>
+
+</div><!--scale-root-->
+
+<div id="game-backdrop"></div>
+<audio id="gameover-sound"><source src="../Music and Sounds/gameover.mp3" type="audio/mpeg"></audio>
+<audio id="countdown-sound"><source src="../Music and Sounds/countdown.mp3" type="audio/mpeg"></audio>
+<audio id="game-music" loop><source src="../Music and Sounds/gamemusic.mp3" type="audio/mpeg"></audio>
+<audio id="hardcore-music" loop><source src="../Music and Sounds/hardcore.mp3" type="audio/mpeg"></audio>
+<audio id="hit-sound"><source src="../Music and Sounds/hit.mp3" type="audio/mpeg"></audio>
+<audio id="click-sound"><source src="../Music and Sounds/floraphonic-8-bit-game-2-186976.mp3" type="audio/mpeg"></audio>
+<audio id="menu-music" loop><source src="../Music and Sounds/darren_hirst-gamer-music-140-bpm-355954.mp3"></audio>
+
+<script src="script.js"></script>
+
+</body>
+</html>

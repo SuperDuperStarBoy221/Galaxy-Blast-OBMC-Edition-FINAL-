@@ -1,0 +1,311 @@
+ * {
+        padding: 0; margin: 0;
+        text-align: center;
+        font-family: "Press Start 2P", "consolas";
+        color: white;
+        background-color: transparent;
+        box-sizing: border-box;
+    }
+    body {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 40px;
+        min-height: 100vh;
+        min-height: 100dvh;
+        background-color: black;
+        background-image: url("Textures/Space.gif");
+        background-size: cover;
+        background-position: center;
+    }
+    #scale-root {
+        background: transparent;
+        transform-origin: top center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 660px;
+    }
+    #hud {
+        display: none;
+        width: 600px;
+        margin: auto;
+        padding: 6px 10px;
+        background: #111;
+        border: 3px solid purple;
+        border-bottom: none;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        top: -56px;
+        z-index: 1;
+    }
+    #hud.hardcore { border-color: red; background: #1a0000; }
+    #hud.medium   { border: 9px solid purple; }
+    #hud-score { font-size: 10px; color: #0ff; }
+    #hud-score.hardcore { color: #ff4444; }
+    #hud-score.medium   { color: #ffd700; }
+    #hud-score.score-lg { font-size: 14px !important; }
+    #hud-score.score-sm { font-size: 7px !important; }
+    #hud-best  { font-size: 10px; color: #ff0; }
+    #hud-best.hardcore  { color: #ff4444; }
+    #hud-best.medium    { color: #ffd700; }
+    #hud-best.score-lg  { font-size: 14px !important; }
+    #hud-best.score-sm  { font-size: 7px !important; }
+    #hud-lives { font-size: 12px; letter-spacing: 4px; }
+    .heart        { color: red;    background: transparent; }
+    .heart-yellow { color: #ffd700; background: transparent; }
+    .heart-empty  { color: #444;   background: transparent; }
+    #game {
+        width: 600px; height: 450px;
+        margin: auto;
+        background-image: url("Textures/Space\ Flying.gif");
+        background-color: black;
+        border: 9px solid purple;
+        position: relative;
+        top: -59px;
+        overflow: hidden;
+    }
+    #game.hardcore { border-color: red; animation: hcflicker 1.5s infinite; }
+    #game.medium   { border-color: purple; }
+    @keyframes spShake {
+        0%{transform:translate(0,0)} 15%{transform:translate(-5px,3px)} 30%{transform:translate(5px,-3px)}
+        45%{transform:translate(-4px,2px)} 60%{transform:translate(4px,-2px)}
+        75%{transform:translate(-2px,1px)} 90%{transform:translate(2px,-1px)} 100%{transform:translate(0,0)}
+    }
+    #game.shaking { animation: spShake 0.25s ease-out; }
+    #game.hardcore.shaking { animation: spShake 0.25s ease-out, hcflicker 1.5s infinite; }
+    #flash {
+        position: absolute; top:0; left:0; width:100%; height:100%;
+        opacity:0; pointer-events:none; z-index:50; background:transparent;
+        transition: opacity 0.05s;
+    }
+    #character {
+        width:100px; height:100px;
+        position:absolute; bottom:30px; left:300px;
+        background:transparent; transition: filter 0.1s;
+    }
+    #character.hit { filter: brightness(5) sepia(1) hue-rotate(300deg); }
+    @keyframes invFlicker { 0%,100%{opacity:1} 50%{opacity:0.2} }
+    #character.inv { animation: invFlicker 0.12s infinite; }
+    #block   { width:100px; height:100px; position:absolute; top:-120px; left:100px; background:transparent; }
+    #block2  { width:100px; height:100px; position:absolute; top:-1000px; left:200px; background:transparent; }
+    #meteor  { width:100px; height:120px; position:absolute; top:-140px; left:300px; background:transparent; }
+    #monster { width:100px; height:120px; position:absolute; top:-1000px; left:100px; background:transparent; }
+    #monster2{ width:100px; height:120px; position:absolute; top:-1000px; left:400px; background:transparent; }
+    @keyframes slide  { 0%{top:-120px} 100%{top:460px} }
+    @keyframes meteor { 0%{top:-140px} 100%{top:460px} }
+    @keyframes monster{ 0%{top:-140px} 100%{top:460px} }
+    #countdown {
+        display:none; position:absolute;
+        top:25%; left:50%; transform:translate(-50%,-50%);
+        font-size:80px; color:red; z-index:9999; background:transparent;
+    }
+    #start, #mode-select, #type-select{
+        width:660px; height:670px; margin:1rem auto;
+        font-size:30px; color:white;
+        background: transparent;
+        position:relative; top:0; left:0
+    }
+    #mode-select  { display:none; }
+    #type-select  { display:none; }
+
+    button {
+        width:250px; height:70px; background-color:rgba(0,0,0,0.7);
+        border:2px solid purple; cursor:pointer;
+        font-family:"Press Start 2P",consolas; font-size:12px; color:white;
+    }
+    button:hover { background-color:rgba(17,17,17,0.8); border:4px solid purple; }
+    button:active { transform:scale(0.96); }
+    button.hc-btn  { border-color:red; color:#ff4444; text-shadow:0 0 8px red; }
+    button.hc-btn:hover { border-color:red; border-width:4px; }
+    button.med-btn { border-color:#ffd700; color:#ffd700; }
+    button.med-btn:hover { border-color:#ffd700; border-width:4px; }
+    #result {
+        height:510px; width:660px; margin:1rem auto; font-size:30px;
+        color:white; display:none; position:relative; top:0; overflow:hidden;
+        background-color: black;
+    }
+    #tutorial {
+        width:660px; height:670px; margin:1rem auto; color:white;
+        display:none; overflow:hidden; background:transparent; position:relative; top:0;
+    }
+    h1 { color: rgb(231,15,15); }
+    h5 { position:fixed; top:6px; left:10px; font-size:15px; z-index:9999; background:transparent; }
+    h6 { font-size:15px; top:10px; position:relative; }
+    p  { color:gray; font-size:12px; }
+    h3 { font-size:1.9vw; color:white; }
+    span { color:white; }
+
+    #random-tag {
+        display: inline-block;
+        transform: rotate(-35deg);
+        color: yellow;
+        background: transparent;
+        position: relative;
+        left: 38%;
+        top: -3%;
+        font-size: 11px;
+        white-space: nowrap;
+        pointer-events: none;
+        max-width: 400px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #game-backdrop { display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:black; z-index:-1; }
+    @keyframes hcflicker { 0%,100%{border-color:red} 50%{border-color:#ff000055} }
+
+    #fps-counter {
+        display: none;
+        position: fixed;
+        top: 6px; right: 80px;
+        font-size: 9px; color: rgba(0,255,0,0.85);
+        background: rgba(0,0,0,0.6);
+        padding: 2px 6px; z-index: 99999;
+        pointer-events: none; letter-spacing: 1px;
+    }
+
+    #mob-pause-btn {
+        display: none; position: fixed; top: 4px; right: 10px; z-index: 99999;
+        width: 62px; height: 30px; background: rgba(0,0,0,0.75);
+        border: 2px solid rgba(180,0,255,0.85); border-radius: 6px;
+        font-family: "Press Start 2P", consolas; font-size: 9px; color: #ccc;
+        letter-spacing: 0.5px; cursor: pointer; align-items: center;
+        justify-content: center; gap: 4px; user-select: none;
+        -webkit-user-select: none; touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        transition: background 0.07s, border-color 0.07s, transform 0.07s;
+    }
+    #mob-pause-btn:active { transform: scale(0.88); background: rgba(100,0,180,0.6); }
+    #mob-pause-btn.paused { border-color: #00ffcc; color: #00ffcc; }
+    #mob-pause-btn.hardcore { border-color: rgba(255,30,30,0.85); }
+    #mob-pause-btn.hardcore.paused { border-color: #ff8888; color: #ff8888; }
+    #mob-pause-btn.medium { border-color: rgba(255,210,0,0.85); }
+    #mob-pause-btn.medium.paused { border-color: #ffe866; color: #ffe866; }
+
+    #mobile-controls {
+        display: none; position: relative; top: -50px; width: 600px;
+        flex-direction: row; justify-content: space-between;
+        align-items: center; z-index: 20; padding: 0 4px;
+    }
+    .mob-btn {
+        width: 130px; height: 66px; background: rgba(0,0,0,0.72);
+        border: 3px solid rgba(180,0,255,0.85); border-radius: 8px;
+        cursor: pointer; font-family: "Press Start 2P", consolas;
+        font-size: 26px; color: white; display: flex; align-items: center;
+        justify-content: center; user-select: none; -webkit-user-select: none;
+        touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+        transition: background 0.07s, border-color 0.07s, transform 0.07s;
+    }
+    .mob-btn:active, .mob-btn.pressed { background:rgba(130,0,220,0.55); border-color:#dd88ff; transform:scale(0.92); }
+    .mob-btn.size-sm { width:90px!important; height:50px!important; font-size:20px!important; }
+    .mob-btn.size-lg { width:170px!important; height:84px!important; font-size:32px!important; }
+    #mobile-controls.hardcore .mob-btn { border-color: rgba(255,30,30,0.85); }
+    #mobile-controls.hardcore .mob-btn:active, #mobile-controls.hardcore .mob-btn.pressed { background:rgba(180,0,0,0.5); border-color:#ff8888; }
+    #mobile-controls.medium .mob-btn { border-color: rgba(255,210,0,0.85); }
+    #mobile-controls.medium .mob-btn:active, #mobile-controls.medium .mob-btn.pressed { background:rgba(160,120,0,0.5); border-color:#ffe866; }
+
+    /*multiplayer*/
+    #mp-wrapper { display:none; flex-direction:row; gap:20px; align-items:flex-start; justify-content:center; padding-top:8px; }
+    .mp-panel { display:flex; flex-direction:column; align-items:center; }
+    .mp-plabel { font-size:9px; margin-bottom:4px; letter-spacing:2px; background:transparent; }
+    .mp-hud { width:280px; padding:5px 8px; background:#111; border:3px solid purple; border-bottom:none; display:flex; justify-content:space-between; align-items:center; }
+    .mp-hud.hardcore { border-color:red; background:#1a0000; }
+    .mp-hud.medium   { border-color:#ffd700; }
+    .mp-hud-score { font-size:8px; color:#0ff; }
+    .mp-hud-score.hardcore { color:#ff4444; }
+    .mp-hud-score.medium   { color:#ffd700; }
+    .mp-hud-lives { font-size:9px; letter-spacing:2px; }
+    .mp-game { width:280px; height:420px; border:6px solid purple; position:relative; overflow:hidden; background-image:url("Textures/Space\ Flying.gif"); background-size:cover; background-position:center center; }
+    .mp-game.hardcore { border-color:red; animation:hcflicker 1.5s infinite; }
+    .mp-game.medium   { border-color:#ffd700; }
+    .mp-obs { width:44px; height:55px; position:absolute; background:transparent; }
+    @keyframes mp-fall { 0%{top:-60px} 100%{top:440px} }
+    .mp-char { width:52px; height:52px; position:absolute; bottom:35px; left:104px; background:transparent; z-index:10; transition:filter 0.1s; }
+    .mp-char.hit { filter:brightness(5) sepia(1) hue-rotate(300deg); }
+    .mp-char.inv { animation:invFlicker 0.12s infinite; }
+    .mp-flash { position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; pointer-events:none; z-index:50; background:red; transition:opacity 0.05s; }
+    .mp-cd { display:none; position:absolute; top:30%; left:50%; transform:translate(-50%,-50%); font-size:42px; color:red; z-index:99; background:transparent; }
+    .mp-dead-overlay { display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.78); flex-direction:column; align-items:center; justify-content:center; z-index:9999; }
+    .mp-dead-overlay.show { display:flex; }
+    .mp-dead-title { font-size:13px; color:red; margin-bottom:10px; }
+    .mp-dead-score { font-size:9px; color:#0ff; }
+    .mp-dead-score.hardcore { color:#ff4444; }
+    .mp-dead-score.medium   { color:#ffd700; }
+    #vs-div { display:flex; flex-direction:column; align-items:center; padding-top:70px; font-size:18px; color:#f0f; text-shadow:0 0 10px #f0f; background:transparent; min-width:36px; }
+    #mp-result { display:none; width:660px; padding:60px 0; text-align:center; position:relative; top:0; overflow:hidden; background-color:black; }
+    #mp-result h1 { font-size:36px; margin-bottom:20px; }
+    .mpr-sub  { font-size:13px; color:#aaa; margin-bottom:28px; }
+    .mpr-scrs { font-size:14px; line-height:3; margin-bottom:32px; }
+    @keyframes wpulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+    #mp-result-title { animation:wpulse 1s infinite; }
+
+    /*pause*/
+    #pause-overlay { display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.45); z-index:10000; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; }
+    #pause-overlay.visible { display:flex; }
+    #pause-overlay button { pointer-events:auto; }
+    #pause-text { font-size:42px; color:#fff; text-shadow:0 0 20px #a000ff,0 0 40px #a000ff; letter-spacing:6px; background:transparent; animation:pausePulse 1.2s ease-in-out infinite; }
+    #pause-text.hardcore { color:#ff4444; text-shadow:0 0 20px red,0 0 40px red; }
+    #pause-text.medium   { color:#ffd700; text-shadow:0 0 20px #ffd700,0 0 40px #ffd700; }
+    #pause-hint { font-size:9px; color:rgba(255,255,255,0.55); margin-top:18px; letter-spacing:2px; background:transparent; }
+    #pause-settings-btn { margin-top:22px; width:180px!important; height:46px!important; font-size:9px!important; border-color:rgba(180,0,255,0.7)!important; color:rgba(220,180,255,0.9)!important; background:rgba(0,0,0,0.6)!important; }
+    #pause-settings-btn:hover { border-color:#fff!important; color:#fff!important; }
+    @keyframes pausePulse { 0%,100%{opacity:1} 50%{opacity:0.55} }
+    .mp-pause-overlay { display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.45); z-index:10000; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; }
+    .mp-pause-overlay.visible { display:flex; }
+    .mp-pause-text { font-size:22px; color:#fff; text-shadow:0 0 16px #a000ff,0 0 32px #a000ff; letter-spacing:4px; background:transparent; animation:pausePulse 1.2s ease-in-out infinite; }
+    .mp-pause-text.hardcore { color:#ff4444; text-shadow:0 0 16px red,0 0 32px red; }
+    .mp-pause-text.medium   { color:#ffd700; text-shadow:0 0 16px #ffd700,0 0 32px #ffd700; }
+    #mp-vs-settings-btn { display:none; margin-top:16px; width:60px!important; height:36px!important; font-size:14px!important; border-color:rgba(180,0,255,0.65)!important; color:rgba(220,180,255,0.85)!important; background:rgba(0,0,0,0.7)!important; }
+    #mp-vs-settings-btn:hover { border-color:#fff!important; color:#fff!important; }
+    #mp-vs-settings-btn.show { display:block; }
+    #mp-vs-quit-btn { display:none; margin-top:10px; width:60px!important; height:36px!important; font-size:14px!important; border-color:rgba(255,80,80,0.55)!important; color:rgba(255,160,160,0.85)!important; background:rgba(0,0,0,0.7)!important; }
+    #mp-vs-quit-btn:hover { border-color:#ff4444!important; color:#ff4444!important; }
+    #mp-vs-quit-btn.show { display:block; }
+
+    /*settings*/
+    #settings { width:660px; display:none; background:transparent; padding:0; position:relative; top:0; overflow:hidden; }
+    #settings-header { padding:6px 28px 0 28px; background:transparent; flex-shrink:0; }
+    #settings-scroll { overflow-y:auto; overflow-x:hidden; max-height:560px; padding:0 28px 12px 28px; background:transparent; scrollbar-width:thin; scrollbar-color:#440088 #111; }
+    #settings-scroll::-webkit-scrollbar { width:6px; }
+    #settings-scroll::-webkit-scrollbar-track { background:#111; border-radius:3px; }
+    #settings-scroll::-webkit-scrollbar-thumb { background:#440088; border-radius:3px; }
+    #settings-scroll::-webkit-scrollbar-thumb:hover { background:#6600cc; }
+    .set-inner { width:100%; background:transparent; }
+    .set-section-label { font-size:7px; color:#888; letter-spacing:3px; margin:8px 0 5px 0; text-align:center; background:transparent; border-top:1px solid #2a2a2a; padding-top:8px; }
+    .set-section-label:first-child { border-top:none; margin-top:0; }
+    .set-subsection-label { font-size:7px; color:#666; margin:5px 0 2px 0; text-align:left; background:transparent; padding-left:2px; letter-spacing:2px; }
+    .set-row { display:flex; align-items:center; justify-content:space-between; padding:4px 10px; background:rgba(255,255,255,0.025); margin:2px 0; border-left:2px solid #1e1e1e; }
+    .set-label { font-size:8px; color:#ccc; text-align:left; background:transparent; flex:1; }
+    .set-label small { display:block; font-size:6px; color:#555; margin-top:2px; background:transparent; font-family:"Press Start 2P",consolas; }
+    .set-toggle { width:140px!important; height:28px!important; font-size:7px!important; border:2px solid #0ff!important; color:#0ff!important; background:rgba(0,0,0,0.6)!important; }
+    .set-toggle:hover { border-width:3px!important; }
+    .set-toggle.off { border-color:#444!important; color:#666!important; }
+    .set-cycle { width:160px!important; height:28px!important; font-size:7px!important; border:2px solid #888!important; color:#ddd!important; background:rgba(0,0,0,0.6)!important; cursor:pointer!important; }
+    .set-cycle:hover { border-color:#0ff!important; border-width:3px!important; }
+    .set-kb { width:80px!important; height:28px!important; font-size:10px!important; border:2px solid #555!important; color:#ddd!important; background:rgba(0,0,0,0.6)!important; }
+    .set-kb:hover { border-color:#aaa!important; border-width:3px!important; }
+    .set-kb.listening { border-color:#ff0!important; color:#ff0!important; background:rgba(40,40,0,0.7)!important; animation:kbPulse 0.55s ease-in-out infinite; }
+    .set-kb.locked { border-color:#2a2a2a!important; color:#3a3a3a!important; cursor:not-allowed!important; pointer-events:none!important; opacity:0.45!important; }
+    @keyframes kbPulse { 0%,100%{opacity:1} 50%{opacity:0.45} }
+    #settings-error { font-size:7px; color:#ff4444; min-height:22px; text-align:center; margin:10px 0 4px 0; line-height:2; background:transparent; }
+    .set-lock-msg { font-size:8px; color:#555; text-align:center; padding:10px 0 6px 0; background:transparent; letter-spacing:1px; }
+    .set-reset-btn { width:230px!important; height:38px!important; font-size:7px!important; border-color:#3a3a3a!important; color:#666!important; }
+    .set-reset-btn:hover { border-color:#888!important; color:#aaa!important; }
+    .set-note { font-size:6px; color:#3a3a3a; text-align:center; margin-top:6px; background:transparent; letter-spacing:1px; }
+    .set-reset-scores-btn { width:200px!important; height:28px!important; font-size:6px!important; border-color:#550000!important; color:#aa4444!important; background:rgba(20,0,0,0.7)!important; }
+    .set-reset-scores-btn:hover { border-color:#ff4444!important; color:#ff8888!important; border-width:3px!important; }
+    .set-reset-scores-btn.confirmed { border-color:#ff4444!important; color:#ff4444!important; animation:kbPulse 0.4s ease-in-out 3; }
+    .set-zoom-btn { width:160px!important; height:28px!important; font-size:7px!important; border:2px solid #888!important; color:#ddd!important; background:rgba(0,0,0,0.6)!important; cursor:pointer!important; }
+    .set-zoom-btn:hover { border-color:#0ff!important; border-width:3px!important; }
+    #game.hitbox-on #character { outline:2px solid lime; box-shadow:0 0 6px lime,inset 0 0 6px rgba(0,255,0,0.15); z-index:1000; }
+    #game.hitbox-on #block, #game.hitbox-on #block2, #game.hitbox-on #meteor, #game.hitbox-on #monster, #game.hitbox-on #monster2 { outline:2px solid orangered; box-shadow:0 0 6px orangered,inset 0 0 6px rgba(255,80,0,0.15); }
+    .mp-game.hitbox-on .mp-char { outline:2px solid lime; box-shadow:0 0 6px lime; }
+    .mp-game.hitbox-on .mp-obs  { outline:2px solid orangered; box-shadow:0 0 6px orangered; }
+
+    .set-vol-row { display:flex; align-items:center; justify-content:space-between; padding:3px 10px 6px 10px; background:rgba(255,255,255,0.015); margin:-4px 0 2px 0; border-left:2px solid #1e1e1e; }
+    #set-vol-slider { width:130px; accent-color:#0ff; cursor:pointer; }
+    #set-vol-label { font-size:7px; color:#0ff; min-width:30px; text-align:right; background:transparent; font-family:"Press Start 2P",consolas; }
