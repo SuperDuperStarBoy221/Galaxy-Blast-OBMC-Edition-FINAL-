@@ -16,7 +16,7 @@
         min-height: 100vh;
         min-height: 100dvh;
         background-color: black;
-        background-image: url("Textures/Space.gif");
+        background-image: url("../Textures/Space.gif");
         background-size: cover;
         background-position: center;
     }
@@ -219,7 +219,7 @@
     .mp-hud-score.hardcore { color:#ff4444; }
     .mp-hud-score.medium   { color:#ffd700; }
     .mp-hud-lives { font-size:9px; letter-spacing:2px; }
-    .mp-game { width:280px; height:420px; border:6px solid purple; position:relative; overflow:hidden; background-image:url("Textures/Space\ Flying.gif"); background-size:cover; background-position:center center; }
+    .mp-game { width:280px; height:420px; border:6px solid purple; position:relative; overflow:hidden; background-image:url("../Textures/Space\ Flying.gif"); background-size:cover; background-position:center center; }
     .mp-game.hardcore { border-color:red; animation:hcflicker 1.5s infinite; }
     .mp-game.medium   { border-color:#ffd700; }
     .mp-obs { width:44px; height:55px; position:absolute; background:transparent; }
