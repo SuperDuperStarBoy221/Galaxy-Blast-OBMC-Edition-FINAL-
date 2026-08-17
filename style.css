@@ -1,4 +1,4 @@
- * {
+* {
         padding: 0; margin: 0;
         text-align: center;
         font-family: "Press Start 2P", "consolas";
@@ -208,28 +208,8 @@
     #mobile-controls.medium .mob-btn { border-color: rgba(255,210,0,0.85); }
     #mobile-controls.medium .mob-btn:active, #mobile-controls.medium .mob-btn.pressed { background:rgba(160,120,0,0.5); border-color:#ffe866; }
 
-    /*mobile multiplayer corner controls - fixed to the viewport corners, independent of the scale-root zoom*/
-    #mp-mob-controls { display:none; }
-    .mp-mob-btn {
-        position: fixed; width: 72px; height: 72px; z-index: 99998;
-        background: rgba(0,0,0,0.72); border-radius: 10px;
-        display: flex; align-items: center; justify-content: center;
-        font-family: "Press Start 2P", consolas; font-size: 24px;
-        user-select: none; -webkit-user-select: none;
-        touch-action: manipulation; -webkit-tap-highlight-color: transparent;
-        transition: background 0.07s, border-color 0.07s, transform 0.07s;
-    }
-    .mp-mob-btn:active, .mp-mob-btn.pressed { transform: scale(0.9); }
-    .mp-mob-p1 { top: max(10px, env(safe-area-inset-top)); border: 3px solid rgba(160,240,255,0.85); color: #a0f0ff; }
-    .mp-mob-p1:active, .mp-mob-p1.pressed { background: rgba(0,110,150,0.5); border-color:#d0f8ff; }
-    .mp-mob-p2 { bottom: max(10px, env(safe-area-inset-bottom)); border: 3px solid rgba(255,219,112,0.85); color: #ffdb70; }
-    .mp-mob-p2:active, .mp-mob-p2.pressed { background: rgba(150,110,0,0.5); border-color:#fff0b0; }
-    #mp-mob-left-1, #mp-mob-left-2   { left:  max(10px, env(safe-area-inset-left)); }
-    #mp-mob-right-1, #mp-mob-right-2 { right: max(10px, env(safe-area-inset-right)); }
-
     /*multiplayer*/
     #mp-wrapper { display:none; flex-direction:row; gap:20px; align-items:flex-start; justify-content:center; padding-top:8px; }
-    .mp-field { display:contents; }
     .mp-panel { display:flex; flex-direction:column; align-items:center; }
     .mp-plabel { font-size:9px; margin-bottom:4px; letter-spacing:2px; background:transparent; }
     .mp-hud { width:280px; padding:5px 8px; background:#111; border:3px solid purple; border-bottom:none; display:flex; justify-content:space-between; align-items:center; }
@@ -285,29 +265,6 @@
     #mp-vs-quit-btn { display:none; margin-top:10px; width:60px!important; height:36px!important; font-size:14px!important; border-color:rgba(255,80,80,0.55)!important; color:rgba(255,160,160,0.85)!important; background:rgba(0,0,0,0.7)!important; }
     #mp-vs-quit-btn:hover { border-color:#ff4444!important; color:#ff4444!important; }
     #mp-vs-quit-btn.show { display:block; }
-
-    /*mobile split-screen multiplayer: real full-bleed top/bottom halves, like the sketch*/
-    body.mp-mobile-active { padding-top:0; overflow:hidden; }
-    body.mp-mobile-active h5 { display:none; }
-    body.mp-mobile-active #mob-pause-btn { top:4px; left:50%; right:auto; transform:translateX(-50%); }
-    body.mp-mobile-active #mob-pause-btn:active { transform:translateX(-50%) scale(0.88); }
-    .mp-wrapper-mobile {
-        display:flex!important; flex-direction:column!important; gap:0!important;
-        width:100vw; height:100dvh; padding-top:0; margin:0;
-        align-items:stretch; justify-content:stretch;
-    }
-    .mp-wrapper-mobile .mp-panel { flex:1 1 0; min-height:0; width:100%; display:flex; flex-direction:column; align-items:center; }
-    .mp-wrapper-mobile .mp-plabel { font-size:10px; margin:6px 0 4px 0; }
-    .mp-wrapper-mobile .mp-hud { width:92%; max-width:340px; }
-    .mp-wrapper-mobile .mp-field { display:block; position:relative; flex:1 1 auto; width:100%; overflow:hidden; }
-    .mp-wrapper-mobile .mp-field .mp-game { position:absolute; top:50%; left:50%; margin:0; }
-    .mp-wrapper-mobile #vs-div {
-        flex-direction:row; flex:0 0 auto; padding:6px 14px; gap:16px; width:100%;
-        border-top:3px solid rgba(240,0,255,0.65); border-bottom:3px solid rgba(240,0,255,0.65);
-        background:rgba(20,0,30,0.55);
-    }
-    .mp-wrapper-mobile #mp-vs-settings-btn, .mp-wrapper-mobile #mp-vs-quit-btn { margin-top:0!important; }
-
 
     /*settings*/
     #settings { width:660px; display:none; background:transparent; padding:0; position:relative; top:0; overflow:hidden; }
