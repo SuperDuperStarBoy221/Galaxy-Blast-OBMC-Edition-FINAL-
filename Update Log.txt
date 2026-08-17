@@ -1,1 +1,3 @@
+[All prior update logs were either lost or never documented.]
 [v1.22.8 - 08/08/26|6:24PM]: Removed Story Mode due to glitches, added new easter eggs, fixed and sorted code.
+[v1.23.0 - 08/08/26|6:24PM]: Added Mobile Multiplayer Mode.
