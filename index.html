@@ -11,9 +11,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h5>Version_1.22.8</h5>
+<h5>Version_1.22.9</h5>
 <div id="mob-pause-btn">⚙ SET</div>
 <div id="fps-counter">FPS: --</div>
+
+<!--Mobile Multiplayer touch controls-->
+<div id="mp-mob-controls">
+    <div class="mp-mob-btn mp-mob-p1" id="mp-mob-left-1">◀</div>
+    <div class="mp-mob-btn mp-mob-p1" id="mp-mob-right-1">▶</div>
+    <div class="mp-mob-btn mp-mob-p2" id="mp-mob-left-2">◀</div>
+    <div class="mp-mob-btn mp-mob-p2" id="mp-mob-right-2">▶</div>
+</div>
 
 <button id="menu-music-btn" onclick="toggleMenuMusicBtn()" style="
     position:fixed; bottom:10px; left:10px; z-index:99999;
@@ -165,6 +173,7 @@
     <h4>MEDIUM: 2 lives ♥♥</h4><br/>
     <h4>HARDCORE: 1 hit = dead ☠</h4><br/>
     <h4>MULTIPLAYER: P1=A/D, P2=←/→</h4><br/>
+    <h4>Mobile MP: tap the 4 corner arrows</h4><br/>
     <h4>P key = PAUSE / UNPAUSE</h4><br/><br/>
     <button onclick="showStart()">← Back</button>
 </div>
@@ -226,7 +235,7 @@
     <div class="mp-panel">
         <div class="mp-plabel" style="color:#a0f0ff;">◀ P1 — A / D ▶</div>
         <div class="mp-hud" id="mp-hud-1"><div class="mp-hud-score" id="mp-hs-1">SCORE: <span id="mp-score-1">0</span></div><div class="mp-hud-lives" id="mp-lives-1"></div></div>
-        <div class="mp-game" id="mp-game-1">
+        <div class="mp-field"><div class="mp-game" id="mp-game-1">
             <div class="mp-flash" id="mp-flash-1"></div>
             <img class="mp-char" id="mp-char-1" src="https://pixeljoint.com/files/icons/full/avion.gif" width="52" height="52">
             <div class="mp-cd" id="mp-cd-1"></div>
@@ -234,13 +243,13 @@
             <div class="mp-pause-overlay" id="mp-pause-1"><div class="mp-pause-text" id="mp-pause-text-1">PAUSED</div></div>
             <div style="position:absolute;bottom:0;left:0;width:100%;height:33px;background-color:#000;z-index:999;"></div>
             <div style="position:absolute;top:0;left:0;width:100%;height:65px;background-color:#000;z-index:999;"></div>
-        </div>
+        </div></div>
     </div>
     <div id="vs-div">VS<button id="mp-vs-settings-btn" onclick="openSettings('mp-pause')" title="Settings">⚙</button><button id="mp-vs-quit-btn" onclick="quitMpToMenu()" title="Quit">✕</button></div>
     <div class="mp-panel">
         <div class="mp-plabel" style="color:#ffdb70;">◀ P2 — ← / → ▶</div>
         <div class="mp-hud" id="mp-hud-2"><div class="mp-hud-score" id="mp-hs-2">SCORE: <span id="mp-score-2">0</span></div><div class="mp-hud-lives" id="mp-lives-2"></div></div>
-        <div class="mp-game" id="mp-game-2">
+        <div class="mp-field"><div class="mp-game" id="mp-game-2">
             <div class="mp-flash" id="mp-flash-2"></div>
             <img class="mp-char" id="mp-char-2" src="https://pixeljoint.com/files/icons/full/avion.gif" width="52" height="52">
             <div class="mp-cd" id="mp-cd-2"></div>
@@ -248,7 +257,7 @@
             <div class="mp-pause-overlay" id="mp-pause-2"><div class="mp-pause-text" id="mp-pause-text-2">PAUSED</div></div>
             <div style="position:absolute;bottom:0;left:0;width:100%;height:33px;background-color:#000;z-index:999;"></div>
             <div style="position:absolute;top:0;left:0;width:100%;height:65px;background-color:#000;z-index:999;"></div>
-        </div>
+        </div></div>
     </div>
 </div>
 <div id="mp-result">
@@ -270,7 +279,9 @@
 <audio id="click-sound"><source src="Music and Sounds/floraphonic-8-bit-game-2-186976.mp3" type="audio/mpeg"></audio>
 <audio id="menu-music" loop><source src="Music and Sounds/darren_hirst-gamer-music-140-bpm-355954.mp3"></audio>
 
-<script src="script.js"></script>
+<script>
+
+</script>
 
 </body>
 </html>
