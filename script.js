@@ -246,9 +246,9 @@ function updateSettingsUI(){
     rsb.textContent='RESET SCORES'; rsb.classList.remove('confirmed');
     _resetScoresConfirmPending=false; if(_resetScoresConfirmTimer){clearTimeout(_resetScoresConfirmTimer);_resetScoresConfirmTimer=null;}
     ['set-section-mobile','set-btnsize-row','set-btnpos-row'].forEach(function(id){
-        var el=document.getElementById(id); if(el)el.style.display=isTouchDevice?(id==='set-section-mobile'?'block':'flex'):'none';
+        var el=document.getElementById(id); if(el)el.style.display=isMobileMode?(id==='set-section-mobile'?'block':'flex'):'none';
     });
-    if(isTouchDevice){
+    if(isMobileMode){
         document.querySelectorAll('.set-kb').forEach(function(b){b.classList.add('locked');});
         document.getElementById('set-kb-mobile-note-sp').style.display='block';
         document.getElementById('set-kb-mobile-note-mp').style.display='block';
@@ -299,7 +299,7 @@ function closeSettings(){
     } else { showStart(); }
 }
 function listenKey(section,dir){
-    if(isTouchDevice)return;
+    if(isMobileMode)return;
     var btnId='kb-'+section+'-'+dir;
     if(listeningFor&&listeningFor.section===section&&listeningFor.dir===dir){
         document.getElementById(btnId).textContent=keyLabel(tempKeybinds[section][dir]);
@@ -353,14 +353,41 @@ function playGameMusic(){
     else                  playAudio(gameMusic,0.5);
 }
 
-var isTouchDevice=(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||("ontouchstart" in window)||(navigator.maxTouchPoints>0);
-if(isTouchDevice){
-    var mpLink=document.getElementById("mp-link"),mpBtn=document.getElementById("mp-btn");
-    mpLink.onclick=function(e){e.preventDefault();}; mpLink.style.cursor="default";
-    mpBtn.disabled=true; mpBtn.style.borderColor="#555"; mpBtn.style.color="#555";
-    mpBtn.style.textShadow="none"; mpBtn.style.cursor="not-allowed"; mpBtn.style.opacity="0.45";
-    document.getElementById("mp-btn-sub").textContent="PC only 🖥"; document.getElementById("mp-btn-sub").style.color="#666";
+/*
+  Device mode detection: previously this checked for a touch-capable screen,
+  which misfires on touchscreen laptops (they get treated as "mobile" even
+  though they have a full keyboard). Instead we detect an actual physical
+  keyboard:
+    - No touch capability at all -> definitely a keyboard-equipped PC, so
+      start in PC mode right away.
+    - Touch capability present -> could be a phone/tablet (no keyboard) OR
+      a touchscreen laptop/tablet with a keyboard attached. Start in mobile
+      mode as a safe default, then listen for a real keydown event. A
+      genuine physical key press (as opposed to the on-screen mobile
+      buttons, which never fire keydown) proves a keyboard is attached, so
+      we switch live into PC mode (multiplayer keybinds + no on-screen
+      buttons).
+*/
+var _hasTouchCapability=(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||("ontouchstart" in window)||(navigator.maxTouchPoints>0);
+var isMobileMode=_hasTouchCapability;
+function _applyModeUI(){
+    document.getElementById("mp-btn-sub").textContent=isMobileMode?"P1: ◤◥ corners  |  P2: ◣◢ corners":"P1: A/D  |  P2: ←/→";
+    if(!isMobileMode){
+        var mc=document.getElementById("mobile-controls"); if(mc)mc.style.display="none";
+        var mmc=document.getElementById("mp-mob-controls"); if(mmc)mmc.style.display="none";
+        if(typeof mobPauseBtn!=="undefined"&&mobPauseBtn)mobPauseBtn.style.display="none";
+    }
+    if(document.getElementById('settings').style.display==='block')updateSettingsUI();
 }
+function _onKeyboardDetected(e){
+    if(e.isTrusted===false)return; /*ignore synthetic key events*/
+    if(isMobileMode){ isMobileMode=false; _applyModeUI(); }
+    window.removeEventListener("keydown",_onKeyboardDetected,true);
+}
+if(_hasTouchCapability){
+    window.addEventListener("keydown",_onKeyboardDetected,true);
+}
+_applyModeUI();
 
 /*game state*/
 var msgs=["Nice try!","Better Luck Next Time!","Almost there!","Don't let Asher laugh at you!","Never Give up!","Lock in!"];
@@ -377,7 +404,7 @@ function saveScores(){ localStorage.setItem("galaxyblast_best_easy",bestEasy); l
 
 var mobPauseBtn=document.getElementById("mob-pause-btn");
 function showMobPauseBtn(visible,m){
-    if(visible&&isTouchDevice){
+    if(visible&&isMobileMode){
         mobPauseBtn.style.display="flex"; mobPauseBtn.classList.remove("hardcore","medium","paused");
         if(m==="hardcore")mobPauseBtn.classList.add("hardcore"); else if(m==="medium")mobPauseBtn.classList.add("medium");
     } else { mobPauseBtn.style.display="none"; }
@@ -462,7 +489,7 @@ function mobUp(){ if(mobInterval){clearInterval(mobInterval);mobInterval=null;} 
 })();
 function showMobileControls(visible,m){
     var mc=document.getElementById("mobile-controls");
-    if(visible&&isTouchDevice&&gameType==="single"){
+    if(visible&&isMobileMode&&gameType==="single"){
         mc.classList.remove("hardcore","medium"); if(m==="hardcore")mc.classList.add("hardcore"); else if(m==="medium")mc.classList.add("medium");
         mc.style.display="flex"; applyBtnGap();
     } else { mc.style.display="none"; }
@@ -475,7 +502,7 @@ function hideAll(){
     document.getElementById("game-backdrop").style.display="none";
     document.getElementById('mp-vs-settings-btn').classList.remove('show');
     document.getElementById('mp-vs-quit-btn').classList.remove('show');
-    showMobPauseBtn(false);
+    showMobPauseBtn(false); showMpMobileControls(false);
 }
 function quitToMenu(){ showStart(); }
 function quitMpToMenu(){ showStart(); }
@@ -495,7 +522,7 @@ function showStart(){
 }
 function showTypeSelect(){ hideAll(); document.getElementById("type-select").style.display="block"; playMenuMusic(); }
 function showClassicModeSelect(){ gameType='single'; hideAll(); document.getElementById("mode-select").style.display="block"; playMenuMusic(); }
-function showMpModeSelect(){ if(isTouchDevice)return; gameType='multi'; hideAll(); document.getElementById("mode-select").style.display="block"; playMenuMusic(); }
+function showMpModeSelect(){ gameType='multi'; hideAll(); document.getElementById("mode-select").style.display="block"; playMenuMusic(); }
 function startTutorial(){ hideAll(); document.getElementById("tutorial").style.display="block"; playMenuMusic(); }
 
 /*singleplayer*/
@@ -706,7 +733,7 @@ function mpCountdown(p,cb){
 function showMpResult(){
     ["start","type-select","mode-select","hud","game","tutorial","mp-wrapper"].forEach(function(id){document.getElementById(id).style.display="none";});
     document.getElementById('mp-vs-settings-btn').classList.remove('show');
-    document.getElementById('mp-vs-quit-btn').classList.remove('show'); showMobPauseBtn(false);
+    document.getElementById('mp-vs-quit-btn').classList.remove('show'); showMobPauseBtn(false); showMpMobileControls(false);
     var p1=mpState[0],p2=mpState[1],title=document.getElementById("mp-result-title"),w,c;
     if(p1.score>p2.score){w="P1 WINS!";c="#a0f0ff";}else if(p2.score>p1.score){w="P2 WINS!";c="#ffdb70";}else{w="IT'S A TIE!";c="#f0f";}
     title.textContent=w;title.style.color=c;title.style.textShadow="0 0 20px "+c;
@@ -729,7 +756,7 @@ function beginMp(m){
     mpUpdateLives(p1);mpUpdateLives(p2);
     stopMenuMusic();
     hideAll(); document.getElementById("mp-wrapper").style.display="flex"; document.getElementById("game-backdrop").style.display="block";
-    applyHitbox(); showMobPauseBtn(true,m); updateMobPauseBtnState();
+    applyHitbox(); showMobPauseBtn(true,m); updateMobPauseBtnState(); showMpMobileControls(true);
     document.getElementById('mp-vs-settings-btn').classList.remove('show');
     document.getElementById('mp-vs-quit-btn').classList.remove('show');
     mpCountdown(p1,function(){mpStartPlayer(p1);}); mpCountdown(p2,function(){mpStartPlayer(p2);});
@@ -741,6 +768,30 @@ function stopMp(){
     mpState=null; stopFpsCounter();
 }
 function restartMp(){ stopAllMusic(); document.getElementById("mp-result").style.display="none"; beginMp(mode); }
+
+/*shared mp movement - used by keyboard AND the mobile corner buttons*/
+function mpMoveLeft(p){ if(!p||p.dead||mpIsPaused)return; if(p.col>0){p.col--;p.charEl.style.left=(p.col*MP_STEP)+"px";} }
+function mpMoveRight(p){ if(!p||p.dead||mpIsPaused)return; if(p.col<MP_COLS-1){p.col++;p.charEl.style.left=(p.col*MP_STEP)+"px";} }
+
+function showMpMobileControls(visible){
+    var mc=document.getElementById("mp-mob-controls");
+    if(!mc)return;
+    mc.style.display=(visible&&isMobileMode&&gameType==="multi")?"block":"none";
+}
+(function(){
+    var map=[["mp-mob-left-1",1,"left"],["mp-mob-right-1",1,"right"],["mp-mob-left-2",2,"left"],["mp-mob-right-2",2,"right"]];
+    map.forEach(function(entry){
+        var btn=document.getElementById(entry[0]); if(!btn)return;
+        var pn=entry[1],dir=entry[2];
+        function fire(){ if(!mpState)return; var p=mpState[pn-1]; if(dir==="left")mpMoveLeft(p);else mpMoveRight(p); }
+        btn.addEventListener("touchstart",function(e){e.preventDefault();btn.classList.add("pressed");fire();},{passive:false});
+        btn.addEventListener("touchend",function(e){e.preventDefault();btn.classList.remove("pressed");},{passive:false});
+        btn.addEventListener("touchcancel",function(e){e.preventDefault();btn.classList.remove("pressed");},{passive:false});
+        btn.addEventListener("mousedown",function(){btn.classList.add("pressed");fire();});
+        btn.addEventListener("mouseup",function(){btn.classList.remove("pressed");});
+        btn.addEventListener("mouseleave",function(){btn.classList.remove("pressed");});
+    });
+})();
 
 document.addEventListener("keydown",function(e){
     if(listeningFor!==null){
@@ -757,10 +808,10 @@ document.addEventListener("keydown",function(e){
     }
     if(gameType==="multi"&&mpState){
         var p1=mpState[0],p2=mpState[1],kb1=settings.keybinds.p1,kb2=settings.keybinds.p2;
-        if(matchKey(e.key,kb1.left)&&!p1.dead&&p1.col>0){p1.col--;p1.charEl.style.left=(p1.col*MP_STEP)+"px";}
-        if(matchKey(e.key,kb1.right)&&!p1.dead&&p1.col<MP_COLS-1){p1.col++;p1.charEl.style.left=(p1.col*MP_STEP)+"px";}
-        if(matchKey(e.key,kb2.left)&&!p2.dead&&p2.col>0){e.preventDefault();p2.col--;p2.charEl.style.left=(p2.col*MP_STEP)+"px";}
-        if(matchKey(e.key,kb2.right)&&!p2.dead&&p2.col<MP_COLS-1){e.preventDefault();p2.col++;p2.charEl.style.left=(p2.col*MP_STEP)+"px";}
+        if(matchKey(e.key,kb1.left)){e.preventDefault();mpMoveLeft(p1);}
+        if(matchKey(e.key,kb1.right)){e.preventDefault();mpMoveRight(p1);}
+        if(matchKey(e.key,kb2.left)){e.preventDefault();mpMoveLeft(p2);}
+        if(matchKey(e.key,kb2.right)){e.preventDefault();mpMoveRight(p2);}
     }
 });
 
