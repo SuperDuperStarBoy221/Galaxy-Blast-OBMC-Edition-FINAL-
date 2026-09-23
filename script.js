@@ -246,9 +246,9 @@ function updateSettingsUI(){
     rsb.textContent='RESET SCORES'; rsb.classList.remove('confirmed');
     _resetScoresConfirmPending=false; if(_resetScoresConfirmTimer){clearTimeout(_resetScoresConfirmTimer);_resetScoresConfirmTimer=null;}
     ['set-section-mobile','set-btnsize-row','set-btnpos-row'].forEach(function(id){
-        var el=document.getElementById(id); if(el)el.style.display=isMobileMode?(id==='set-section-mobile'?'block':'flex'):'none';
+        var el=document.getElementById(id); if(el)el.style.display=isTouchDevice?(id==='set-section-mobile'?'block':'flex'):'none';
     });
-    if(isMobileMode){
+    if(isTouchDevice){
         document.querySelectorAll('.set-kb').forEach(function(b){b.classList.add('locked');});
         document.getElementById('set-kb-mobile-note-sp').style.display='block';
         document.getElementById('set-kb-mobile-note-mp').style.display='block';
@@ -299,7 +299,7 @@ function closeSettings(){
     } else { showStart(); }
 }
 function listenKey(section,dir){
-    if(isMobileMode)return;
+    if(isTouchDevice)return;
     var btnId='kb-'+section+'-'+dir;
     if(listeningFor&&listeningFor.section===section&&listeningFor.dir===dir){
         document.getElementById(btnId).textContent=keyLabel(tempKeybinds[section][dir]);
@@ -353,41 +353,10 @@ function playGameMusic(){
     else                  playAudio(gameMusic,0.5);
 }
 
-/*
-  Device mode detection: previously this checked for a touch-capable screen,
-  which misfires on touchscreen laptops (they get treated as "mobile" even
-  though they have a full keyboard). Instead we detect an actual physical
-  keyboard:
-    - No touch capability at all -> definitely a keyboard-equipped PC, so
-      start in PC mode right away.
-    - Touch capability present -> could be a phone/tablet (no keyboard) OR
-      a touchscreen laptop/tablet with a keyboard attached. Start in mobile
-      mode as a safe default, then listen for a real keydown event. A
-      genuine physical key press (as opposed to the on-screen mobile
-      buttons, which never fire keydown) proves a keyboard is attached, so
-      we switch live into PC mode (multiplayer keybinds + no on-screen
-      buttons).
-*/
-var _hasTouchCapability=(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||("ontouchstart" in window)||(navigator.maxTouchPoints>0);
-var isMobileMode=_hasTouchCapability;
-function _applyModeUI(){
-    document.getElementById("mp-btn-sub").textContent=isMobileMode?"P1: ◤◥ corners  |  P2: ◣◢ corners":"P1: A/D  |  P2: ←/→";
-    if(!isMobileMode){
-        var mc=document.getElementById("mobile-controls"); if(mc)mc.style.display="none";
-        var mmc=document.getElementById("mp-mob-controls"); if(mmc)mmc.style.display="none";
-        if(typeof mobPauseBtn!=="undefined"&&mobPauseBtn)mobPauseBtn.style.display="none";
-    }
-    if(document.getElementById('settings').style.display==='block')updateSettingsUI();
+var isTouchDevice=(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||("ontouchstart" in window)||(navigator.maxTouchPoints>0);
+if(isTouchDevice){
+    document.getElementById("mp-btn-sub").textContent="P1: ◤◥ corners  |  P2: ◣◢ corners";
 }
-function _onKeyboardDetected(e){
-    if(e.isTrusted===false)return; /*ignore synthetic key events*/
-    if(isMobileMode){ isMobileMode=false; _applyModeUI(); }
-    window.removeEventListener("keydown",_onKeyboardDetected,true);
-}
-if(_hasTouchCapability){
-    window.addEventListener("keydown",_onKeyboardDetected,true);
-}
-_applyModeUI();
 
 /*game state*/
 var msgs=["Nice try!","Better Luck Next Time!","Almost there!","Don't let Asher laugh at you!","Never Give up!","Lock in!"];
@@ -404,7 +373,7 @@ function saveScores(){ localStorage.setItem("galaxyblast_best_easy",bestEasy); l
 
 var mobPauseBtn=document.getElementById("mob-pause-btn");
 function showMobPauseBtn(visible,m){
-    if(visible&&isMobileMode){
+    if(visible&&isTouchDevice){
         mobPauseBtn.style.display="flex"; mobPauseBtn.classList.remove("hardcore","medium","paused");
         if(m==="hardcore")mobPauseBtn.classList.add("hardcore"); else if(m==="medium")mobPauseBtn.classList.add("medium");
     } else { mobPauseBtn.style.display="none"; }
@@ -489,7 +458,7 @@ function mobUp(){ if(mobInterval){clearInterval(mobInterval);mobInterval=null;} 
 })();
 function showMobileControls(visible,m){
     var mc=document.getElementById("mobile-controls");
-    if(visible&&isMobileMode&&gameType==="single"){
+    if(visible&&isTouchDevice&&gameType==="single"){
         mc.classList.remove("hardcore","medium"); if(m==="hardcore")mc.classList.add("hardcore"); else if(m==="medium")mc.classList.add("medium");
         mc.style.display="flex"; applyBtnGap();
     } else { mc.style.display="none"; }
@@ -776,7 +745,7 @@ function mpMoveRight(p){ if(!p||p.dead||mpIsPaused)return; if(p.col<MP_COLS-1){p
 function showMpMobileControls(visible){
     var mc=document.getElementById("mp-mob-controls");
     if(!mc)return;
-    mc.style.display=(visible&&isMobileMode&&gameType==="multi")?"block":"none";
+    mc.style.display=(visible&&isTouchDevice&&gameType==="multi")?"block":"none";
 }
 (function(){
     var map=[["mp-mob-left-1",1,"left"],["mp-mob-right-1",1,"right"],["mp-mob-left-2",2,"left"],["mp-mob-right-2",2,"right"]];
