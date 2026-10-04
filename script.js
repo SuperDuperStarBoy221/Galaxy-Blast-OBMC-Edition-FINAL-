@@ -16,7 +16,8 @@ var ROTATED_MSGS = [
     "Remember Scrapbooks?",
     "We all procrastinate!", 
     "Where did Story Mode go?",
-    "Try the Gen Method!"
+    "Try the Gen Method!", 
+    "Happy Teachers Day!"
     
 ];
 function setRandomTag() {
