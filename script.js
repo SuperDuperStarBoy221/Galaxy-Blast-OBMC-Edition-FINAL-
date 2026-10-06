@@ -355,7 +355,7 @@ function playGameMusic(){
 
 var isTouchDevice=(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||("ontouchstart" in window)||(navigator.maxTouchPoints>0);
 
-// On a touch/mobile screen, multiplayer is grayed out (keyboard required for MP controls)
+// touch screen
 if(isTouchDevice){
     var mpLink=document.getElementById("mp-link");
     var mpBtn=document.getElementById("mp-btn");
