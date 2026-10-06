@@ -354,44 +354,16 @@ function playGameMusic(){
 }
 
 var isTouchDevice=(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||("ontouchstart" in window)||(navigator.maxTouchPoints>0);
-var hasKeyboard=false; // Track if keyboard has been detected
 
-// Detect keyboard usage
-document.addEventListener("keydown",function(){
-    if(!hasKeyboard){
-        hasKeyboard=true;
-        updateMultiplayerAvailability();
-    }
-},true);
-
+// On a touch/mobile screen, multiplayer is grayed out (keyboard required for MP controls)
 if(isTouchDevice){
-    document.getElementById("mp-btn-sub").textContent="P1: ◤◥ corners  |  P2: ◣◢ corners";
-}
-
-function updateMultiplayerAvailability(){
     var mpLink=document.getElementById("mp-link");
     var mpBtn=document.getElementById("mp-btn");
-    var shouldDisable=isTouchDevice&&!hasKeyboard;
-    
-    if(shouldDisable){
-        mpLink.style.pointerEvents="none"; mpLink.style.opacity="0.4";
-        mpBtn.disabled=true; mpBtn.style.opacity="0.4";
-        mpBtn.style.cursor="not-allowed";
-        document.getElementById("mp-btn-sub").textContent="🖥 Keyboard required";
-    } else {
-        mpLink.style.pointerEvents="auto"; mpLink.style.opacity="1";
-        mpBtn.disabled=false; mpBtn.style.opacity="1";
-        mpBtn.style.cursor="pointer";
-        if(isTouchDevice){
-            document.getElementById("mp-btn-sub").textContent="P1: ◤◥ corners  |  P2: ◣◢ corners";
-        } else {
-            document.getElementById("mp-btn-sub").textContent="P1: A/D &nbsp;|&nbsp; P2: ←/→";
-        }
-    }
+    mpLink.style.pointerEvents="none"; mpLink.style.opacity="0.4";
+    mpBtn.disabled=true; mpBtn.style.opacity="0.4";
+    mpBtn.style.cursor="not-allowed";
+    document.getElementById("mp-btn-sub").textContent="🖥 Keyboard required";
 }
-
-// Initial check
-updateMultiplayerAvailability();
 
 /*game state*/
 var msgs=["Nice try!","Better Luck Next Time!","Almost there!","Don't let Asher laugh at you!","Never Give up!","Lock in!"];
@@ -526,10 +498,10 @@ function showStart(){
 }
 function showTypeSelect(){ hideAll(); document.getElementById("type-select").style.display="block"; playMenuMusic(); }
 function showClassicModeSelect(){ gameType='single'; hideAll(); document.getElementById("mode-select").style.display="block"; playMenuMusic(); }
-function showMpModeSelect(){ 
-    // Prevent multiplayer on touch devices without keyboard
-    if(isTouchDevice&&!hasKeyboard){ playMenuMusic(); return; }
-    gameType='multi'; hideAll(); document.getElementById("mode-select").style.display="block"; playMenuMusic(); 
+function showMpModeSelect(){
+    // Multiplayer is unavailable on touch devices
+    if(isTouchDevice){ playMenuMusic(); return; }
+    gameType='multi'; hideAll(); document.getElementById("mode-select").style.display="block"; playMenuMusic();
 }
 function startTutorial(){ hideAll(); document.getElementById("tutorial").style.display="block"; playMenuMusic(); }
 
@@ -784,9 +756,7 @@ function mpMoveRight(p){ if(!p||p.dead||mpIsPaused)return; if(p.col<MP_COLS-1){p
 function showMpMobileControls(visible){
     var mc=document.getElementById("mp-mob-controls");
     if(!mc)return;
-    // Hide mobile controls if keyboard is detected (user will use keyboard instead)
-    var shouldShow=visible&&isTouchDevice&&gameType==="multi"&&!hasKeyboard;
-    mc.style.display=shouldShow?"block":"none";
+    mc.style.display=(visible&&isTouchDevice&&gameType==="multi")?"block":"none";
 }
 (function(){
     var map=[["mp-mob-left-1",1,"left"],["mp-mob-right-1",1,"right"],["mp-mob-left-2",2,"left"],["mp-mob-right-2",2,"right"]];
